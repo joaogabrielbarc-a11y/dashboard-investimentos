@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carteira | Consolidador</title>
+<meta name="description" content="Dashboard simplificado para consolidação, simulação de aportes e balanceamento de carteira.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="shell">
+<header class="topbar">
+  <div><div class="eyebrow">CARTEIRA • V1.1</div><h1>Consolidador & Balanceamento</h1><p>Edite o plano de aporte, projete os novos pesos e acompanhe a distância para sua alocação ideal.</p></div>
+  <button id="reset" class="ghost">Restaurar base</button>
+</header>
+<section id="kpis" class="grid kpis"></section>
+<section class="card contribution">
+  <div class="controlIntro"><h2>Planejar aporte</h2><p>O valor do mês é seu orçamento. Os aportes por classe podem ser ajustados livremente.</p></div>
+  <div class="controlGrid">
+    <label>Aporte do mês<div class="inputMoney"><span>R$</span><input id="contribution" type="number" min="0" step="50"></div></label>
+    <div><span class="controlLabel">Saldo do aporte</span><div id="contributionBalance" class="balanceBox"></div></div>
+    <label>Banda de desbalanceamento<div class="bandInput"><span>±</span><input id="band" type="number" min="0" max="100" step="1"><span>%</span></div></label>
+    <button id="applySuggestion" class="primary">Aplicar sugestão automática</button>
+  </div>
+</section>
+<section class="card chartsCard">
+  <div class="sectionTitle">
+    <div><h2>Balanceamento da carteira</h2><p>Compare a composição atual com os pesos-alvo definidos abaixo.</p></div>
+    <button id="toggleIdeal" class="ghost compact">Mostrar ideal</button>
+  </div>
+  <div id="charts" class="charts">
+    <div class="chartPanel">
+      <div class="chartHeading"><strong>Atual</strong><span>Composição hoje</span></div>
+      <div class="pieWrap"><div id="currentPie" class="pie"><div class="pieCenter"><strong>Atual</strong><span>100%</span></div></div></div>
+      <div id="currentLegend" class="legend"></div>
+    </div>
+    <div id="idealPanel" class="chartPanel idealPanel hidden">
+      <div class="chartHeading"><strong>Ideal</strong><span>Pesos-alvo</span></div>
+      <div class="pieWrap"><div id="idealPie" class="pie"><div class="pieCenter"><strong>Ideal</strong><span id="idealTotal">100%</span></div></div></div>
+      <div id="idealLegend" class="legend"></div>
+    </div>
+  </div>
+</section>
+<section class="layout">
+  <div class="card tableCard">
+    <div class="sectionTitle"><div><h2>Macro alocação</h2><p>Os aportes começam preenchidos pela sugestão automática, mas você pode sobrescrevê-los.</p></div><span id="targetTotal" class="pill"></span></div>
+    <div class="tableWrap"><table><thead><tr><th>Classe</th><th>Valor atual</th><th>Peso atual</th><th>Meta</th><th>Faixa</th><th>Status</th><th>Aporte</th><th>Peso pós-aporte</th></tr></thead><tbody id="rows"></tbody></table></div>
+  </div>
+  <aside class="card recommendation">
+    <div class="sectionTitle"><div><h2>Distribuição planejada</h2><p>Seu plano atual, comparado à sugestão do motor.</p></div></div>
+    <div id="ranking" class="rankList"></div>
+    <div class="note"><strong>Como funciona</strong><p>A sugestão automática busca reduzir os déficits em relação aos pesos-alvo. Se você editar os aportes, a projeção passa a usar exatamente os valores escolhidos.</p></div>
+  </aside>
+</section>
+<footer>Dados iniciais importados da planilha fornecida • alterações ficam salvas neste navegador.</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
