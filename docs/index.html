@@ -3,56 +3,131 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Carteira | Consolidador</title>
-<meta name="description" content="Dashboard simplificado para consolidação, simulação de aportes e balanceamento de carteira.">
+<meta name="description" content="Dashboard para consolidação, macro alocação, planejamento de aportes e organização de ativos.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <main class="shell">
 <header class="topbar">
-  <div><div class="eyebrow">CARTEIRA • V1.1</div><h1>Consolidador & Balanceamento</h1><p>Edite o plano de aporte, projete os novos pesos e acompanhe a distância para sua alocação ideal.</p></div>
+  <div>
+    <div class="eyebrow">CARTEIRA • V1.2</div>
+    <h1>Consolidador & Balanceamento <span class="infoTip" tabindex="0" data-tip="Visão central da sua carteira de longo prazo. Aqui você acompanha quanto existe em cada classe, compara com as metas e simula novos aportes.">?</span></h1>
+    <p>Organize classes e ativos, projete aportes e acompanhe a distância até a sua macro alocação ideal.</p>
+  </div>
   <button id="reset" class="ghost">Restaurar base</button>
 </header>
+
 <section id="kpis" class="grid kpis"></section>
+
 <section class="card contribution">
-  <div class="controlIntro"><h2>Planejar aporte</h2><p>O valor do mês é seu orçamento. Os aportes por classe podem ser ajustados livremente.</p></div>
+  <div class="controlIntro">
+    <h2>Planejador de aportes <span class="infoTip" tabindex="0" data-tip="O planejador distribui o orçamento mensal entre as classes mais abaixo do peso-alvo. Você pode aceitar a sugestão ou editar cada aporte manualmente.">?</span></h2>
+    <p>O valor do mês é seu orçamento. Os aportes por classe podem ser ajustados livremente.</p>
+  </div>
   <div class="controlGrid">
-    <label>Aporte do mês<div class="inputMoney"><span>R$</span><input id="contribution" type="number" min="0" step="50"></div></label>
-    <div><span class="controlLabel">Saldo do aporte</span><div id="contributionBalance" class="balanceBox"></div></div>
-    <label>Banda de desbalanceamento<div class="bandInput"><span>±</span><input id="band" type="number" min="0" max="100" step="1"><span>%</span></div></label>
-    <button id="applySuggestion" class="primary">Aplicar sugestão automática</button>
+    <label>Aporte do mês <span class="infoTip" tabindex="0" data-tip="Valor total que você pretende investir neste mês. Ele funciona como orçamento para o planejador de aportes.">?</span><div class="inputMoney"><span>R$</span><input id="contribution" type="number" min="0" step="50"></div></label>
+    <div><span class="controlLabel">Saldo do aporte <span class="infoTip" tabindex="0" data-tip="Diferença entre o orçamento mensal e a soma dos aportes preenchidos na tabela. Positivo = ainda falta distribuir. Negativo = seu plano excedeu o orçamento.">?</span></span><div id="contributionBalance" class="balanceBox"></div></div>
+    <label>Banda de desbalanceamento <span class="infoTip" tabindex="0" data-tip="Tolerância ao redor da meta de cada classe. Com banda de 25%, uma meta de 20% é considerada balanceada entre 15% e 25%.">?</span><div class="bandInput"><span>±</span><input id="band" type="number" min="0" max="100" step="1"><span>%</span></div></label>
+    <button id="applySuggestion" class="primary">Aplicar sugestão do planejador</button>
   </div>
 </section>
+
 <section class="card chartsCard">
   <div class="sectionTitle">
-    <div><h2>Balanceamento da carteira</h2><p>Compare a composição atual com os pesos-alvo definidos abaixo.</p></div>
+    <div>
+      <h2>Macro alocação da carteira <span class="infoTip" tabindex="0" data-tip="Mostra como o patrimônio está distribuído entre grandes classes de ativos. Clique em uma fatia ou legenda para destacar uma classe.">?</span></h2>
+      <p>Compare a composição atual com os pesos-alvo definidos abaixo.</p>
+    </div>
     <button id="toggleIdeal" class="ghost compact">Mostrar ideal</button>
   </div>
   <div id="charts" class="charts">
     <div class="chartPanel">
-      <div class="chartHeading"><strong>Atual</strong><span>Composição hoje</span></div>
-      <div class="pieWrap"><div id="currentPie" class="pie"><div class="pieCenter"><strong>Atual</strong><span>100%</span></div></div></div>
+      <div class="chartHeading"><strong>Atual <span class="infoTip" tabindex="0" data-tip="Distribuição percentual calculada a partir dos valores atuais de cada classe.">?</span></strong><span>Composição hoje</span></div>
+      <div class="pieWrap"><div id="currentPie" class="pie interactivePie" role="img" aria-label="Gráfico de macro alocação atual"><div class="pieCenter"><strong id="currentPieLabel">Atual</strong><span id="currentPieValue">100%</span></div></div></div>
       <div id="currentLegend" class="legend"></div>
     </div>
     <div id="idealPanel" class="chartPanel idealPanel hidden">
-      <div class="chartHeading"><strong>Ideal</strong><span>Pesos-alvo</span></div>
-      <div class="pieWrap"><div id="idealPie" class="pie"><div class="pieCenter"><strong>Ideal</strong><span id="idealTotal">100%</span></div></div></div>
+      <div class="chartHeading"><strong>Ideal <span class="infoTip" tabindex="0" data-tip="Distribuição desejada segundo as metas cadastradas. As metas devem somar 100% para representar uma carteira completa.">?</span></strong><span>Pesos-alvo</span></div>
+      <div class="pieWrap"><div id="idealPie" class="pie interactivePie" role="img" aria-label="Gráfico de macro alocação ideal"><div class="pieCenter"><strong id="idealPieLabel">Ideal</strong><span id="idealTotal">100%</span></div></div></div>
       <div id="idealLegend" class="legend"></div>
     </div>
   </div>
+  <div id="pieHint" class="chartHint">Clique em uma fatia ou em uma classe da legenda para destacá-la.</div>
 </section>
+
 <section class="layout">
   <div class="card tableCard">
-    <div class="sectionTitle"><div><h2>Macro alocação</h2><p>Os aportes começam preenchidos pela sugestão automática, mas você pode sobrescrevê-los.</p></div><span id="targetTotal" class="pill"></span></div>
-    <div class="tableWrap"><table><thead><tr><th>Classe</th><th>Valor atual</th><th>Peso atual</th><th>Meta</th><th>Faixa</th><th>Status</th><th>Aporte</th><th>Peso pós-aporte</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="sectionTitle">
+      <div><h2>Macro alocação <span class="infoTip" tabindex="0" data-tip="Tabela principal de classes. Edite valores, metas e aportes. Você também pode criar ou excluir classes sem alterar as demais.">?</span></h2><p>Os aportes começam preenchidos pela sugestão automática, mas você pode sobrescrevê-los.</p></div>
+      <div class="sectionActions"><span id="targetTotal" class="pill"></span><button id="addClass" class="ghost compact">+ Adicionar classe</button></div>
+    </div>
+    <div class="tableWrap"><table><thead><tr>
+      <th>Classe <span class="infoTip" tabindex="0" data-tip="Grupo amplo de investimentos, como Ações BR, FIIs, ETFs internacionais ou Cripto.">?</span></th>
+      <th>Valor atual <span class="infoTip" tabindex="0" data-tip="Valor financeiro atualmente alocado nesta classe.">?</span></th>
+      <th>Peso atual <span class="infoTip" tabindex="0" data-tip="Participação desta classe no patrimônio consolidado da carteira.">?</span></th>
+      <th>Meta <span class="infoTip" tabindex="0" data-tip="Percentual desejado para esta classe na sua macro alocação ideal.">?</span></th>
+      <th>Faixa <span class="infoTip" tabindex="0" data-tip="Intervalo considerado aceitável segundo a banda de desbalanceamento escolhida.">?</span></th>
+      <th>Status <span class="infoTip" tabindex="0" data-tip="OK quando o peso atual está dentro da faixa permitida; NOK quando está fora.">?</span></th>
+      <th>Aporte <span class="infoTip" tabindex="0" data-tip="Valor que você pretende aportar nesta classe. Vem preenchido pelo planejador e pode ser editado.">?</span></th>
+      <th>Peso pós-aporte <span class="infoTip" tabindex="0" data-tip="Peso projetado da classe considerando exatamente os aportes preenchidos na tabela.">?</span></th>
+      <th>Ações <span class="infoTip" tabindex="0" data-tip="Permite remover a classe do dashboard. Os ativos cadastrados na lista permanecem salvos separadamente.">?</span></th>
+    </tr></thead><tbody id="rows"></tbody></table></div>
   </div>
   <aside class="card recommendation">
-    <div class="sectionTitle"><div><h2>Distribuição planejada</h2><p>Seu plano atual, comparado à sugestão do motor.</p></div></div>
+    <div class="sectionTitle"><div><h2>Distribuição planejada <span class="infoTip" tabindex="0" data-tip="Resumo do plano de aporte atual, ordenado pelo valor destinado a cada classe.">?</span></h2><p>Seu plano atual, comparado à sugestão do planejador de aportes.</p></div></div>
     <div id="ranking" class="rankList"></div>
-    <div class="note"><strong>Como funciona</strong><p>A sugestão automática busca reduzir os déficits em relação aos pesos-alvo. Se você editar os aportes, a projeção passa a usar exatamente os valores escolhidos.</p></div>
+    <div class="note"><strong>Como funciona</strong><p>O planejador de aportes busca reduzir os déficits em relação aos pesos-alvo. Se você editar os aportes, a projeção passa a usar exatamente os valores escolhidos.</p></div>
   </aside>
 </section>
+
+<section class="card holdingsCard">
+  <div class="sectionTitle holdingsTitle">
+    <div>
+      <h2>Ativos na carteira <span class="infoTip" tabindex="0" data-tip="Cadastro dos ativos individuais que compõem sua carteira, organizado por classe. Nesta versão, a lista é independente da macro alocação para evitar alterações acidentais nos totais.">?</span></h2>
+      <p>Uma visão por ticker inspirada em gerenciadores de carteira: filtre por classe, pesquise e mantenha seus ativos organizados.</p>
+    </div>
+    <button id="addHolding" class="primary compactPrimary">+ Adicionar ativo</button>
+  </div>
+  <div class="holdingsToolbar">
+    <div id="holdingFilters" class="filterChips"></div>
+    <div class="holdingSearch"><span>⌕</span><input id="holdingSearch" type="search" placeholder="Buscar ativo ou nome"></div>
+  </div>
+  <div class="tableWrap holdingsTableWrap"><table class="holdingsTable"><thead><tr>
+    <th>Ativo <span class="infoTip" tabindex="0" data-tip="Ticker ou identificador do investimento.">?</span></th>
+    <th>Classe <span class="infoTip" tabindex="0" data-tip="Classe à qual o ativo pertence no seu cadastro.">?</span></th>
+    <th>Quantidade <span class="infoTip" tabindex="0" data-tip="Número de ações, cotas ou unidades do ativo.">?</span></th>
+    <th>Preço <span class="infoTip" tabindex="0" data-tip="Preço unitário de referência usado no cadastro.">?</span></th>
+    <th>Valor <span class="infoTip" tabindex="0" data-tip="Valor financeiro cadastrado para a posição. Pode ser quantidade × preço ou um valor informado manualmente.">?</span></th>
+    <th>Peso na lista <span class="infoTip" tabindex="0" data-tip="Participação do ativo no total dos ativos cadastrados nesta lista. Esta métrica é independente da macro alocação.">?</span></th>
+    <th>Ações <span class="infoTip" tabindex="0" data-tip="Edite ou exclua o ativo cadastrado.">?</span></th>
+  </tr></thead><tbody id="holdingRows"></tbody></table></div>
+  <div class="holdingsFooter"><span id="holdingSummary"></span><button id="toggleHoldings" class="ghost compact">Ver todos</button></div>
+</section>
+
 <footer>Dados iniciais importados da planilha fornecida • alterações ficam salvas neste navegador.</footer>
 </main>
+
+<dialog id="classDialog" class="modal">
+  <form id="classForm" method="dialog" class="modalCard">
+    <div class="modalHeader"><div><span class="eyebrow">MACRO ALOCAÇÃO</span><h3>Adicionar classe</h3></div><button type="button" class="iconButton" data-close="classDialog">×</button></div>
+    <label>Nome da classe<input id="className" type="text" required placeholder="Ex.: Ouro"></label>
+    <div class="modalGrid"><label>Valor atual (R$)<input id="classCurrent" type="number" min="0" step="10" value="0"></label><label>Meta (%)<input id="classTarget" type="number" min="0" max="100" step="1" value="0"></label></div>
+    <div class="modalActions"><button type="button" class="ghost" data-close="classDialog">Cancelar</button><button type="submit" class="primary">Adicionar classe</button></div>
+  </form>
+</dialog>
+
+<dialog id="holdingDialog" class="modal">
+  <form id="holdingForm" method="dialog" class="modalCard">
+    <div class="modalHeader"><div><span class="eyebrow">LISTA DE ATIVOS</span><h3 id="holdingDialogTitle">Adicionar ativo</h3></div><button type="button" class="iconButton" data-close="holdingDialog">×</button></div>
+    <input id="holdingEditId" type="hidden">
+    <div class="modalGrid"><label>Ticker<input id="holdingTicker" type="text" required placeholder="Ex.: ITUB4"></label><label>Nome / descrição<input id="holdingName" type="text" placeholder="Ex.: Itaú Unibanco"></label></div>
+    <label>Classe<select id="holdingClass"></select></label>
+    <div class="modalGrid three"><label>Quantidade<input id="holdingQty" type="number" min="0" step="0.000001" value="0"></label><label>Preço (R$)<input id="holdingPrice" type="number" min="0" step="0.01" value="0"></label><label>Valor total (R$)<input id="holdingValue" type="number" min="0" step="0.01" placeholder="automático"></label></div>
+    <div class="modalHelp">Se “Valor total” ficar vazio, o sistema usa quantidade × preço.</div>
+    <div class="modalActions"><button type="button" class="ghost" data-close="holdingDialog">Cancelar</button><button type="submit" class="primary">Salvar ativo</button></div>
+  </form>
+</dialog>
+
 <script src="app.js"></script>
 </body>
 </html>
