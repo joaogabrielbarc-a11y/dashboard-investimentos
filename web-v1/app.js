@@ -19,9 +19,10 @@ function loadState(){
     const old=saved?.assets?.find(a=>a.id===base.id);
     return old?{...base,...old}:structuredClone(base);
   });
+  const savedContribution=+saved?.contribution;
   return {
     assets,
-    contribution:Math.max(0,+saved?.contribution||1500),
+    contribution:Number.isFinite(savedContribution)?Math.max(0,savedContribution):1500,
     band:Math.min(100,Math.max(0,Number.isFinite(+saved?.band)?+saved.band:25)),
     aportes:saved?.aportes&&typeof saved.aportes==='object'?saved.aportes:{},
     autoAportes:saved?.autoAportes??true,
