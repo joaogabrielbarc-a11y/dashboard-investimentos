@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carteira | Consolidador</title>
+<meta name="description" content="Dashboard simplificado para consolidação e balanceamento de carteira.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="shell">
+<header class="topbar"><div><div class="eyebrow">CARTEIRA • V1 SIMPLIFICADA</div><h1>Consolidador & Balanceamento</h1><p>Veja onde sua carteira está fora do alvo e direcione o próximo aporte sem vender ativos.</p></div><button id="reset" class="ghost">Restaurar base</button></header>
+<section id="kpis" class="grid kpis"></section>
+<section class="card contribution"><div><h2>Planejar aporte</h2><p>O motor prioriza as classes mais abaixo do alvo, considerando o patrimônio após o aporte.</p></div><label>Valor do aporte<div class="inputMoney"><span>R$</span><input id="contribution" type="number" min="0" step="50"></div></label></section>
+<section class="layout"><div class="card tableCard"><div class="sectionTitle"><div><h2>Macro alocação</h2><p>Edite valores e metas. Tudo recalcula automaticamente.</p></div><span id="targetTotal" class="pill"></span></div><div class="tableWrap"><table><thead><tr><th>Classe</th><th>Valor atual</th><th>Peso atual</th><th>Meta</th><th>Faixa</th><th>Status</th><th>Aporte sugerido</th></tr></thead><tbody id="rows"></tbody></table></div></div><aside class="card recommendation"><div class="sectionTitle"><div><h2>Recomendação</h2><p>Ordem sugerida para o aporte atual.</p></div></div><div id="ranking" class="rankList"></div><div class="note"><strong>Critério da V1</strong><p>Sem vendas. O aporte é rateado proporcionalmente entre os déficits necessários para chegar aos pesos-alvo no patrimônio pós-aporte.</p></div></aside></section>
+<footer>Dados iniciais importados da planilha fornecida • alterações ficam salvas neste navegador.</footer>
+</main><script src="app.js"></script></body></html>
