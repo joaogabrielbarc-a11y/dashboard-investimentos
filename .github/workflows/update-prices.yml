@@ -12,11 +12,17 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: market-price-update
+  cancel-in-progress: true
+
 jobs:
   update-prices:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -31,7 +37,8 @@ jobs:
           git add docs/prices.json web-v1/prices.json
           if git diff --cached --quiet; then
             echo "No price changes"
-          else
-            git commit -m "Update market prices"
-            git push
+            exit 0
           fi
+          git commit -m "Update market prices"
+          git pull --rebase origin main
+          git push origin HEAD:main
