@@ -27,7 +27,7 @@ BR = [
 ]
 US = [
     'VOO','VTV','AVUV','VEA','AVDV','VWO','AVES','TFLO',
-    'NU',
+    'NU','AAPL','MSFT','GOOGL','AMZN','NVDA','META','JPM','XOM','BRK-B',
 ]
 
 HEADERS = {
@@ -43,39 +43,69 @@ def clean(v):
         return None
 
 
-def yahoo_market_quote(symbol: str, market_tz: str):
-    """Return the most recent regular-market price, falling back to latest daily close."""
-    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{quote(symbol, safe="")}?range=10d&interval=1d&includePrePost=false'
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=15)
-        r.raise_for_status()
-        result = ((r.json().get('chart') or {}).get('result') or [None])[0]
-        if not result:
-            return None
+def _quote_date(timestamp, market_tz):
+    if timestamp:
+        try:
+            return datetime.fromtimestamp(float(timestamp), ZoneInfo(market_tz)).date().isoformat()
+        except Exception:
+            pass
+    return datetime.now(ZoneInfo(market_tz)).date().isoformat()
 
-        meta = result.get('meta') or {}
-        live = clean(meta.get('regularMarketPrice'))
-        live_ts = clean(meta.get('regularMarketTime'))
-        if live is not None and live > 0:
-            if live_ts:
-                date = datetime.fromtimestamp(live_ts, ZoneInfo(market_tz)).date().isoformat()
-            else:
-                date = datetime.now(ZoneInfo(market_tz)).date().isoformat()
-            return date, live
 
-        timestamps = result.get('timestamp') or []
-        closes = ((((result.get('indicators') or {}).get('quote') or [{}])[0]).get('close') or [])
-        chosen = None
-        for ts, px in zip(timestamps, closes):
-            px = clean(px)
-            if px is None:
-                continue
-            date = datetime.fromtimestamp(ts, ZoneInfo(market_tz)).date().isoformat()
-            chosen = (date, px)
-        return chosen
-    except Exception as exc:
-        print(f'Yahoo warning {symbol}: {exc}')
+def _chart_quote(host: str, symbol: str, market_tz: str):
+    url = f'https://{host}/v8/finance/chart/{quote(symbol, safe="")}?range=10d&interval=1d&includePrePost=false'
+    r = requests.get(url, headers=HEADERS, timeout=10)
+    r.raise_for_status()
+    result = ((r.json().get('chart') or {}).get('result') or [None])[0]
+    if not result:
         return None
+    meta = result.get('meta') or {}
+    live = clean(meta.get('regularMarketPrice'))
+    if live is not None and live > 0:
+        return _quote_date(meta.get('regularMarketTime'), market_tz), live
+    timestamps = result.get('timestamp') or []
+    closes = ((((result.get('indicators') or {}).get('quote') or [{}])[0]).get('close') or [])
+    chosen = None
+    for ts, px in zip(timestamps, closes):
+        px = clean(px)
+        if px is not None and px > 0:
+            chosen = (_quote_date(ts, market_tz), px)
+    return chosen
+
+
+def _search_quote(host: str, symbol: str, market_tz: str):
+    url = f'https://{host}/v1/finance/search?q={quote(symbol, safe="")}&quotesCount=10&newsCount=0&listsCount=0'
+    r = requests.get(url, headers=HEADERS, timeout=10)
+    r.raise_for_status()
+    quotes = r.json().get('quotes') or []
+    exact = next((q for q in quotes if str(q.get('symbol') or '').upper() == symbol.upper()), None)
+    if not exact:
+        return None
+    px = clean(exact.get('regularMarketPrice'))
+    if px is None or px <= 0:
+        px = clean(exact.get('regularMarketPreviousClose'))
+    return (_quote_date(exact.get('regularMarketTime'), market_tz), px) if px is not None and px > 0 else None
+
+
+def yahoo_market_quote(symbol: str, market_tz: str):
+    """Most recent regular-market price with redundant Yahoo endpoints."""
+    errors = []
+    for host in ('query1.finance.yahoo.com', 'query2.finance.yahoo.com'):
+        try:
+            rec = _chart_quote(host, symbol, market_tz)
+            if rec:
+                return rec
+        except Exception as exc:
+            errors.append(f'{host}/chart: {exc}')
+    for host in ('query1.finance.yahoo.com', 'query2.finance.yahoo.com'):
+        try:
+            rec = _search_quote(host, symbol, market_tz)
+            if rec:
+                return rec
+        except Exception as exc:
+            errors.append(f'{host}/search: {exc}')
+    print(f'Yahoo warning {symbol}: no quote found' + (f' | {errors[-1]}' if errors else ''))
+    return None
 
 
 def norm(s):
@@ -91,7 +121,7 @@ def write_json(path: Path, payload):
 
 def treasury_prices():
     url = 'https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/precotaxatesourodireto.csv'
-    r = requests.get(url, headers=HEADERS, timeout=30)
+    r = requests.get(url, headers=HEADERS, timeout=12)
     r.raise_for_status()
     raw = BytesIO(r.content)
     df = None
@@ -154,7 +184,7 @@ def treasury_prices():
 
 def bcb_last(series, n=1):
     url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.{series}/dados/ultimos/{n}?formato=json'
-    r = requests.get(url, headers=HEADERS, timeout=20)
+    r = requests.get(url, headers=HEADERS, timeout=12)
     r.raise_for_status()
     data = r.json()
     out = []
@@ -201,7 +231,7 @@ def digits(s):
 def cvm_fund_prices():
     now = datetime.now(ZoneInfo('America/Sao_Paulo'))
     months = []
-    for back in range(3):
+    for back in range(2):
         y, m = now.year, now.month - back
         while m <= 0:
             y -= 1
@@ -213,7 +243,7 @@ def cvm_fund_prices():
     for candidate in months:
         url = f'https://dados.cvm.gov.br/dados/FI/DOC/INF_DIARIO/DADOS/inf_diario_fi_{candidate}.zip'
         try:
-            r = requests.get(url, headers=HEADERS, timeout=25)
+            r = requests.get(url, headers=HEADERS, timeout=8)
             if r.ok and len(r.content) > 1000:
                 blob, ym = r.content, candidate
                 break
@@ -311,7 +341,19 @@ def main():
 
     indexes = market_indexes()
     for out_path in INDEX_OUTS:
-        write_json(out_path, indexes)
+        old = {}
+        if out_path.exists():
+            try:
+                old = json.loads(out_path.read_text(encoding='utf-8'))
+            except Exception:
+                pass
+        merged_indexes = dict(old.get('indexes') or {})
+        merged_indexes.update(indexes.get('indexes') or {})
+        write_json(out_path, {
+            'updatedAt': indexes.get('updatedAt'),
+            'source': 'Banco Central do Brasil',
+            'indexes': merged_indexes,
+        })
 
     try:
         funds = cvm_fund_prices()
@@ -319,7 +361,12 @@ def main():
         print('CVM warning:', exc)
         funds = {'updatedAt': datetime.now(ZoneInfo('America/Sao_Paulo')).isoformat(), 'source': 'CVM Informe Diário', 'month': None, 'funds': {}}
     for out_path in FUND_OUTS:
-        write_json(out_path, funds)
+        if funds.get('funds'):
+            write_json(out_path, funds)
+        elif out_path.exists():
+            print('CVM unavailable; keeping cached fund prices in', out_path)
+        else:
+            write_json(out_path, funds)
 
 
 if __name__ == '__main__':
