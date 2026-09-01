@@ -1,0 +1,1 @@
+(()=>{const files=['v18-core.js?v=18.0','v18-ui.js?v=18.0','v18-dialogs.js?v=18.0','v18-init.js?v=18.0'];const load=i=>{if(i>=files.length)return;const s=document.createElement('script');s.src=files[i];s.onload=()=>load(i+1);document.body.appendChild(s);};load(0);})();
