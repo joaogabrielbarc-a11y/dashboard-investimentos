@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-01T14:56:45.021835-03:00",
-  "fxUsdBrl": 5.14109992980957,
+  "updatedAt": "2026-09-01T14:58:18.774418-03:00",
+  "fxUsdBrl": 5.140500068664551,
   "prices": {
     "CPFE3": {
       "priceNative": 44.540000915527344,
@@ -151,45 +151,45 @@
     },
     "VOO": {
       "priceNative": 704.8900146484375,
-      "priceBRL": 3623.910004832549,
+      "priceBRL": 3623.487168701249,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
     },
     "AVUV": {
       "priceNative": 124.97000122070312,
-      "priceBRL": 642.4832645040588,
+      "priceBRL": 642.4082998560334,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
     },
     "VEA": {
       "priceNative": 72.91999816894531,
-      "priceBRL": 374.88899746807874,
+      "priceBRL": 374.8452555944823,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
     },
     "TFLO": {
       "priceNative": 50.650001525878906,
-      "priceBRL": 260.3967192895507,
+      "priceBRL": 260.3663363216401,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
     },
     "BTCUSD": {
-      "priceNative": 77338.84375,
-      "priceBRL": 397606.7241746783,
+      "priceNative": 77288.1484375,
+      "priceBRL": 397299.73234992474,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
     },
     "TESOURO RENDA+ 2060": {
-      "priceNative": 258.44736842105266,
-      "priceBRL": 258.44736842105266,
+      "priceNative": 261.43,
+      "priceBRL": 261.43,
       "currency": "BRL",
       "date": "2026-08-31",
-      "source": "Base local — aguardando atualização automática"
+      "source": "Tesouro Transparente"
     },
     "TESOURO SELIC 2027": {
       "priceNative": 19772.03,
@@ -537,6 +537,55 @@
     "TESOURO EDUCA+ 2043": {
       "priceNative": 1637.36,
       "priceBRL": 1637.36,
+      "currency": "BRL",
+      "date": "2026-08-31",
+      "source": "Tesouro Transparente"
+    },
+    "TESOURO RENDA+ 2065": {
+      "priceNative": 185.48,
+      "priceBRL": 185.48,
+      "currency": "BRL",
+      "date": "2026-08-31",
+      "source": "Tesouro Transparente"
+    },
+    "TESOURO RENDA+ 2050": {
+      "priceNative": 513.45,
+      "priceBRL": 513.45,
+      "currency": "BRL",
+      "date": "2026-08-31",
+      "source": "Tesouro Transparente"
+    },
+    "TESOURO RENDA+ 2045": {
+      "priceNative": 712.85,
+      "priceBRL": 712.85,
+      "currency": "BRL",
+      "date": "2026-08-31",
+      "source": "Tesouro Transparente"
+    },
+    "TESOURO RENDA+ 2030": {
+      "priceNative": 1951.55,
+      "priceBRL": 1951.55,
+      "currency": "BRL",
+      "date": "2026-08-31",
+      "source": "Tesouro Transparente"
+    },
+    "TESOURO RENDA+ 2055": {
+      "priceNative": 368.5,
+      "priceBRL": 368.5,
+      "currency": "BRL",
+      "date": "2026-08-31",
+      "source": "Tesouro Transparente"
+    },
+    "TESOURO RENDA+ 2035": {
+      "priceNative": 1386.6,
+      "priceBRL": 1386.6,
+      "currency": "BRL",
+      "date": "2026-08-31",
+      "source": "Tesouro Transparente"
+    },
+    "TESOURO RENDA+ 2040": {
+      "priceNative": 994.09,
+      "priceBRL": 994.09,
       "currency": "BRL",
       "date": "2026-08-31",
       "source": "Tesouro Transparente"
