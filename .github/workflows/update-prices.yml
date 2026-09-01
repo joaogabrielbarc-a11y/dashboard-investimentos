@@ -28,17 +28,36 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: pip install --disable-pip-version-check yfinance pandas requests
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
       - name: Update previous-close prices
         run: python scripts/update_prices.py
-      - name: Commit price files
+      - name: Commit price files with retry
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/prices.json web-v1/prices.json docs/market-indexes.json web-v1/market-indexes.json docs/fund-prices.json web-v1/fund-prices.json
-          if git diff --cached --quiet; then
-            echo "No price changes"
+
+          publish_prices() {
+            git add docs/prices.json web-v1/prices.json \
+              docs/market-indexes.json web-v1/market-indexes.json \
+              docs/fund-prices.json web-v1/fund-prices.json
+            if git diff --cached --quiet; then
+              echo "No price changes"
+              return 0
+            fi
+            git commit -m "Update market prices"
+            git push origin HEAD:main
+          }
+
+          if publish_prices; then
             exit 0
           fi
-          git commit -m "Update market prices"
-          git pull --rebase origin main
-          git push origin HEAD:main
+
+          echo "Main changed while prices were being generated. Regenerating on latest main..."
+          git fetch origin main
+          git reset --hard origin/main
+          python scripts/update_prices.py
+          publish_prices
