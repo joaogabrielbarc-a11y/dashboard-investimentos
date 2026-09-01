@@ -1,0 +1,1 @@
+(()=>{const files=['v19-core.js?v=19.0','v19-holdings.js?v=19.0','v19-transactions.js?v=19.0','v19-planning.js?v=19.0','v19-init.js?v=19.0'];const load=i=>{if(i>=files.length)return;const s=document.createElement('script');s.src=files[i];s.onload=()=>load(i+1);document.body.appendChild(s);};load(0);})();
