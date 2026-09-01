@@ -1,0 +1,1 @@
+['v13-core.js','v13-tooltips.js'].forEach(src=>{const s=document.createElement('script');s.src=src;s.defer=false;document.body.appendChild(s);});
