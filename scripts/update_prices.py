@@ -55,7 +55,9 @@ def treasury_prices():
         typ=str(row[type_col]).strip();mat=pd.to_datetime(row[mat_col],dayfirst=True,errors='coerce');px=clean(row[pu_col])
         if not typ or pd.isna(mat) or px is None:continue
         year=int(mat.year);t=norm(typ)
-        if 'renda' in t:key=f'TESOURO RENDA+ {year}'
+        # No RendA+, a carteira identifica o título pelo ano de início da renda.
+        # O CSV oficial identifica o vencimento final, 19 anos após esse início.
+        if 'renda' in t:key=f'TESOURO RENDA+ {year-19}'
         elif 'ipca' in t:key=f'TESOURO IPCA+ {year}'
         elif 'selic' in t:key=f'TESOURO SELIC {year}'
         elif 'prefixado' in t:key=f'TESOURO PREFIXADO {year}'
