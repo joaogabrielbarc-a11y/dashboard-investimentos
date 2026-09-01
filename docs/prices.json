@@ -1,0 +1,33 @@
+{
+  "updatedAt": "2026-09-01T00:00:00-03:00",
+  "fxUsdBrl": null,
+  "prices": {
+    "CPFE3": {"priceNative":44.8,"priceBRL":44.8,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "BBSE3": {"priceNative":40.02,"priceBRL":40.02,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "BBAS3": {"priceNative":20.17,"priceBRL":20.17,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "PETR4": {"priceNative":43.55,"priceBRL":43.55,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "SAPR4": {"priceNative":6.5,"priceBRL":6.5,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "ISAE4": {"priceNative":26.7,"priceBRL":26.7,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "VALE3": {"priceNative":78.58,"priceBRL":78.58,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "ITSA4": {"priceNative":12.95,"priceBRL":12.95,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "WIZC3": {"priceNative":7.89,"priceBRL":7.89,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "TAEE11": {"priceNative":38.68,"priceBRL":38.68,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "CMIG4": {"priceNative":10.51,"priceBRL":10.51,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "ITUB4": {"priceNative":39.19,"priceBRL":39.19,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "BBDC3": {"priceNative":15.04,"priceBRL":15.04,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "FIQE3": {"priceNative":4.74,"priceBRL":4.74,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "BRBI11": {"priceNative":13.15,"priceBRL":13.15,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "GGRC11": {"priceNative":9.06,"priceBRL":9.06,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "XPML11": {"priceNative":99.9,"priceBRL":99.9,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "GARE11": {"priceNative":8.43,"priceBRL":8.43,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "HGCR11": {"priceNative":94.86,"priceBRL":94.86,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "LVBI11": {"priceNative":99.41,"priceBRL":99.41,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "TRXF11": {"priceNative":78.31,"priceBRL":78.31,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "VOO": {"priceNative":null,"priceBRL":3667.534468,"currency":"USD","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "AVUV": {"priceNative":null,"priceBRL":651.168349,"currency":"USD","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "VEA": {"priceNative":null,"priceBRL":378.867242,"currency":"USD","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "TFLO": {"priceNative":null,"priceBRL":262.655705,"currency":"USD","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "BTCUSD": {"priceNative":407667.3752,"priceBRL":407667.3752,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"},
+    "TESOURO RENDA+ 2060": {"priceNative":258.44736842105266,"priceBRL":258.44736842105266,"currency":"BRL","date":"2026-08-31","source":"Base local — aguardando atualização automática"}
+  }
+}
