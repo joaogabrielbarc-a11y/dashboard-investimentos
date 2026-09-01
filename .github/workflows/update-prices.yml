@@ -19,6 +19,7 @@ concurrency:
 jobs:
   update-prices:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
@@ -27,7 +28,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install dependencies
-        run: pip install --disable-pip-version-check yfinance pandas requests
+        run: pip install --disable-pip-version-check pandas requests
       - name: Sync latest main
         run: |
           git fetch origin main
