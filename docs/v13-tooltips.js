@@ -12,7 +12,7 @@ window.addEventListener('resize',()=>{if(activeTooltipEl)positionTooltip(activeT
 window.addEventListener('scroll',()=>{if(activeTooltipEl)positionTooltip(activeTooltipEl);},{passive:true});
 window.addEventListener('load',()=>{
   if(document.querySelector('script[data-v15-loader]'))return;
-  const s=document.createElement('script');s.src='v15.js?v=15.3';s.dataset.v15Loader='1';
+  const s=document.createElement('script');s.src='v15.js?v=15.4';s.dataset.v15Loader='1';
   s.onload=()=>{
     if(document.querySelector('script[data-v16-loader]'))return;
     const n=document.createElement('script');n.src='v16.js?v=16.3';n.dataset.v16Loader='1';
