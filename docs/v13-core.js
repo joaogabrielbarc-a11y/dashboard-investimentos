@@ -1,0 +1,25 @@
+const assetClassCatalog=['Ações','Fundos Imobiliários','Fiagros','BDRs','Tesouro Direto','Índices','ETFs Nacionais','Fundos de Investimentos','Renda Fixa','Stocks','REITs','Moedas','Commodities','ETFs Internacionais','Criptomoedas','Outros'];
+const classAliases={'Ações':['Ações','Ações BR'],'Fundos Imobiliários':['Fundos Imobiliários','FIIs'],'Renda Fixa':['Renda Fixa','Renda fixa'],'Criptomoedas':['Criptomoedas','Cripto'],'Stocks':['Stocks'],'ETFs Internacionais':['ETFs Internacionais']};
+const normClass=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+function classExists(name){const aliases=classAliases[name]||[name];const set=aliases.map(normClass);return state.assets.some(a=>set.includes(normClass(a.name)));}
+function setupClassCatalog(){
+  const legacy=document.getElementById('classNameLegacy');if(!legacy)return;
+  legacy.innerHTML='Classe<select id="classPreset"></select><input id="className" type="hidden"><span class="catalogOptionNote">Escolha uma categoria padronizada. Apenas “Outros” permite nome personalizado.</span>';
+  legacy.insertAdjacentHTML('afterend','<label id="otherClassWrap" class="otherClassField hidden">Nome personalizado<input id="otherClassName" type="text" maxlength="40" placeholder="Ex.: Colecionáveis"><span class="catalogOptionNote">Use quando nenhuma categoria da lista representar bem o ativo.</span></label>');
+  const preset=document.getElementById('classPreset'),otherWrap=document.getElementById('otherClassWrap'),hidden=document.getElementById('className'),custom=document.getElementById('otherClassName');
+  function sync(){const other=preset.value==='Outros';otherWrap.classList.toggle('hidden',!other);hidden.value=other?custom.value.trim():preset.value;}
+  function populate(){preset.innerHTML=assetClassCatalog.map(name=>{const disabled=name!=='Outros'&&classExists(name);return '<option value="'+escapeAttr(name)+'" '+(disabled?'disabled':'')+'>'+escapeHtml(name)+(disabled?' — já adicionada':'')+'</option>';}).join('');const first=[...preset.options].find(o=>!o.disabled);if(first)preset.value=first.value;sync();}
+  preset.onchange=sync;custom.oninput=sync;
+  document.getElementById('addClass').onclick=()=>{document.getElementById('classCurrent').value=0;document.getElementById('classTarget').value=0;custom.value='';populate();document.getElementById('classDialog').showModal();};
+  document.getElementById('classForm').onsubmit=e=>{e.preventDefault();sync();const presetName=preset.value,name=hidden.value.trim();if(!name){alert('Informe um nome para a classe “Outros”.');return;}if(presetName!=='Outros'&&classExists(presetName)){alert('Essa classe já está presente na macro alocação.');return;}if(state.assets.some(a=>normClass(a.name)===normClass(name))){alert('Já existe uma classe com esse nome.');return;}const id=safeId(name);state.assets.push({id,name,current:Math.max(0,+document.getElementById('classCurrent').value||0),target:Math.max(0,+document.getElementById('classTarget').value||0)});state.aportes[id]=0;state.autoAportes=true;document.getElementById('classDialog').close();save();render();};
+  populate();
+}
+const originalRenderV13=render;
+render=function(){
+  originalRenderV13();
+  const rows=getRows(),total=totalAtual(),targets=normalizedTargets(rows),dispersion=dispersionIndex(rows.map(r=>r.currentWeight),targets),postDispersion=dispersionIndex(rows.map(r=>r.postWeight),targets),band=Math.max(0,+state.band||0),dispersionOk=dispersion<=band,postOk=postDispersion<=band;
+  const priority=[...rows].filter(r=>r.target>0).sort((a,b)=>a.priorityScore-b.priorityScore)[0]||rows[0];
+  document.getElementById('kpis').innerHTML='<article class="card kpi"><span class="kpiLabel">Patrimônio consolidado</span><strong>'+fmt.format(total)+'</strong><small>Soma dos valores atuais das classes da macro alocação.</small></article><article class="card kpi dispersion '+(dispersionOk?'good':'bad')+'"><span class="kpiLabel">Índice de dispersão '+info('Mede quanto a distribuição atual está distante da alocação ideal. 0% significa coincidência exata com as metas. O indicador fica verde quando é menor ou igual à banda de desbalanceamento e vermelho quando a supera.')+'</span><strong>'+pct(dispersion)+'</strong><small>'+(dispersionOk?'Dentro':'Acima')+' da banda de ±'+state.band+'% • após os aportes: <span style="color:'+(postOk?'#73e4b9':'#ff9fa8')+'">'+pct(postDispersion)+'</span></small></article>';
+  const pc=document.getElementById('priorityCard');if(priority)pc.innerHTML='<span class="priorityEyebrow">MAIOR PRIORIDADE DO PLANEJADOR</span><strong>'+escapeHtml(priority.name)+'</strong><small>É a classe mais subalocada proporcionalmente em relação à própria meta.</small><div class="priorityMeta"><span>'+pct(priority.currentWeight)+' atual</span><span>'+pct(priority.target)+' meta</span><span>'+fmt.format(priority.suggested)+' sugeridos</span></div>';else pc.innerHTML='';
+};
+setupClassCatalog();render();
