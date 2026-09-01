@@ -1,1 +1,1 @@
-(()=>{const files=['v20-core.js?v=20.0','v20-ui.js?v=20.0','v20-init.js?v=20.0'];const load=i=>{if(i>=files.length)return;const s=document.createElement('script');s.src=files[i];s.onload=()=>load(i+1);document.body.appendChild(s);};load(0);})();
+(()=>{const files=['v20-core.js?v=20.0','v20-ui.js?v=20.0','v20-fixes.js?v=20.0','v20-init.js?v=20.0'];const load=i=>{if(i>=files.length)return;const s=document.createElement('script');s.src=files[i];s.onload=()=>load(i+1);document.body.appendChild(s);};load(0);})();
