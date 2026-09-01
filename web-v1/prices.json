@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-01T17:20:20.181928-03:00",
-  "fxUsdBrl": 5.156000137329102,
+  "updatedAt": "2026-09-01T17:36:06.841276-03:00",
+  "fxUsdBrl": 5.181700229644775,
   "prices": {
     "CPFE3": {
       "priceNative": 44.540000915527344,
@@ -151,35 +151,35 @@
     },
     "VOO": {
       "priceNative": 704.8900146484375,
-      "priceBRL": 3634.413012329256,
+      "priceBRL": 3652.5287507781177,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
     },
     "AVUV": {
       "priceNative": 124.97000122070312,
-      "priceBRL": 644.3453434559633,
+      "priceBRL": 647.5570840240252,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
     },
     "VEA": {
       "priceNative": 72.91999816894531,
-      "priceBRL": 375.97552057311987,
+      "priceBRL": 377.8495712577205,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
     },
     "TFLO": {
       "priceNative": 50.650001525878906,
-      "priceBRL": 261.15141482315084,
+      "priceBRL": 262.45312453815495,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
     },
     "BTCUSD": {
       "priceNative": 77384.2890625,
-      "priceBRL": 398993.4050333649,
+      "priceBRL": 400982.18840605393,
       "currency": "USD",
       "date": "2026-08-31",
       "source": "Yahoo Finance"
