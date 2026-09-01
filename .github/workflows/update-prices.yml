@@ -2,6 +2,9 @@ name: Update market prices
 
 on:
   schedule:
+    # Atualiza durante a janela em que B3/EUA podem estar negociando (UTC).
+    - cron: '15 13-22 * * 1-5'
+    # Fechamento adicional no fim do dia.
     - cron: '30 23 * * 1-5'
   workflow_dispatch:
   push:
@@ -34,7 +37,7 @@ jobs:
           git fetch origin main
           git checkout main
           git reset --hard origin/main
-      - name: Update previous-close prices
+      - name: Update latest market prices
         run: python scripts/update_prices.py
       - name: Commit price files with retry
         run: |
