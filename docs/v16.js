@@ -2,7 +2,7 @@ const V16_PLAN_KEY='carteira-v16-planning';
 function loadV16Plan(){let x=null;try{x=JSON.parse(localStorage.getItem(V16_PLAN_KEY)||'null')}catch(e){}return x&&typeof x==='object'?x:{suggestionApplied:false};}
 let v16Plan=loadV16Plan();
 function saveV16Plan(){localStorage.setItem(V16_PLAN_KEY,JSON.stringify(v16Plan));}
-function simulationActiveV16(){return !!(window.v14&&Array.isArray(v14.pending)&&v14.pending.length);}
+function simulationActiveV16(){return !!(typeof v14!=='undefined'&&Array.isArray(v14.pending)&&v14.pending.length);}
 function planningModeV16(){return simulationActiveV16()?'simulation':(v16Plan.suggestionApplied?'suggestion':'none');}
 function zeroAportesV16(){state.assets.forEach(a=>state.aportes[a.id]=0);}
 function preparePlanningStateV16(){
