@@ -19,7 +19,13 @@ function cloneV15(v){return JSON.parse(JSON.stringify(v));}
 function loadPatrimonyV15(){let x=null;try{x=JSON.parse(localStorage.getItem(V15_PATRIMONY_KEY)||'null')}catch(e){}return Array.isArray(x)&&x.length?x:cloneV15(patrimonySeedV15);}
 let patrimonySnapshotsV15=loadPatrimonyV15();
 function savePatrimonyV15(){localStorage.setItem(V15_PATRIMONY_KEY,JSON.stringify(patrimonySnapshotsV15));}
-function canonicalClassV15(name){return classMigrationV15[name]||name;}
+function canonicalClassV15(name){
+  if(name==='Renda Fixa'||name==='Renda fixa'){
+    const legacyAggregate=Array.isArray(state?.holdings)&&state.holdings.some(h=>String(h.ticker||'').toUpperCase()==='RF'||String(h.name||'').toLowerCase().includes('posição agregada'));
+    return legacyAggregate?'Tesouro Direto':'Renda Fixa';
+  }
+  return classMigrationV15[name]||name;
+}
 function migratePortfolioV15(){
   const merged=[],idMap={};
   state.assets.forEach(a=>{
