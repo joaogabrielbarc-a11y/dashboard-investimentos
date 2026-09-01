@@ -1,6 +1,26 @@
 const assetClassCatalog=['Ações','Fundos Imobiliários','Fiagros','BDRs','Tesouro Direto','Índices','ETFs Nacionais','Fundos de Investimentos','Renda Fixa','Stocks','REITs','Moedas','Commodities','ETFs Internacionais','Criptomoedas','Outros'];
 const classAliases={'Ações':['Ações','Ações BR'],'Fundos Imobiliários':['Fundos Imobiliários','FIIs'],'Renda Fixa':['Renda Fixa','Renda fixa'],'Criptomoedas':['Criptomoedas','Cripto'],'Stocks':['Stocks'],'ETFs Internacionais':['ETFs Internacionais']};
 const normClass=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+const legacyClassMap={
+  'acoes br':'Ações',
+  'acoes brasileiras':'Ações',
+  'fiis':'Fundos Imobiliários',
+  'fii':'Fundos Imobiliários',
+  'fundos imobiliarios':'Fundos Imobiliários',
+  'renda fixa':'Renda Fixa',
+  'cripto':'Criptomoedas',
+  'criptomoeda':'Criptomoedas',
+  'criptomoedas':'Criptomoedas',
+  'etfs internacionais':'ETFs Internacionais',
+  'stocks':'Stocks'
+};
+function canonicalClassName(name){return legacyClassMap[normClass(name)]||String(name||'').trim();}
+function migrateClassNames(){
+  let changed=false;
+  state.assets.forEach(a=>{const canonical=canonicalClassName(a.name);if(canonical&&canonical!==a.name){a.name=canonical;changed=true;}});
+  state.holdings.forEach(h=>{const canonical=canonicalClassName(h.className);if(canonical&&canonical!==h.className){h.className=canonical;changed=true;}});
+  if(changed)save();
+}
 function classExists(name){const aliases=classAliases[name]||[name];const set=aliases.map(normClass);return state.assets.some(a=>set.includes(normClass(a.name)));}
 function setupClassCatalog(){
   const legacy=document.getElementById('classNameLegacy');if(!legacy)return;
@@ -16,10 +36,13 @@ function setupClassCatalog(){
 }
 const originalRenderV13=render;
 render=function(){
+  migrateClassNames();
   originalRenderV13();
   const rows=getRows(),total=totalAtual(),targets=normalizedTargets(rows),dispersion=dispersionIndex(rows.map(r=>r.currentWeight),targets),postDispersion=dispersionIndex(rows.map(r=>r.postWeight),targets),band=Math.max(0,+state.band||0),dispersionOk=dispersion<=band,postOk=postDispersion<=band;
   const priority=[...rows].filter(r=>r.target>0).sort((a,b)=>a.priorityScore-b.priorityScore)[0]||rows[0];
   document.getElementById('kpis').innerHTML='<article class="card kpi"><span class="kpiLabel">Patrimônio consolidado</span><strong>'+fmt.format(total)+'</strong><small>Soma dos valores atuais das classes da macro alocação.</small></article><article class="card kpi dispersion '+(dispersionOk?'good':'bad')+'"><span class="kpiLabel">Índice de dispersão '+info('Mede quanto a distribuição atual está distante da alocação ideal. 0% significa coincidência exata com as metas. O indicador fica verde quando é menor ou igual à banda de desbalanceamento e vermelho quando a supera.')+'</span><strong>'+pct(dispersion)+'</strong><small>'+(dispersionOk?'Dentro':'Acima')+' da banda de ±'+state.band+'% • após os aportes: <span style="color:'+(postOk?'#73e4b9':'#ff9fa8')+'">'+pct(postDispersion)+'</span></small></article>';
   const pc=document.getElementById('priorityCard');if(priority)pc.innerHTML='<span class="priorityEyebrow">MAIOR PRIORIDADE DO PLANEJADOR</span><strong>'+escapeHtml(priority.name)+'</strong><small>É a classe mais subalocada proporcionalmente em relação à própria meta.</small><div class="priorityMeta"><span>'+pct(priority.currentWeight)+' atual</span><span>'+pct(priority.target)+' meta</span><span>'+fmt.format(priority.suggested)+' sugeridos</span></div>';else pc.innerHTML='';
 };
-setupClassCatalog();render();
+migrateClassNames();
+setupClassCatalog();
+render();
