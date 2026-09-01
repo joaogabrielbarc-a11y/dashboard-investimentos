@@ -95,13 +95,12 @@ function patchHoldingsRefreshV15(){
 }
 function updateVersionV15(){const e=document.querySelector('.eyebrow');if(e)e.textContent='CARTEIRA • V1.5';}
 
-const originalRenderEvolutionV15=renderEvolution;
 renderEvolution=renderPatrimonyEvolutionV15;
 const renderBeforeV15=render;
 render=function(){migratePortfolioV15();syncMacroFromHoldingsV15();upsertCurrentPatrimonyV15();renderBeforeV15();makeMacroReadOnlyV15();renderPatrimonyEvolutionV15();save();};
 
 function initV15(){
-  if(!document.querySelector('link[href="v15.css"]'){const l=document.createElement('link');l.rel='stylesheet';l.href='v15.css';document.head.appendChild(l);}
+  if(!document.querySelector('link[href="v15.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='v15.css';document.head.appendChild(l);}
   migratePortfolioV15();syncMacroFromHoldingsV15();configureEvolutionUiV15();patchHoldingsRefreshV15();updateVersionV15();upsertCurrentPatrimonyV15();save();render();
 }
 initV15();
