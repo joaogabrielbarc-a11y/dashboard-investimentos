@@ -10,3 +10,4 @@ document.addEventListener('focusout',e=>{if(e.target.closest&&e.target.closest('
 document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.infoTip');if(t){e.preventDefault();e.stopPropagation();if(activeTooltipEl===t)hideGlobalTooltip();else showGlobalTooltip(t);return;}hideGlobalTooltip();});
 window.addEventListener('resize',()=>{if(activeTooltipEl)positionTooltip(activeTooltipEl);});
 window.addEventListener('scroll',()=>{if(activeTooltipEl)positionTooltip(activeTooltipEl);},{passive:true});
+window.addEventListener('load',()=>{if(document.querySelector('script[data-v15-loader]'))return;const s=document.createElement('script');s.src='v15.js';s.dataset.v15Loader='1';document.body.appendChild(s);});
