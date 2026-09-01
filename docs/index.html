@@ -6,14 +6,15 @@
 <meta name="description" content="Dashboard para consolidação, macro alocação, planejamento de aportes e organização de ativos.">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="v13.css">
+<link rel="stylesheet" href="v14.css">
 </head>
 <body>
 <main class="shell">
 <header class="topbar">
   <div>
-    <div class="eyebrow">CARTEIRA • V1.3</div>
+    <div class="eyebrow">CARTEIRA • V1.4</div>
     <h1>Consolidador & Balanceamento</h1>
-    <p>Organize classes e ativos, projete aportes e acompanhe a distância até a sua macro alocação ideal.</p>
+    <p>Organize classes e ativos, teste aportes, execute lançamentos e acompanhe sua macro alocação.</p>
   </div>
   <button id="reset" class="ghost">Restaurar base</button>
 </header>
@@ -22,7 +23,7 @@
 
 <section class="card contribution">
   <div class="controlIntro">
-    <h2>Planejador de aportes <span class="infoTip" tabindex="0" data-tip="Distribui o orçamento mensal entre as classes mais abaixo de seus pesos-alvo. A sugestão é apenas um ponto de partida: os aportes podem ser alterados manualmente.">?</span></h2>
+    <h2>Planejador de aportes <span class="infoTip" tabindex="0" data-tip="Distribui o orçamento mensal entre as classes mais abaixo de seus pesos-alvo. A sugestão é apenas um ponto de partida: os aportes podem ser alterados manualmente ou alimentados pela simulação de lançamentos.">?</span></h2>
     <p>Defina seu orçamento do mês e ajuste a distribuição entre as classes.</p>
   </div>
   <div class="controlGrid">
@@ -63,71 +64,68 @@
       <div class="sectionActions"><span id="targetTotal" class="pill"></span><button id="addClass" class="ghost compact">+ Adicionar classe</button></div>
     </div>
     <div class="tableWrap"><table><thead><tr>
-      <th>Classe</th>
-      <th>Valor atual</th>
-      <th>Peso atual</th>
+      <th>Classe</th><th>Valor atual</th><th>Peso atual</th>
       <th>Meta <span class="infoTip" tabindex="0" data-tip="Percentual desejado para a classe na sua carteira ideal. O conjunto das metas deve, de preferência, somar 100%.">?</span></th>
       <th>Faixa <span class="infoTip" tabindex="0" data-tip="Intervalo aceitável calculado a partir da meta e da banda de desbalanceamento escolhida.">?</span></th>
       <th>Status <span class="infoTip" tabindex="0" data-tip="OK significa que o peso atual está dentro da faixa permitida. NOK significa que a classe está fora da banda definida.">?</span></th>
-      <th>Aporte <span class="infoTip" tabindex="0" data-tip="Valor planejado para investir nesta classe. Começa com a sugestão do planejador, mas pode ser alterado livremente.">?</span></th>
-      <th>Peso pós-aporte <span class="infoTip" tabindex="0" data-tip="Participação projetada da classe depois de considerar exatamente os aportes preenchidos na tabela.">?</span></th>
-      <th>Ações</th>
+      <th>Aporte <span class="infoTip" tabindex="0" data-tip="Valor planejado para investir nesta classe. Pode vir da sugestão do planejador, de edição manual ou da soma das compras em simulação.">?</span></th>
+      <th>Peso pós-aporte <span class="infoTip" tabindex="0" data-tip="Participação projetada da classe depois de considerar exatamente os aportes preenchidos na tabela.">?</span></th><th>Ações</th>
     </tr></thead><tbody id="rows"></tbody></table></div>
   </div>
   <aside class="card recommendation">
     <div class="sectionTitle"><div><h2>Distribuição planejada <span class="infoTip" tabindex="0" data-tip="Resume para onde irá o aporte deste mês. A classe de maior prioridade aparece destacada antes da lista.">?</span></h2><p>Seu plano atual comparado à sugestão do planejador de aportes.</p></div></div>
-    <div id="priorityCard" class="priorityCard"></div>
-    <div id="ranking" class="rankList"></div>
-    <div class="note"><strong>Como funciona</strong><p>O planejador busca reduzir os déficits em relação aos pesos-alvo. Se você editar os aportes, a projeção usa exatamente os valores escolhidos.</p></div>
+    <div id="priorityCard" class="priorityCard"></div><div id="ranking" class="rankList"></div>
+    <div class="note"><strong>Como funciona</strong><p>O planejador busca reduzir os déficits em relação aos pesos-alvo. Se houver lançamentos em simulação, as compras passam a alimentar automaticamente a coluna Aporte.</p></div>
   </aside>
+</section>
+
+<section id="transactionsSection" class="card transactionsCard">
+  <div class="sectionTitle holdingsTitle">
+    <div><h2>Lançamentos & simulação de aportes <span class="infoTip" tabindex="0" data-tip="Monte uma lista de compras antes de executá-las. Enquanto estiverem em simulação, as compras alimentam a coluna Aporte e recalculam os pesos projetados. Só depois da execução o valor atual da carteira é alterado.">?</span></h2><p>Teste uma combinação de compras, compare com o aporte ideal por classe e execute somente quando estiver satisfeito.</p></div>
+    <div class="txHeaderActions"><button id="clearSimulation" class="dangerGhost">Limpar simulação</button><button id="newTransaction" class="primary compactPrimary">+ Novo lançamento</button></div>
+  </div>
+  <div id="txSummary" class="txSummary"></div>
+  <div class="tableWrap"><table class="pendingTable"><thead><tr><th>Ativo</th><th>Classe</th><th>Ordem</th><th>Quantidade</th><th>Preço unitário</th><th>Total</th><th>Aporte ideal</th><th>Data</th><th>Ações</th></tr></thead><tbody id="pendingRows"></tbody></table></div>
+  <div class="txFooter"><div class="txFooterText">Compras em simulação entram na coluna <strong>Aporte</strong>. Vendas ficam registradas no teste, mas só alteram o patrimônio quando os lançamentos são executados.</div><button id="executeTransactions" class="executeButton">Executar lançamentos</button></div>
+  <div class="historyBlock">
+    <div class="historyHeader"><div><h3>Histórico de lançamentos</h3><span id="historyCount"></span></div><button id="toggleHistory" class="ghost compact">Ver todos</button></div>
+    <div class="tableWrap"><table class="historyTable"><thead><tr><th>Ativo</th><th>Classe</th><th>Ordem</th><th>Quantidade</th><th>Preço unitário</th><th>Total</th><th>Data</th><th>Origem</th></tr></thead><tbody id="historyRows"></tbody></table></div>
+  </div>
+</section>
+
+<section class="card evolutionCard">
+  <div class="evolutionHeader">
+    <div><h2>Evolução de aportes <span class="infoTip" tabindex="0" data-tip="Usa os lançamentos de compra registrados no histórico. As barras mostram o total acumulado e a linha mostra quanto foi aportado em cada mês ou ano.">?</span></h2><p> acompanhe quanto foi aportado ao longo do tempo e alterne entre visão mensal e anual.</p></div>
+    <div class="chartControls"><button id="modeMonthly" class="active">Mensal</button><button id="modeAnnual">Anual</button><select id="chartRange"><option value="12">12 meses</option><option value="24">24 meses</option><option value="all">Todo o histórico</option></select></div>
+  </div>
+  <div id="aportesChart" class="aportesChart"></div>
+  <div class="chartLegendV14"><span><i class="legendBar"></i>Aportes acumulados</span><span><i class="legendLine"></i>Aporte do período</span></div>
+  <div class="chartFootV14"><span id="chartEvolutionSummary"></span><span>Compras históricas em USD sem câmbio conhecido não são convertidas automaticamente.</span></div>
 </section>
 
 <section class="card holdingsCard">
   <div class="sectionTitle holdingsTitle">
-    <div>
-      <h2>Ativos na carteira <span class="infoTip" tabindex="0" data-tip="Cadastro dos ativos individuais da carteira. Nesta etapa, essa lista é independente da macro alocação para que uma edição de ticker não altere seus totais automaticamente.">?</span></h2>
-      <p>Pesquise, filtre por classe e mantenha seus ativos organizados.</p>
-    </div>
+    <div><h2>Ativos na carteira <span class="infoTip" tabindex="0" data-tip="Cadastro dos ativos individuais da carteira. Lançamentos executados nesta versão passam a atualizar automaticamente as posições correspondentes.">?</span></h2><p>Pesquise, filtre por classe e use “Testar aporte” para enviar um ativo à simulação de lançamentos.</p></div>
     <button id="addHolding" class="primary compactPrimary">+ Adicionar ativo</button>
   </div>
-  <div class="holdingsToolbar">
-    <div id="holdingFilters" class="filterChips"></div>
-    <div class="holdingSearch"><span>⌕</span><input id="holdingSearch" type="search" placeholder="Buscar ativo ou nome"></div>
-  </div>
-  <div class="tableWrap holdingsTableWrap"><table class="holdingsTable"><thead><tr>
-    <th>Ativo</th><th>Classe</th><th>Quantidade</th><th>Preço</th><th>Valor</th>
-    <th>Peso na lista <span class="infoTip" tabindex="0" data-tip="Participação do ativo no valor total dos ativos cadastrados nesta lista. Não é o mesmo que o peso da classe na macro alocação.">?</span></th>
-    <th>Ações</th>
-  </tr></thead><tbody id="holdingRows"></tbody></table></div>
+  <div class="holdingsToolbar"><div id="holdingFilters" class="filterChips"></div><div class="holdingSearch"><span>⌕</span><input id="holdingSearch" type="search" placeholder="Buscar ativo ou nome"></div></div>
+  <div class="tableWrap holdingsTableWrap"><table class="holdingsTable"><thead><tr><th>Ativo</th><th>Classe</th><th>Quantidade</th><th>Preço</th><th>Valor</th><th>Peso na lista <span class="infoTip" tabindex="0" data-tip="Participação do ativo no valor total dos ativos cadastrados nesta lista.">?</span></th><th>Ações</th></tr></thead><tbody id="holdingRows"></tbody></table></div>
   <div class="holdingsFooter"><span id="holdingSummary"></span><button id="toggleHoldings" class="ghost compact">Ver todos</button></div>
 </section>
 
 <footer>Dados iniciais importados da planilha fornecida • alterações ficam salvas neste navegador.</footer>
 </main>
 
-<dialog id="classDialog" class="modal">
-  <form id="classForm" method="dialog" class="modalCard">
-    <div class="modalHeader"><div><span class="eyebrow">MACRO ALOCAÇÃO</span><h3>Adicionar classe</h3></div><button type="button" class="iconButton" data-close="classDialog">×</button></div>
-    <label id="classNameLegacy">Nome da classe<input id="className" type="text" required placeholder="Classe"></label>
-    <div class="modalGrid"><label>Valor atual (R$)<input id="classCurrent" type="number" min="0" step="10" value="0"></label><label>Meta (%)<input id="classTarget" type="number" min="0" max="100" step="1" value="0"></label></div>
-    <div class="modalActions"><button type="button" class="ghost" data-close="classDialog">Cancelar</button><button type="submit" class="primary">Adicionar classe</button></div>
-  </form>
-</dialog>
+<dialog id="classDialog" class="modal"><form id="classForm" method="dialog" class="modalCard"><div class="modalHeader"><div><span class="eyebrow">MACRO ALOCAÇÃO</span><h3>Adicionar classe</h3></div><button type="button" class="iconButton" data-close="classDialog">×</button></div><label id="classNameLegacy">Nome da classe<input id="className" type="text" required placeholder="Classe"></label><div class="modalGrid"><label>Valor atual (R$)<input id="classCurrent" type="number" min="0" step="10" value="0"></label><label>Meta (%)<input id="classTarget" type="number" min="0" max="100" step="1" value="0"></label></div><div class="modalActions"><button type="button" class="ghost" data-close="classDialog">Cancelar</button><button type="submit" class="primary">Adicionar classe</button></div></form></dialog>
 
-<dialog id="holdingDialog" class="modal">
-  <form id="holdingForm" method="dialog" class="modalCard">
-    <div class="modalHeader"><div><span class="eyebrow">LISTA DE ATIVOS</span><h3 id="holdingDialogTitle">Adicionar ativo</h3></div><button type="button" class="iconButton" data-close="holdingDialog">×</button></div>
-    <input id="holdingEditId" type="hidden">
-    <div class="modalGrid"><label>Ticker<input id="holdingTicker" type="text" required placeholder="Ex.: ITUB4"></label><label>Nome / descrição<input id="holdingName" type="text" placeholder="Ex.: Itaú Unibanco"></label></div>
-    <label>Classe<select id="holdingClass"></select></label>
-    <div class="modalGrid three"><label>Quantidade<input id="holdingQty" type="number" min="0" step="0.000001" value="0"></label><label>Preço (R$)<input id="holdingPrice" type="number" min="0" step="0.01" value="0"></label><label>Valor total (R$)<input id="holdingValue" type="number" min="0" step="0.01" placeholder="automático"></label></div>
-    <div class="modalHelp">Se “Valor total” ficar vazio, o sistema usa quantidade × preço.</div>
-    <div class="modalActions"><button type="button" class="ghost" data-close="holdingDialog">Cancelar</button><button type="submit" class="primary">Salvar ativo</button></div>
-  </form>
-</dialog>
+<dialog id="holdingDialog" class="modal"><form id="holdingForm" method="dialog" class="modalCard"><div class="modalHeader"><div><span class="eyebrow">LISTA DE ATIVOS</span><h3 id="holdingDialogTitle">Adicionar ativo</h3></div><button type="button" class="iconButton" data-close="holdingDialog">×</button></div><input id="holdingEditId" type="hidden"><div class="modalGrid"><label>Ticker<input id="holdingTicker" type="text" required placeholder="Ex.: ITUB4"></label><label>Nome / descrição<input id="holdingName" type="text" placeholder="Ex.: Itaú Unibanco"></label></div><label>Classe<select id="holdingClass"></select></label><div class="modalGrid three"><label>Quantidade<input id="holdingQty" type="number" min="0" step="0.000001" value="0"></label><label>Preço (R$)<input id="holdingPrice" type="number" min="0" step="0.01" value="0"></label><label>Valor total (R$)<input id="holdingValue" type="number" min="0" step="0.01" placeholder="automático"></label></div><div class="modalHelp">Se “Valor total” ficar vazio, o sistema usa quantidade × preço.</div><div class="modalActions"><button type="button" class="ghost" data-close="holdingDialog">Cancelar</button><button type="submit" class="primary">Salvar ativo</button></div></form></dialog>
+
+<dialog id="txDialog" class="modal modalWide"><form id="txForm" method="dialog" class="modalCard"><div class="modalHeader"><div><span class="eyebrow">SIMULAÇÃO</span><h3>Novo lançamento</h3></div><button id="closeTxDialog" type="button" class="iconButton">×</button></div><div class="txFormGrid"><label>Ativo / ticker<input id="txTicker" type="text" required placeholder="Ex.: ITUB4"></label><label>Nome / descrição<input id="txName" type="text" placeholder="Opcional"></label></div><div class="txFormGrid three"><label>Classe<select id="txClass"></select></label><label>Ordem<select id="txSide"><option>Compra</option><option>Venda</option></select></label><label>Moeda<select id="txCurrency"><option value="BRL">BRL</option><option value="USD">USD</option></select></label></div><div class="txFormGrid three"><label>Quantidade<input id="txQty" type="number" min="0" step="0.000001" required></label><label>Preço unitário<input id="txPrice" type="number" min="0" step="0.000001" required></label><label id="txFxWrap" class="fxField hidden">Câmbio USD/BRL<input id="txFx" type="number" min="0" step="0.0001" placeholder="Ex.: 5,40"></label></div><div class="txFormGrid"><label>Data do lançamento<input id="txDate" type="date" required></label><div></div></div><div class="txPreview"><div class="txPreviewBox"><span>Total na moeda</span><strong id="txNativePreview">R$ 0,00</strong></div><div class="txPreviewBox"><span>Total consolidado</span><strong id="txBrlPreview">R$ 0,00</strong></div><div class="txPreviewBox"><span>Aporte ideal da classe</span><strong id="txIdealPreview">R$ 0,00</strong></div></div><div class="modalHelp">Para ativos em USD, informe o câmbio usado na operação. O dashboard precisa do valor equivalente em reais para projetar e consolidar a macro alocação.</div><div class="modalActions"><button type="button" class="ghost" onclick="document.getElementById('txDialog').close()">Cancelar</button><button type="submit" class="primary">Adicionar à simulação</button></div></form></dialog>
 
 <div id="globalTooltip" class="globalTooltip" role="tooltip" aria-hidden="true"></div>
 <script src="app.js"></script>
-<script src="v13.js"></script>
+<script src="v13-core.js"></script>
+<script src="v13-tooltips.js"></script>
+<script src="v14.js"></script>
 </body>
 </html>
