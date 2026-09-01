@@ -87,7 +87,18 @@ function enhanceDistributionRangesV16(){
     const row=byName.get(raw);if(!row)return;
     strong.innerHTML=`${escapeHtml(raw)} <span class="rangeInlineV16">${rangeTextV16(row)}</span>`;
   });
-  const priority=document.getElementById('priorityCard');if(priority){const strong=priority.querySelector('strong');if(strong){const raw=strong.dataset.baseName||strong.textContent.trim();strong.dataset.baseName=raw;const row=byName.get(raw);if(row){const meta=priority.querySelector('.priorityMeta');if(meta&&!meta.querySelector('.priorityRangeV16'))meta.insertAdjacentHTML('beforeend',`<span class="priorityRangeV16">Faixa ${pct(row.min)} – ${pct(row.max)}</span>`);}}}
+  const priority=document.getElementById('priorityCard');
+  if(priority){
+    const strong=priority.querySelector('strong');
+    if(strong){
+      const raw=strong.dataset.baseName||strong.textContent.trim();
+      strong.dataset.baseName=raw;
+      const row=byName.get(raw);
+      if(row){
+        const meta=priority.querySelector('.priorityMeta');
+        if(meta&&!meta.querySelector('.priorityRangeV16'))meta.insertAdjacentHTML('beforeend',`<span class="priorityRangeV16">Faixa ${pct(row.min)} – ${pct(row.max)}</span>`);
+      }
+    }
   }
   const note=document.querySelector('.recommendation .note p');if(note)note.textContent='A banda define a faixa aceitável de cada classe. “Aplicar sugestão” preenche a coluna Aporte automaticamente; se houver lançamentos em simulação, eles passam a ter prioridade.';
 }
