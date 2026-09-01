@@ -21,7 +21,7 @@ window.addEventListener('load',()=>{
       const q=document.createElement('script');q.src='v17.js?v=17.0';q.dataset.v17Loader='1';
       q.onload=()=>{
         if(document.querySelector('script[data-v18-loader]'))return;
-        const r=document.createElement('script');r.src='v18.js?v=18.0';r.dataset.v18Loader='1';document.body.appendChild(r);
+        const r=document.createElement('script');r.src='v18.js?v=18.1';r.dataset.v18Loader='1';document.body.appendChild(r);
       };
       document.body.appendChild(q);
     };
