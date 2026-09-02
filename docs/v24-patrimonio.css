@@ -1,0 +1,80 @@
+/* V2.4 — refinamento estrutural da aba Patrimônio.
+   Somente layout/apresentação: nenhum dado da carteira é alterado. */
+
+#tabPatrimonioV22 > #kpis.patrimonyKpisV24{
+  margin-top:0;
+  margin-bottom:18px;
+}
+
+#tabPatrimonioV22 .patrimonyChartsGridV24.patrimonyChartsGridV242{
+  display:grid;
+  grid-template-columns:minmax(340px,.86fr) minmax(0,1.54fr);
+  gap:18px;
+  align-items:stretch;
+  margin:0 0 18px;
+}
+
+#tabPatrimonioV22 .patrimonyChartsGridV242 > #portfolioDistributionV24{
+  grid-column:1;
+  grid-row:1;
+  min-width:0;
+  height:100%;
+  margin:0!important;
+}
+
+#tabPatrimonioV22 .patrimonyChartsGridV242 > .evolutionCard{
+  grid-column:2;
+  grid-row:1;
+  min-width:0;
+  height:100%;
+  margin:0!important;
+}
+
+/* A macro alocação tem aba própria. Na aba Patrimônio mantemos apenas
+   resumo patrimonial + composição dos ativos + evolução patrimonial. */
+#tabPatrimonioV22 > .chartsCard.patrimonyLegacyHiddenV242{
+  display:none!important;
+}
+
+#tabPatrimonioV22 #patrimonyOverviewGridV22{
+  display:none!important;
+}
+
+#tabPatrimonioV22 .portfolioDistributionV24,
+#tabPatrimonioV22 .evolutionCard{
+  min-height:430px;
+}
+
+#tabPatrimonioV22 .portfolioDistributionV24 .distributionHeaderV24 h2,
+#tabPatrimonioV22 .evolutionCard .evolutionHeader h2{
+  font-size:19px;
+}
+
+#tabPatrimonioV22 .portfolioDistributionV24 .distributionBodyV24{
+  min-height:315px;
+}
+
+#tabPatrimonioV22 .patrimonySectionOrderV242{
+  position:relative;
+}
+
+@media(max-width:1180px){
+  #tabPatrimonioV22 .patrimonyChartsGridV24.patrimonyChartsGridV242{
+    grid-template-columns:1fr;
+  }
+  #tabPatrimonioV22 .patrimonyChartsGridV242 > #portfolioDistributionV24,
+  #tabPatrimonioV22 .patrimonyChartsGridV242 > .evolutionCard{
+    grid-column:1;
+    grid-row:auto;
+  }
+  #tabPatrimonioV22 .portfolioDistributionV24,
+  #tabPatrimonioV22 .evolutionCard{
+    min-height:auto;
+  }
+}
+
+@media(max-width:900px){
+  #tabPatrimonioV22 > #kpis.patrimonyKpisV24{
+    grid-template-columns:1fr;
+  }
+}
