@@ -41,3 +41,11 @@
   };
   boot();
 })();
+
+(()=>{
+  if(document.querySelector('script[data-v22-loader]'))return;
+  const s=document.createElement('script');
+  s.src='v22.js?v=22.0';
+  s.dataset.v22Loader='1';
+  document.body.appendChild(s);
+})();
