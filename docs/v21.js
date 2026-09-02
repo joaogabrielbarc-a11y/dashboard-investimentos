@@ -51,7 +51,7 @@
     n.onload=()=>{
       if(document.querySelector('script[data-v24-loader]'))return;
       const p=document.createElement('script');
-      p.src='v24.js?v=24.0';
+      p.src='v24.js?v=24.1';
       p.dataset.v24Loader='1';
       document.body.appendChild(p);
     };
