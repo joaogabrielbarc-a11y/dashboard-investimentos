@@ -1,9 +1,14 @@
-/* V2.4 — refinamento estrutural da aba Patrimônio.
+/* V2.4.2 — refinamento estrutural da aba Patrimônio.
    Somente layout/apresentação: nenhum dado da carteira é alterado. */
 
 #tabPatrimonioV22 > #kpis.patrimonyKpisV24{
+  order:1!important;
   margin-top:0;
   margin-bottom:18px;
+}
+
+#tabPatrimonioV22 > #patrimonyChartsGridV24{
+  order:2!important;
 }
 
 #tabPatrimonioV22 .patrimonyChartsGridV24.patrimonyChartsGridV242{
@@ -31,10 +36,12 @@
 }
 
 #tabPatrimonioV22 > .chartsCard.patrimonyLegacyHiddenV242{
+  order:3!important;
   display:none!important;
 }
 
 #tabPatrimonioV22 #patrimonyOverviewGridV22{
+  order:4!important;
   display:none!important;
 }
 
