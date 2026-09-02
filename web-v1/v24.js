@@ -6,11 +6,12 @@ let v24DividendDb={events:[],updatedAt:null};
 let v24DividendLoaded=false;
 let v24Scope=(()=>{try{const x=JSON.parse(localStorage.getItem(V24_UI_KEY)||'null');return x?.scope||'macro';}catch(e){return 'macro';}})();
 function escV24(v){return typeof escapeHtml==='function'?escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-function moneyV24(v){return Number.isFinite(+v)?fmt.format(+v):'—';}
-function pctV24(v){return Number.isFinite(+v)?`${(+v).toFixed(2).replace('.',',')}%`:'—';}
-function signedPctV24(v){return Number.isFinite(+v)?`${+v>=0?'+':''}${pctV24(+v)}`:'—';}
-function signedMoneyV24(v){return Number.isFinite(+v)?`${+v>=0?'+':''}${moneyV24(+v)}`:'—';}
-function perfClassV24(v){return !Number.isFinite(+v)?'neutral':+v>0?'positive':+v<0?'negative':'neutral';}
+function finiteV24(v){return v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));}
+function moneyV24(v){return finiteV24(v)?fmt.format(Number(v)):'—';}
+function pctV24(v){return finiteV24(v)?`${Number(v).toFixed(2).replace('.',',')}%`:'—';}
+function signedPctV24(v){return finiteV24(v)?`${Number(v)>=0?'+':''}${pctV24(Number(v))}`:'—';}
+function signedMoneyV24(v){return finiteV24(v)?`${Number(v)>=0?'+':''}${moneyV24(Number(v))}`:'—';}
+function perfClassV24(v){return !finiteV24(v)?'neutral':Number(v)>0?'positive':Number(v)<0?'negative':'neutral';}
 function tickerV24(v){const t=String(v||'').trim().toUpperCase();return t==='BTC'?'BTCUSD':t;}
 function isoV24(v){const s=String(v||'').slice(0,10);return /^\d{4}-\d{2}-\d{2}$/.test(s)?s:null;}
 function todayV24(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
