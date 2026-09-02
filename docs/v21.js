@@ -46,8 +46,15 @@
   s.onload=()=>{
     if(document.querySelector('script[data-v23-loader]'))return;
     const n=document.createElement('script');
-    n.src='v23.js?v=23.0';
+    n.src='v23.js?v=23.1';
     n.dataset.v23Loader='1';
+    n.onload=()=>{
+      if(document.querySelector('script[data-v24-loader]'))return;
+      const p=document.createElement('script');
+      p.src='v24.js?v=24.0';
+      p.dataset.v24Loader='1';
+      document.body.appendChild(p);
+    };
     document.body.appendChild(n);
   };
   document.body.appendChild(s);
