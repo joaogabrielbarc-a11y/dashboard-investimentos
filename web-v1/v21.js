@@ -51,8 +51,15 @@
     n.onload=()=>{
       if(document.querySelector('script[data-v24-loader]'))return;
       const p=document.createElement('script');
-      p.src='v24.js?v=24.0';
+      p.src='v24.js?v=24.1';
       p.dataset.v24Loader='1';
+      p.onload=()=>{
+        if(document.querySelector('script[data-v24-patrimonio-loader]'))return;
+        const q=document.createElement('script');
+        q.src='v24-patrimonio.js?v=24.2';
+        q.dataset.v24PatrimonioLoader='1';
+        document.body.appendChild(q);
+      };
       document.body.appendChild(p);
     };
     document.body.appendChild(n);
