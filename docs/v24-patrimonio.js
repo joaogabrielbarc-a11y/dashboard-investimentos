@@ -15,6 +15,14 @@ function ensureStyle(){
   if(!String(l.href||'').includes('v=24.4'))l.href='v24-patrimonio.css?v=24.4';
 }
 
+function ensureV25(){
+  if(document.querySelector('script[data-v25-structured-loader]'))return;
+  const s=document.createElement('script');
+  s.src='v25-structured.js?v=25.1';
+  s.dataset.v25StructuredLoader='1';
+  document.body.appendChild(s);
+}
+
 function arrangePatrimonyV241(){
   if(applying)return false;
   const panel=document.getElementById('tabPatrimonioV22');
@@ -50,7 +58,7 @@ function arrangePatrimonyV241(){
     if(oldOverview)oldOverview.classList.add('hiddenPatrimonyOverviewV24');
 
     const version=document.querySelector('.topbar .eyebrow');
-    if(version)version.textContent=`CARTEIRA • V${REVISION}`;
+    if(version&&!document.querySelector('script[data-v25-structured-loader]'))version.textContent=`CARTEIRA • V${REVISION}`;
     panel.dataset.patrimonyRevision=REVISION;
     return true;
   }finally{
@@ -69,6 +77,7 @@ function enforceRepeatedly(){
 
 function boot(){
   ensureStyle();
+  ensureV25();
   enforceRepeatedly();
 
   const bindObserver=()=>{
@@ -85,7 +94,7 @@ function boot(){
     setTimeout(arrangePatrimonyV241,0);
     setTimeout(arrangePatrimonyV241,150);
   });
-  window.addEventListener('pageshow',()=>setTimeout(arrangePatrimonyV241,0));
+  window.addEventListener('pageshow',()=>{ensureV25();setTimeout(arrangePatrimonyV241,0);});
 }
 
 boot();
