@@ -1,0 +1,29 @@
+.portfolioTabsV23{position:sticky;top:0;z-index:35}
+.portfolioTabsV23 button{min-width:max-content}
+#tabPatrimonioV22 .patrimonyOverviewGridV22.patrimonyOverviewSingleV23{grid-template-columns:1fr}
+#tabPatrimonioV22 #patrimonyIncomeSummaryV22{grid-column:1/-1}
+.allocationMacroSnapshotV23{margin-bottom:18px}
+.allocationMacroRowsV23{display:grid;gap:10px;margin-top:14px}
+.allocationMacroRowV23{padding:14px;border:1px solid var(--line,#20344d);border-radius:14px;background:rgba(255,255,255,.018)}
+.allocationMacroRowV23.good{border-color:rgba(48,183,123,.26)}
+.allocationMacroRowV23.warn{border-color:rgba(242,182,109,.34)}
+.allocationMacroRowV23.bad{border-color:rgba(255,123,134,.34)}
+.allocationMacroNameV23{display:flex;align-items:center;gap:10px;min-width:0}
+.allocationMacroNameV23>i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+.allocationMacroNameV23 div{display:flex;align-items:baseline;gap:10px;min-width:0}
+.allocationMacroNameV23 strong{font-size:14px}
+.allocationMacroNameV23 small{color:var(--muted,#7890aa);white-space:nowrap}
+.allocationMacroNumbersV23{display:grid;grid-template-columns:repeat(4,minmax(90px,1fr));gap:10px;margin:12px 0 10px}
+.allocationMacroNumbersV23 span{display:flex;flex-direction:column;gap:3px}
+.allocationMacroNumbersV23 small{color:var(--muted,#7890aa);font-size:10px;text-transform:uppercase;letter-spacing:.06em}
+.allocationMacroNumbersV23 strong{font-size:12px}
+.allocationTrackV23{height:7px;border-radius:999px;background:#14283d;position:relative;overflow:visible}
+.allocationTrackV23>i{position:absolute;inset:0 auto 0 0;border-radius:999px;background:#43d39e}
+.allocationTrackV23>b{position:absolute;top:-4px;width:2px;height:15px;background:#f2b66d;border-radius:2px;transform:translateX(-1px)}
+#tabMacroV22 .chartsCard,#tabMacroV22 .allocationMicroSummaryV23,#tabMacroV22 .allocationHoldingsV23{margin-top:18px}
+#tabMacroV22 .allocationMicroSummaryV23{width:100%}
+#tabMicroV22 #macroBudgetCardV22,#tabMicroV22 .layout,#tabMicroV22 #transactionsSection{margin-top:18px}
+#tabMicroV22 .layout{align-items:start}
+#tabMicroV22 .microProjectionV19{margin-top:14px}
+@media(max-width:820px){.portfolioTabsV23{overflow-x:auto;justify-content:flex-start}.allocationMacroNumbersV23{grid-template-columns:repeat(2,minmax(100px,1fr))}}
+@media(max-width:540px){.allocationMacroNumbersV23{grid-template-columns:1fr 1fr}.allocationMacroNameV23 div{align-items:flex-start;flex-direction:column;gap:2px}}
