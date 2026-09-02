@@ -1,0 +1,62 @@
+name: Update dividends
+
+on:
+  schedule:
+    - cron: '30 2 * * 2-6'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/update_dividends.py'
+      - '.github/workflows/update-dividends.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dividend-update
+  cancel-in-progress: true
+
+jobs:
+  update-dividends:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check requests beautifulsoup4
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+      - name: Update dividend calendar
+        run: python scripts/update_dividends.py
+      - name: Commit dividend files with retry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          publish_dividends() {
+            git add docs/dividends.json web-v1/dividends.json
+            if git diff --cached --quiet; then
+              echo "No dividend changes"
+              return 0
+            fi
+            git commit -m "Update dividends"
+            git push origin HEAD:main
+          }
+
+          if publish_dividends; then
+            exit 0
+          fi
+
+          echo "Main changed while dividends were being generated. Regenerating on latest main..."
+          git fetch origin main
+          git reset --hard origin/main
+          python scripts/update_dividends.py
+          publish_dividends
