@@ -1,6 +1,6 @@
 (()=>{
 const STYLE_ID='v24-patrimonio-layout-css';
-const REVISION='2.4.1';
+const REVISION='2.4.2';
 let applying=false;
 let observer=null;
 
@@ -12,7 +12,7 @@ function ensureStyle(){
     l.rel='stylesheet';
     document.head.appendChild(l);
   }
-  if(!String(l.href||'').includes('v=24.3'))l.href='v24-patrimonio.css?v=24.3';
+  if(!String(l.href||'').includes('v=24.4'))l.href='v24-patrimonio.css?v=24.4';
 }
 
 function arrangePatrimonyV241(){
@@ -28,13 +28,17 @@ function arrangePatrimonyV241(){
   try{
     ensureStyle();
 
-    // Ordem oficial da aba Patrimônio (V2.4.1):
+    // Ordem oficial da aba Patrimônio (V2.4.2):
     // 1. KPIs patrimoniais
-    // 2. Ativos na Carteira
-    // 3. Evolução do Patrimônio
+    // 2. Grid de gráficos
+    // A V2.2 usa flex + order, então além da ordem no DOM também fixamos
+    // explicitamente o order inline para impedir regressões em renders futuros.
+    kpis.style.order='1';
+    grid.style.order='2';
     panel.insertBefore(kpis,panel.firstChild);
     panel.insertBefore(grid,kpis.nextSibling);
 
+    // Mantém a composição atual dos gráficos: Ativos à esquerda e Evolução à direita.
     if(grid.firstElementChild!==distribution)grid.insertBefore(distribution,grid.firstChild);
     if(distribution.nextElementSibling!==evolution)grid.insertBefore(evolution,distribution.nextSibling);
 
