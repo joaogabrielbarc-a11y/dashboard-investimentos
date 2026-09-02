@@ -22,8 +22,6 @@
       if(attempts<240)setTimeout(boot,25);
       return;
     }
-    // A V2.0 remodelou o histórico. A cadeia antiga ainda chamava renderizadores
-    // que dependiam de #historyRows e interrompiam qualquer render posterior.
     renderHistory=renderHistoryV20;
     renderPending=renderPendingV20;
     renderTxSummary=renderTxSummaryV20;
@@ -31,8 +29,6 @@
     const previousPostRenderV20=postRenderV20;
     postRenderV20=function(){
       previousPostRenderV20();
-      // As rotinas especiais de preço rodam dentro do post-render V2.0; recalcular
-      // os KPIs depois delas mantém Patrimônio/Investido/Variação sincronizados.
       if(typeof renderTopPerformanceV19==='function')renderTopPerformanceV19();
       refreshCopy();
       const e=document.querySelector('.topbar .eyebrow');if(e)e.textContent='CARTEIRA • V2.1';
@@ -47,5 +43,12 @@
   const s=document.createElement('script');
   s.src='v22.js?v=22.0';
   s.dataset.v22Loader='1';
+  s.onload=()=>{
+    if(document.querySelector('script[data-v23-loader]'))return;
+    const n=document.createElement('script');
+    n.src='v23.js?v=23.0';
+    n.dataset.v23Loader='1';
+    document.body.appendChild(n);
+  };
   document.body.appendChild(s);
 })();
