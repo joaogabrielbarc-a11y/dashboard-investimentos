@@ -1,0 +1,96 @@
+(()=>{
+const V24_UI_KEY='carteira-v24-ui';
+const V24_COLORS=['#3aa7e3','#62d3d8','#ffd65c','#ff956f','#d95ba6','#8c7cf0','#51c18b','#f0b35b','#6ba6ff','#a8d46f','#d18cff','#5bc4a8'];
+let v24Ready=false;
+let v24DividendDb={events:[],updatedAt:null};
+let v24DividendLoaded=false;
+let v24Scope=(()=>{try{const x=JSON.parse(localStorage.getItem(V24_UI_KEY)||'null');return x?.scope||'macro';}catch(e){return 'macro';}})();
+
+function escV24(v){return typeof escapeHtml==='function'?escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function moneyV24(v){return Number.isFinite(+v)?fmt.format(+v):'—';}
+function pctV24(v){return Number.isFinite(+v)?`${(+v).toFixed(2).replace('.',',')}%`:'—';}
+function signedPctV24(v){return Number.isFinite(+v)?`${+v>=0?'+':''}${pctV24(+v)}`:'—';}
+function signedMoneyV24(v){return Number.isFinite(+v)?`${+v>=0?'+':''}${moneyV24(+v)}`:'—';}
+function perfClassV24(v){return !Number.isFinite(+v)?'neutral':+v>0?'positive':+v<0?'negative':'neutral';}
+function tickerV24(v){const t=String(v||'').trim().toUpperCase();return t==='BTC'?'BTCUSD':t;}
+function isoV24(v){const s=String(v||'').slice(0,10);return /^\d{4}-\d{2}-\d{2}$/.test(s)?s:null;}
+function todayV24(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function fxV24(){try{const x=typeof fxUsdBrlV20==='function'?fxUsdBrlV20():null;return Number.isFinite(+x)?+x:null;}catch(e){return null;}}
+function saveUiV24(){try{localStorage.setItem(V24_UI_KEY,JSON.stringify({scope:v24Scope}));}catch(e){}}
+function ensureCssV24(){if(document.querySelector('link[href^="v24.css"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='v24.css?v=24.0';document.head.appendChild(l);}
+function updateVersionV24(){const e=document.querySelector('.topbar .eyebrow');if(e)e.textContent='CARTEIRA • V2.4';}
+
+function historyV24(ticker){const key=tickerV24(ticker);const hist=(typeof v14!=='undefined'&&Array.isArray(v14.history))?v14.history:[];return hist.filter(t=>tickerV24(t.ticker)===key&&(+t.qty||0)>0&&isoV24(t.date));}
+function qtyAtV24(h,date){const d=isoV24(date),current=Math.max(0,+h?.qty||0);if(!d)return current;let q=current;historyV24(h.ticker).filter(t=>String(t.date)>d).forEach(t=>{const n=Math.max(0,+t.qty||0);q+=t.side==='Venda'?n:-n;});if(q<0)return current;return Math.max(0,q);}
+function dividendStatsV24(){
+  if(!v24DividendLoaded)return {loaded:false,received12:null,receivedTotal:null};
+  const holdings=(state.holdings||[]).filter(h=>(+h.qty||0)>1e-10),by=new Map(holdings.map(h=>[tickerV24(h.ticker),h])),fx=fxV24(),today=todayV24();
+  const d12=new Date();d12.setMonth(d12.getMonth()-12);const start=`${d12.getFullYear()}-${String(d12.getMonth()+1).padStart(2,'0')}-${String(d12.getDate()).padStart(2,'0')}`;
+  let received12=0,receivedTotal=0;
+  (v24DividendDb.events||[]).forEach(e=>{
+    const h=by.get(tickerV24(e.ticker)),pay=isoV24(e.paymentDate),ex=isoV24(e.exDate);if(!h||!pay||pay>today)return;
+    const q=ex&&ex>today?Math.max(0,+h.qty||0):qtyAtV24(h,ex||pay);if(q<=1e-10)return;
+    const amount=Math.max(0,+e.amount||0),cur=String(e.currency||'BRL').toUpperCase();let total=amount*q;if(cur==='USD'){if(!Number.isFinite(fx))return;total*=fx;}
+    if(!Number.isFinite(total))return;receivedTotal+=total;if(pay>=start)received12+=total;
+  });
+  return {loaded:true,received12,receivedTotal};
+}
+async function loadDividendsV24(){try{const r=await fetch(`dividends.json?v=${Date.now()}`,{cache:'no-store'});if(r.ok){const j=await r.json();v24DividendDb={events:Array.isArray(j.events)?j.events:[],updatedAt:j.updatedAt||null};}}catch(e){console.warn('[V2.4] falha ao carregar proventos',e);}v24DividendLoaded=true;renderPatrimonyKpisV24();}
+
+function renderPatrimonyKpisV24(){
+  const host=document.getElementById('kpis');if(!host||typeof state==='undefined')return;
+  const perf=typeof portfolioPerformanceV19==='function'?portfolioPerformanceV19():{current:(state.holdings||[]).reduce((s,h)=>s+(+h.value||0),0),invested:null,delta:null,pct:null};
+  const d=dividendStatsV24(),capitalGain=Number.isFinite(perf.delta)?perf.delta:null,totalProfit=Number.isFinite(capitalGain)&&d.loaded?capitalGain+d.receivedTotal:null;
+  host.className='grid kpis patrimonyKpisV24';
+  host.innerHTML=`
+    <article class="card patrimonyKpiV24">
+      <div class="kpiTitleV24"><span class="kpiIconV24">◈</span><span>Patrimônio total</span></div>
+      <div class="kpiMainV24"><strong>${moneyV24(perf.current)}</strong><span class="kpiChangeV24 ${perfClassV24(perf.pct)}">${signedPctV24(perf.pct)}</span></div>
+      <div class="kpiSubV24"><span>Valor investido</span><strong>${moneyV24(perf.invested)}</strong></div>
+    </article>
+    <article class="card patrimonyKpiV24">
+      <div class="kpiTitleV24"><span class="kpiIconV24">◎</span><span>Lucro total</span></div>
+      <div class="kpiMainV24 ${perfClassV24(totalProfit)}"><strong>${d.loaded?moneyV24(totalProfit):'Calculando…'}</strong></div>
+      <div class="kpiSplitV24"><div><span>Ganho de capital</span><strong class="${perfClassV24(capitalGain)}">${signedMoneyV24(capitalGain)}</strong></div><div><span>Proventos recebidos</span><strong>${d.loaded?moneyV24(d.receivedTotal):'—'}</strong></div></div>
+    </article>
+    <article class="card patrimonyKpiV24">
+      <div class="kpiTitleV24"><span class="kpiIconV24">▤</span><span>Proventos recebidos (12M)</span></div>
+      <div class="kpiMainV24 positive"><strong>${d.loaded?moneyV24(d.received12):'Calculando…'}</strong></div>
+      <div class="kpiSubV24"><span>Total já recebido</span><strong>${d.loaded?moneyV24(d.receivedTotal):'—'}</strong></div>
+    </article>`;
+}
+
+function dispersionDataV24(){const rows=typeof getRows==='function'?getRows():[],targets=typeof normalizedTargets==='function'?normalizedTargets(rows):rows.map(r=>+r.target||0),weights=rows.map(r=>+r.currentWeight||0),disp=typeof dispersionIndex==='function'?dispersionIndex(weights,targets):0,band=Math.max(0,+state.band||0);let worst=null;rows.forEach((r,i)=>{const target=targets[i]??(+r.target||0),gap=Math.abs((+r.currentWeight||0)-target);if(!worst||gap>worst.gap)worst={name:r.name,gap,current:+r.currentWeight||0,target};});return {disp,band,ok:disp<=band,worst};}
+function renderAllocationHealthV24(){
+  const panel=document.getElementById('tabMacroV22');if(!panel)return;let card=document.getElementById('allocationHealthV24');if(!card){card=document.createElement('section');card.id='allocationHealthV24';card.className='card allocationHealthV24';const intro=panel.querySelector('.tabIntroV22');intro?.insertAdjacentElement('afterend',card);}const d=dispersionDataV24(),ratio=d.band>0?Math.min(100,d.disp/d.band*100):(d.disp>0?100:0);card.classList.toggle('good',d.ok);card.classList.toggle('bad',!d.ok);card.innerHTML=`<div class="allocationHealthHeadV24"><div><span class="tabEyebrowV22">ADERÊNCIA À ESTRATÉGIA</span><h2>Índice de dispersão</h2><p>Distância entre a macro alocação atual e os pesos-alvo definidos.</p></div><strong class="allocationHealthValueV24">${pctV24(d.disp)}</strong></div><div class="allocationHealthGridV24"><div><span>Banda global</span><strong>±${pctV24(d.band)}</strong></div><div><span>Situação</span><strong class="${d.ok?'positive':'negative'}">${d.ok?'Dentro da banda':'Acima da banda'}</strong></div><div><span>Maior desvio</span><strong>${d.worst?escV24(d.worst.name):'—'}</strong><small>${d.worst?`${pctV24(d.worst.current)} atual • ${pctV24(d.worst.target)} alvo`:'—'}</small></div></div><div class="allocationHealthTrackV24"><i style="width:${ratio}%"></i><b style="left:100%"></b></div>`;}
+
+function activeHoldingsV24(){return (state.holdings||[]).filter(h=>(+h.qty||0)>1e-10&&(+h.value||0)>0);}
+function scopesV24(){const set=[];activeHoldingsV24().forEach(h=>{if(h.className&&!set.includes(h.className))set.push(h.className);});return set;}
+function rowsForScopeV24(scope){
+  const items=activeHoldingsV24();if(scope==='macro'){
+    const map=new Map();(state.assets||[]).forEach(a=>map.set(a.name,0));items.forEach(h=>map.set(h.className,(map.get(h.className)||0)+Math.max(0,+h.value||0)));return [...map.entries()].filter(([,value])=>value>0).map(([name,value])=>({name,value,key:name}));
+  }
+  return items.filter(h=>h.className===scope).map(h=>({name:tickerV24(h.ticker),subtitle:h.name||'',value:Math.max(0,+h.value||0),key:h.id||h.ticker})).sort((a,b)=>b.value-a.value);
+}
+function gradientV24(rows){const total=rows.reduce((s,r)=>s+r.value,0);if(total<=0)return '#14283d';let acc=0,stops=[];rows.forEach((r,i)=>{const start=acc,end=acc+r.value/total*100;stops.push(`${V24_COLORS[i%V24_COLORS.length]} ${start}% ${end}%`);acc=end;});return `conic-gradient(${stops.join(',')})`;}
+function ensureDistributionCardV24(){
+  const panel=document.getElementById('tabPatrimonioV22'),evo=document.querySelector('.evolutionCard');if(!panel||!evo)return null;let grid=document.getElementById('patrimonyChartsGridV24');if(!grid){grid=document.createElement('div');grid.id='patrimonyChartsGridV24';grid.className='patrimonyChartsGridV24';const kpis=document.getElementById('kpis');if(kpis)kpis.insertAdjacentElement('afterend',grid);else panel.appendChild(grid);}if(evo.parentElement!==grid)grid.appendChild(evo);let card=document.getElementById('portfolioDistributionV24');if(!card){card=document.createElement('section');card.id='portfolioDistributionV24';card.className='card portfolioDistributionV24';grid.appendChild(card);}else if(card.parentElement!==grid)grid.appendChild(card);return card;
+}
+function renderDistributionV24(){
+  const card=ensureDistributionCardV24();if(!card)return;const classes=scopesV24();if(v24Scope!=='macro'&&!classes.includes(v24Scope))v24Scope='macro';const rows=rowsForScopeV24(v24Scope),total=rows.reduce((s,r)=>s+r.value,0),title=v24Scope==='macro'?'Ativos na carteira':v24Scope,subtitle=v24Scope==='macro'?'Distribuição macro por classe':'Distribuição dos ativos dentro da classe';
+  card.innerHTML=`<div class="distributionHeaderV24"><div><h2>${escV24(title)}</h2><p>${escV24(subtitle)}</p></div><select id="distributionScopeV24"><option value="macro">Macro da carteira</option>${classes.map(c=>`<option value="${escV24(c)}">${escV24(c)}</option>`).join('')}</select></div><div class="distributionBodyV24"><div class="distributionDonutV24" style="background:${gradientV24(rows)}"><div><strong>${v24Scope==='macro'?'Carteira':escV24(v24Scope)}</strong><span>${moneyV24(total)}</span></div></div><div class="distributionLegendV24">${rows.map((r,i)=>{const w=total?r.value/total*100:0;return `<button type="button" ${v24Scope==='macro'?`data-drill-v24="${escV24(r.name)}"`:''}><i style="background:${V24_COLORS[i%V24_COLORS.length]}"></i><span><strong>${escV24(r.name)}</strong>${r.subtitle?`<small>${escV24(r.subtitle)}</small>`:''}</span><b>${pctV24(w)}</b><em>${moneyV24(r.value)}</em></button>`;}).join('')||'<div class="emptyState">Sem posições para exibir.</div>'}</div></div>${v24Scope!=='macro'?'<button type="button" id="distributionBackV24" class="ghost compact distributionBackV24">← Voltar à macro</button>':''}`;
+  const sel=card.querySelector('#distributionScopeV24');if(sel){sel.value=v24Scope;sel.onchange=e=>{v24Scope=e.target.value;saveUiV24();renderDistributionV24();};}card.querySelectorAll('[data-drill-v24]').forEach(b=>b.onclick=()=>{v24Scope=b.dataset.drillV24;saveUiV24();renderDistributionV24();});card.querySelector('#distributionBackV24')?.addEventListener('click',()=>{v24Scope='macro';saveUiV24();renderDistributionV24();});
+}
+function hideOldPatrimonySummariesV24(){const grid=document.getElementById('patrimonyOverviewGridV22');if(grid)grid.classList.add('hiddenPatrimonyOverviewV24');}
+function ensurePatrimonyLayoutV24(){const panel=document.getElementById('tabPatrimonioV22'),kpis=document.getElementById('kpis');if(!panel||!kpis)return;if(kpis.parentElement!==panel)panel.appendChild(kpis);renderPatrimonyKpisV24();hideOldPatrimonySummariesV24();renderDistributionV24();}
+
+function afterRenderV24(){if(!v24Ready)return;updateVersionV24();ensurePatrimonyLayoutV24();renderAllocationHealthV24();}
+function initV24(){
+  if(v24Ready)return;v24Ready=true;ensureCssV24();
+  if(typeof renderTopPerformanceV19==='function'){const prevTop=renderTopPerformanceV19;renderTopPerformanceV19=function(){const r=prevTop();renderPatrimonyKpisV24();return r;};}
+  const previousRender=render;render=function(){const r=previousRender();afterRenderV24();return r;};
+  afterRenderV24();loadDividendsV24();
+  window.addEventListener('hashchange',()=>setTimeout(()=>{if(String(location.hash).includes('patrimonio')){ensurePatrimonyLayoutV24();}if(String(location.hash).includes('alocacao'))renderAllocationHealthV24();},0));
+}
+let attempts=0;const boot=()=>{attempts++;if(typeof render!=='function'||typeof portfolioPerformanceV19!=='function'||!document.getElementById('tabPatrimonioV22')||!document.getElementById('tabMacroV22')){if(attempts<400)setTimeout(boot,25);return;}initV24();};boot();
+})();
