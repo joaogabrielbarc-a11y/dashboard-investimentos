@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "project": "dashboard-investimentos",
+  "currentVersion": "2.4.1",
+  "versioningPolicy": "major.minor.patch",
+  "revisions": [
+    {
+      "version": "2.4.1",
+      "date": "2026-09-02",
+      "type": "patch",
+      "area": "Patrimônio",
+      "status": "deployed",
+      "request": "Garantir a ordem da aba Patrimônio como KPIs, Ativos na Carteira e Evolução do Patrimônio e iniciar registro formal de versões.",
+      "motivation": "A interface publicada em dispositivos móveis ainda mostrava Ativos na Carteira e Evolução do Patrimônio antes dos KPIs. A causa provável era cache da cadeia de loaders da V2.4, apesar da lógica de ordenação já existir.",
+      "changes": [
+        "Força a ordem KPIs -> Ativos na Carteira -> Evolução do Patrimônio.",
+        "Carrega a camada patrimonial diretamente no index.html com parâmetro de versão para invalidar cache.",
+        "Adiciona reforço de ordenação por MutationObserver, pageshow, hashchange e janela temporária de revalidação.",
+        "Atualiza o identificador visual da aplicação para V2.4.1.",
+        "Mantém intactas as chaves de localStorage, posições, lançamentos, metas e demais dados do usuário."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false
+      }
+    },
+    {
+      "version": "2.4.0",
+      "date": "2026-09-02",
+      "type": "baseline",
+      "area": "Patrimônio",
+      "status": "superseded",
+      "request": "Adicionar visão executiva de patrimônio com KPIs, distribuição de ativos e evolução patrimonial.",
+      "motivation": "Concentrar na aba Patrimônio uma visão executiva da carteira sem alterar o foco principal de consolidação e balanceamento.",
+      "changes": [
+        "Introduziu KPIs de Patrimônio total, Lucro total e Proventos.",
+        "Introduziu gráfico Ativos na Carteira.",
+        "Introduziu Evolução do Patrimônio.",
+        "Manteve a persistência principal no localStorage."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false
+      }
+    }
+  ]
+}
