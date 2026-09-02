@@ -1,122 +1,122 @@
 {
-  "updatedAt": "2026-09-02T16:24:14.731466-03:00",
-  "fxUsdBrl": 5.1061,
+  "updatedAt": "2026-09-02T17:27:16.594335-03:00",
+  "fxUsdBrl": 5.0941,
   "prices": {
     "CPFE3": {
-      "priceNative": 46.56,
-      "priceBRL": 46.56,
+      "priceNative": 46.08,
+      "priceBRL": 46.08,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "BBSE3": {
-      "priceNative": 41.73,
-      "priceBRL": 41.73,
+      "priceNative": 41.79,
+      "priceBRL": 41.79,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "BBAS3": {
-      "priceNative": 22.29,
-      "priceBRL": 22.29,
+      "priceNative": 22.26,
+      "priceBRL": 22.26,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "PETR4": {
-      "priceNative": 48.09,
-      "priceBRL": 48.09,
+      "priceNative": 48.2,
+      "priceBRL": 48.2,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "SAPR4": {
-      "priceNative": 6.76,
-      "priceBRL": 6.76,
+      "priceNative": 6.77,
+      "priceBRL": 6.77,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "ISAE4": {
-      "priceNative": 27.48,
-      "priceBRL": 27.48,
+      "priceNative": 27.64,
+      "priceBRL": 27.64,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "VALE3": {
-      "priceNative": 80.42,
-      "priceBRL": 80.42,
+      "priceNative": 80.8,
+      "priceBRL": 80.8,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "ITSA4": {
-      "priceNative": 13.61,
-      "priceBRL": 13.61,
+      "priceNative": 13.65,
+      "priceBRL": 13.65,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "WIZC3": {
-      "priceNative": 8.08,
-      "priceBRL": 8.08,
+      "priceNative": 8.1,
+      "priceBRL": 8.1,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "TAEE11": {
-      "priceNative": 41.46,
-      "priceBRL": 41.46,
+      "priceNative": 40.89,
+      "priceBRL": 40.89,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "CMIG4": {
-      "priceNative": 11.02,
-      "priceBRL": 11.02,
+      "priceNative": 10.97,
+      "priceBRL": 10.97,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "ITUB4": {
-      "priceNative": 41.25,
-      "priceBRL": 41.25,
+      "priceNative": 41.41,
+      "priceBRL": 41.41,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "BBDC3": {
-      "priceNative": 15.55,
-      "priceBRL": 15.55,
+      "priceNative": 15.59,
+      "priceBRL": 15.59,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "FIQE3": {
-      "priceNative": 5.05,
-      "priceBRL": 5.05,
+      "priceNative": 5.08,
+      "priceBRL": 5.08,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "BRBI11": {
-      "priceNative": 14.18,
-      "priceBRL": 14.18,
+      "priceNative": 14.36,
+      "priceBRL": 14.36,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "GGRC11": {
-      "priceNative": 9.01,
-      "priceBRL": 9.01,
+      "priceNative": 9.0,
+      "priceBRL": 9.0,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "XPML11": {
-      "priceNative": 102.66,
-      "priceBRL": 102.66,
+      "priceNative": 101.8,
+      "priceBRL": 101.8,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
@@ -129,57 +129,57 @@
       "source": "Yahoo Finance"
     },
     "HGCR11": {
-      "priceNative": 95.97,
-      "priceBRL": 95.97,
+      "priceNative": 95.9,
+      "priceBRL": 95.9,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "LVBI11": {
-      "priceNative": 99.3,
-      "priceBRL": 99.3,
+      "priceNative": 98.63,
+      "priceBRL": 98.63,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "TRXF11": {
-      "priceNative": 75.02,
-      "priceBRL": 75.02,
+      "priceNative": 75.09,
+      "priceBRL": 75.09,
       "currency": "BRL",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "VOO": {
-      "priceNative": 703.49,
-      "priceBRL": 3592.0902889999998,
+      "priceNative": 703.41,
+      "priceBRL": 3583.2408809999997,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "AVUV": {
-      "priceNative": 126.18,
-      "priceBRL": 644.287698,
+      "priceNative": 125.92,
+      "priceBRL": 641.449072,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "VEA": {
-      "priceNative": 72.545,
-      "priceBRL": 370.42202449999996,
+      "priceNative": 72.59,
+      "priceBRL": 369.78071900000003,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "TFLO": {
-      "priceNative": 50.508,
-      "priceBRL": 257.8988988,
+      "priceNative": 50.51,
+      "priceBRL": 257.302991,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "BTCUSD": {
-      "priceNative": 77233.89,
-      "priceBRL": 394363.965729,
+      "priceNative": 77393.47,
+      "priceBRL": 394250.075527,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
@@ -726,99 +726,99 @@
       "titleType": "Tesouro Educa+"
     },
     "VTV": {
-      "priceNative": 225.415,
-      "priceBRL": 1150.9915314999998,
+      "priceNative": 225.41,
+      "priceBRL": 1148.261081,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "AVDV": {
-      "priceNative": 111.95,
-      "priceBRL": 571.627895,
+      "priceNative": 112.03,
+      "priceBRL": 570.6920230000001,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "VWO": {
-      "priceNative": 60.735,
-      "priceBRL": 310.11898349999996,
+      "priceNative": 60.77,
+      "priceBRL": 309.568457,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "AVES": {
-      "priceNative": 66.74,
-      "priceBRL": 340.78111399999995,
+      "priceNative": 66.79,
+      "priceBRL": 340.23493900000005,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "NU": {
-      "priceNative": 15.412,
-      "priceBRL": 78.6952132,
+      "priceNative": 15.4,
+      "priceBRL": 78.44914,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "AAPL": {
-      "priceNative": 325.54,
-      "priceBRL": 1662.239794,
+      "priceNative": 324.96,
+      "priceBRL": 1655.378736,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "MSFT": {
-      "priceNative": 496.59,
-      "priceBRL": 2535.6381989999995,
+      "priceNative": 496.82,
+      "priceBRL": 2530.850762,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "GOOGL": {
-      "priceNative": 337.725,
-      "priceBRL": 1724.4576225,
+      "priceNative": 337.12,
+      "priceBRL": 1717.322992,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "AMZN": {
-      "priceNative": 255.135,
-      "priceBRL": 1302.7448235,
+      "priceNative": 254.98,
+      "priceBRL": 1298.893618,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "NVDA": {
-      "priceNative": 224.645,
-      "priceBRL": 1147.0598345,
+      "priceNative": 224.41,
+      "priceBRL": 1143.166981,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "META": {
-      "priceNative": 595.32,
-      "priceBRL": 3039.763452,
+      "priceNative": 592.85,
+      "priceBRL": 3020.037185,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "JPM": {
-      "priceNative": 355.825,
-      "priceBRL": 1816.8780324999998,
+      "priceNative": 356.22,
+      "priceBRL": 1814.6203020000003,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "XOM": {
-      "priceNative": 164.58,
-      "priceBRL": 840.361938,
+      "priceNative": 164.15,
+      "priceBRL": 836.1965150000001,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
     },
     "BRK-B": {
-      "priceNative": 505.16,
-      "priceBRL": 2579.397476,
+      "priceNative": 505.24,
+      "priceBRL": 2573.743084,
       "currency": "USD",
       "date": "2026-09-02",
       "source": "Yahoo Finance"
