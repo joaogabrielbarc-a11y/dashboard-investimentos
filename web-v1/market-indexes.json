@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-09-01T20:33:34.171667-03:00",
+  "updatedAt": "2026-09-02T10:28:25.689290-03:00",
   "source": "Banco Central do Brasil",
   "indexes": {
     "CDI": {
       "annualPct": 13.89987480014514,
       "dailyPct": 0.05166,
-      "date": "31/08/2026",
+      "date": "01/09/2026",
       "series": 12
     },
     "SELIC": {
