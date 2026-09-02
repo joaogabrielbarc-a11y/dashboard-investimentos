@@ -4,7 +4,9 @@ const V24_COLORS=['#3aa7e3','#62d3d8','#ffd65c','#ff956f','#d95ba6','#8c7cf0','#
 let v24Ready=false;
 let v24DividendDb={events:[],updatedAt:null};
 let v24DividendLoaded=false;
-let v24Scope=(()=>{try{const x=JSON.parse(localStorage.getItem(V24_UI_KEY)||'null');return x?.scope||'macro';}catch(e){return 'macro';}})();
+const v24Saved=(()=>{try{return JSON.parse(localStorage.getItem(V24_UI_KEY)||'null')||{};}catch(e){return {};}})();
+let v24Scope=v24Saved.scope||'macro';
+let v24Type=v24Saved.type||'all';
 
 function escV24(v){return typeof escapeHtml==='function'?escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function finiteV24(v){return v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));}
@@ -17,20 +19,21 @@ function tickerV24(v){const t=String(v||'').trim().toUpperCase();return t==='BTC
 function isoV24(v){const s=String(v||'').slice(0,10);return /^\d{4}-\d{2}-\d{2}$/.test(s)?s:null;}
 function todayV24(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function fxV24(){try{const x=typeof fxUsdBrlV20==='function'?fxUsdBrlV20():null;return Number.isFinite(+x)?+x:null;}catch(e){return null;}}
-function saveUiV24(){try{localStorage.setItem(V24_UI_KEY,JSON.stringify({scope:v24Scope}));}catch(e){}}
-function ensureCssV24(){if(document.querySelector('link[href^="v24.css"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='v24.css?v=24.0';document.head.appendChild(l);}
+function saveUiV24(){try{localStorage.setItem(V24_UI_KEY,JSON.stringify({scope:v24Scope,type:v24Type}));}catch(e){}}
+function ensureCssV24(){if(document.querySelector('link[href^="v24.css"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='v24.css?v=24.1';document.head.appendChild(l);}
 function updateVersionV24(){const e=document.querySelector('.topbar .eyebrow');if(e)e.textContent='CARTEIRA • V2.4';}
 
-function historyV24(ticker){const key=tickerV24(ticker);const hist=(typeof v14!=='undefined'&&Array.isArray(v14.history))?v14.history:[];return hist.filter(t=>tickerV24(t.ticker)===key&&(+t.qty||0)>0&&isoV24(t.date));}
-function qtyAtV24(h,date){const d=isoV24(date),current=Math.max(0,+h?.qty||0);if(!d)return current;let q=current;historyV24(h.ticker).filter(t=>String(t.date)>d).forEach(t=>{const n=Math.max(0,+t.qty||0);q+=t.side==='Venda'?n:-n;});if(q<0)return current;return Math.max(0,q);}
+function txHistoryV24(){if(typeof v14==='undefined')return[];if(Array.isArray(v14.executed))return v14.executed;if(Array.isArray(v14.history))return v14.history;return[];}
+function historyV24(ticker){const key=tickerV24(ticker);return txHistoryV24().filter(t=>tickerV24(t.ticker)===key&&(+t.qty||0)>0&&isoV24(t.date));}
+function currentQtyV24(ticker){const key=tickerV24(ticker),h=(state.holdings||[]).find(x=>tickerV24(x.ticker)===key);return Math.max(0,+h?.qty||0);}
+function qtyAtTickerV24(ticker,date){const d=isoV24(date);if(!d)return currentQtyV24(ticker);let q=currentQtyV24(ticker);historyV24(ticker).filter(t=>String(t.date)>d).forEach(t=>{const n=Math.max(0,+t.qty||0);q+=t.side==='Venda'?n:-n;});return Math.max(0,q);}
 function dividendStatsV24(){
   if(!v24DividendLoaded)return {loaded:false,received12:null,receivedTotal:null};
-  const holdings=(state.holdings||[]).filter(h=>(+h.qty||0)>1e-10),by=new Map(holdings.map(h=>[tickerV24(h.ticker),h])),fx=fxV24(),today=todayV24();
-  const d12=new Date();d12.setMonth(d12.getMonth()-12);const start=`${d12.getFullYear()}-${String(d12.getMonth()+1).padStart(2,'0')}-${String(d12.getDate()).padStart(2,'0')}`;
+  const fx=fxV24(),today=todayV24(),d12=new Date();d12.setMonth(d12.getMonth()-12);const start=`${d12.getFullYear()}-${String(d12.getMonth()+1).padStart(2,'0')}-${String(d12.getDate()).padStart(2,'0')}`;
   let received12=0,receivedTotal=0;
   (v24DividendDb.events||[]).forEach(e=>{
-    const h=by.get(tickerV24(e.ticker)),pay=isoV24(e.paymentDate),ex=isoV24(e.exDate);if(!h||!pay||pay>today)return;
-    const q=ex&&ex>today?Math.max(0,+h.qty||0):qtyAtV24(h,ex||pay);if(q<=1e-10)return;
+    const pay=isoV24(e.paymentDate),ex=isoV24(e.exDate);if(!pay||pay>today)return;
+    const q=qtyAtTickerV24(e.ticker,ex||pay);if(q<=1e-10)return;
     const amount=Math.max(0,+e.amount||0),cur=String(e.currency||'BRL').toUpperCase();let total=amount*q;if(cur==='USD'){if(!Number.isFinite(fx))return;total*=fx;}
     if(!Number.isFinite(total))return;receivedTotal+=total;if(pay>=start)received12+=total;
   });
@@ -41,23 +44,23 @@ async function loadDividendsV24(){try{const r=await fetch(`dividends.json?v=${Da
 function renderPatrimonyKpisV24(){
   const host=document.getElementById('kpis');if(!host||typeof state==='undefined')return;
   const perf=typeof portfolioPerformanceV19==='function'?portfolioPerformanceV19():{current:(state.holdings||[]).reduce((s,h)=>s+(+h.value||0),0),invested:null,delta:null,pct:null};
-  const d=dividendStatsV24(),capitalGain=Number.isFinite(perf.delta)?perf.delta:null,totalProfit=Number.isFinite(capitalGain)&&d.loaded?capitalGain+d.receivedTotal:null;
+  const d=dividendStatsV24(),capitalGain=finiteV24(perf.delta)?Number(perf.delta):null,totalProfit=finiteV24(capitalGain)&&d.loaded?capitalGain+d.receivedTotal:null;
   host.className='grid kpis patrimonyKpisV24';
   host.innerHTML=`
     <article class="card patrimonyKpiV24">
       <div class="kpiTitleV24"><span class="kpiIconV24">◈</span><span>Patrimônio total</span></div>
-      <div class="kpiMainV24"><strong>${moneyV24(perf.current)}</strong><span class="kpiChangeV24 ${perfClassV24(perf.pct)}">${signedPctV24(perf.pct)}</span></div>
+      <div class="kpiMainV24"><strong>${moneyV24(perf.current)}</strong><span class="kpiChangeV24 ${perfClassV24(perf.pct)}">${pctV24(perf.pct)}${finiteV24(perf.pct)&&Number(perf.pct)!==0?` <i>${Number(perf.pct)>0?'▲':'▼'}</i>`:''}</span></div>
       <div class="kpiSubV24"><span>Valor investido</span><strong>${moneyV24(perf.invested)}</strong></div>
     </article>
     <article class="card patrimonyKpiV24">
       <div class="kpiTitleV24"><span class="kpiIconV24">◎</span><span>Lucro total</span></div>
       <div class="kpiMainV24 ${perfClassV24(totalProfit)}"><strong>${d.loaded?moneyV24(totalProfit):'Calculando…'}</strong></div>
-      <div class="kpiSplitV24"><div><span>Ganho de capital</span><strong class="${perfClassV24(capitalGain)}">${signedMoneyV24(capitalGain)}</strong></div><div><span>Proventos recebidos</span><strong>${d.loaded?moneyV24(d.receivedTotal):'—'}</strong></div></div>
+      <div class="kpiSplitV24"><div><span>Ganho de Capital</span><strong class="${perfClassV24(capitalGain)}">${moneyV24(capitalGain)}</strong></div><div><span>Dividendos Recebidos</span><strong>${d.loaded?moneyV24(d.receivedTotal):'—'}</strong></div></div>
     </article>
     <article class="card patrimonyKpiV24">
-      <div class="kpiTitleV24"><span class="kpiIconV24">▤</span><span>Proventos recebidos (12M)</span></div>
+      <div class="kpiTitleV24"><span class="kpiIconV24">▤</span><span>Proventos Recebidos (12M)</span></div>
       <div class="kpiMainV24 positive"><strong>${d.loaded?moneyV24(d.received12):'Calculando…'}</strong></div>
-      <div class="kpiSubV24"><span>Total já recebido</span><strong>${d.loaded?moneyV24(d.receivedTotal):'—'}</strong></div>
+      <div class="kpiSubV24"><span>Total</span><strong>${d.loaded?moneyV24(d.receivedTotal):'—'}</strong></div>
     </article>`;
 }
 
@@ -78,12 +81,52 @@ function ensureDistributionCardV24(){
   const panel=document.getElementById('tabPatrimonioV22'),evo=document.querySelector('.evolutionCard');if(!panel||!evo)return null;let grid=document.getElementById('patrimonyChartsGridV24');if(!grid){grid=document.createElement('div');grid.id='patrimonyChartsGridV24';grid.className='patrimonyChartsGridV24';const kpis=document.getElementById('kpis');if(kpis)kpis.insertAdjacentElement('afterend',grid);else panel.appendChild(grid);}if(evo.parentElement!==grid)grid.appendChild(evo);let card=document.getElementById('portfolioDistributionV24');if(!card){card=document.createElement('section');card.id='portfolioDistributionV24';card.className='card portfolioDistributionV24';grid.appendChild(card);}else if(card.parentElement!==grid)grid.appendChild(card);return card;
 }
 function renderDistributionV24(){
-  const card=ensureDistributionCardV24();if(!card)return;const classes=scopesV24();if(v24Scope!=='macro'&&!classes.includes(v24Scope))v24Scope='macro';const rows=rowsForScopeV24(v24Scope),total=rows.reduce((s,r)=>s+r.value,0),title=v24Scope==='macro'?'Ativos na carteira':v24Scope,subtitle=v24Scope==='macro'?'Distribuição macro por classe':'Distribuição dos ativos dentro da classe';
-  card.innerHTML=`<div class="distributionHeaderV24"><div><h2>${escV24(title)}</h2><p>${escV24(subtitle)}</p></div><select id="distributionScopeV24"><option value="macro">Macro da carteira</option>${classes.map(c=>`<option value="${escV24(c)}">${escV24(c)}</option>`).join('')}</select></div><div class="distributionBodyV24"><div class="distributionDonutV24" style="background:${gradientV24(rows)}"><div><strong>${v24Scope==='macro'?'Carteira':escV24(v24Scope)}</strong><span>${moneyV24(total)}</span></div></div><div class="distributionLegendV24">${rows.map((r,i)=>{const w=total?r.value/total*100:0;return `<button type="button" ${v24Scope==='macro'?`data-drill-v24="${escV24(r.name)}"`:''}><i style="background:${V24_COLORS[i%V24_COLORS.length]}"></i><span><strong>${escV24(r.name)}</strong>${r.subtitle?`<small>${escV24(r.subtitle)}</small>`:''}</span><b>${pctV24(w)}</b><em>${moneyV24(r.value)}</em></button>`;}).join('')||'<div class="emptyState">Sem posições para exibir.</div>'}</div></div>${v24Scope!=='macro'?'<button type="button" id="distributionBackV24" class="ghost compact distributionBackV24">← Voltar à macro</button>':''}`;
+  const card=ensureDistributionCardV24();if(!card)return;const classes=scopesV24();if(v24Scope!=='macro'&&!classes.includes(v24Scope))v24Scope='macro';const rows=rowsForScopeV24(v24Scope),total=rows.reduce((s,r)=>s+r.value,0),title=v24Scope==='macro'?'Ativos na Carteira':v24Scope;
+  card.innerHTML=`<div class="distributionHeaderV24"><div><h2>${escV24(title)}</h2></div><select id="distributionScopeV24"><option value="macro">Todos os tipos</option>${classes.map(c=>`<option value="${escV24(c)}">${escV24(c)}</option>`).join('')}</select></div><div class="distributionBodyV24"><div class="distributionDonutV24" style="background:${gradientV24(rows)}"><div aria-hidden="true"></div></div><div class="distributionLegendV24">${rows.map((r,i)=>{const w=total?r.value/total*100:0;return `<button type="button" ${v24Scope==='macro'?`data-drill-v24="${escV24(r.name)}"`:''}><i style="background:${V24_COLORS[i%V24_COLORS.length]}"></i><span><strong>${escV24(r.name)}</strong>${r.subtitle?`<small>${escV24(r.subtitle)}</small>`:''}</span><b>${pctV24(w)}</b></button>`;}).join('')||'<div class="emptyState">Sem posições para exibir.</div>'}</div></div>${v24Scope!=='macro'?'<button type="button" id="distributionBackV24" class="ghost compact distributionBackV24">← Voltar à carteira</button>':''}`;
   const sel=card.querySelector('#distributionScopeV24');if(sel){sel.value=v24Scope;sel.onchange=e=>{v24Scope=e.target.value;saveUiV24();renderDistributionV24();};}card.querySelectorAll('[data-drill-v24]').forEach(b=>b.onclick=()=>{v24Scope=b.dataset.drillV24;saveUiV24();renderDistributionV24();});card.querySelector('#distributionBackV24')?.addEventListener('click',()=>{v24Scope='macro';saveUiV24();renderDistributionV24();});
 }
+
+function txBrlV24(t){if(finiteV24(t?.brlTotal))return Number(t.brlTotal);if(String(t?.currency||'').toUpperCase()==='USD'&&finiteV24(t?.totalNative)&&finiteV24(fxV24()))return Number(t.totalNative)*fxV24();return null;}
+function scopePerfV24(scope){if(scope&&scope!=='all'&&typeof classPerformanceV19==='function')return classPerformanceV19(scope);return typeof portfolioPerformanceV19==='function'?portfolioPerformanceV19():{current:null,invested:null,delta:null,pct:null};}
+function monthKeyV24(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;}
+function monthLabelV24(k){const [y,m]=k.split('-');return `${m}/${String(y).slice(2)}`;}
+function txMonthV24(t){const d=isoV24(t?.date);return d?d.slice(0,7):null;}
+function compactMoneyV24(v){const n=Math.max(0,Number(v)||0);if(n>=1e6)return `R$ ${(n/1e6).toFixed(1).replace('.',',')} mi`;if(n>=1e3)return `R$ ${(n/1e3).toFixed(1).replace('.',',')} mil`;return `R$ ${Math.round(n).toLocaleString('pt-BR')}`;}
+function patrimonySeriesV24(){
+  const classes=scopesV24();if(v24Type!=='all'&&!classes.includes(v24Type))v24Type='all';
+  const perf=scopePerfV24(v24Type),history=txHistoryV24().filter(t=>isoV24(t.date)&&(v24Type==='all'||t.className===v24Type)).map(t=>({...t,_brl:txBrlV24(t)})).filter(t=>finiteV24(t._brl));
+  const range=typeof v14!=='undefined'?String(v14.chartRange||'12'):'12',now=new Date(),keys=[];
+  if(range==='all'){
+    const first=history.map(t=>txMonthV24(t)).filter(Boolean).sort()[0];if(first){let [y,m]=first.split('-').map(Number);const ey=now.getFullYear(),em=now.getMonth()+1;while(y<ey||(y===ey&&m<=em)){keys.push(`${y}-${String(m).padStart(2,'0')}`);m++;if(m>12){m=1;y++;}}}
+  }else{const count=Math.max(1,Number(range)||12);for(let i=count-1;i>=0;i--){keys.push(monthKeyV24(new Date(now.getFullYear(),now.getMonth()-i,1)));}}
+  if(!keys.length)keys.push(monthKeyV24(now));
+  const signed=t=>(t.side==='Venda'?-1:1)*Number(t._brl||0),netAll=history.reduce((s,t)=>s+signed(t),0),investedNow=finiteV24(perf.invested)?Number(perf.invested):null;
+  let applied=Math.max(0,(investedNow??Math.max(0,netAll))-netAll);const firstKey=keys[0];history.filter(t=>txMonthV24(t)<firstKey).forEach(t=>applied=Math.max(0,applied+signed(t)));
+  const gainRate=investedNow&&finiteV24(perf.delta)?Number(perf.delta)/investedNow:0;
+  const data=keys.map(key=>{history.filter(t=>txMonthV24(t)===key).forEach(t=>applied=Math.max(0,applied+signed(t)));const gain=applied*gainRate;return {key,label:monthLabelV24(key),applied,gain,total:Math.max(0,applied+gain)};});
+  if(data.length&&investedNow!==null){const last=data[data.length-1];last.applied=investedNow;last.gain=finiteV24(perf.delta)?Number(perf.delta):0;last.total=Math.max(0,last.applied+last.gain);}
+  return {data,perf,estimated:data.length>1};
+}
+function prepareEvolutionTemplateV24(){
+  const card=document.querySelector('#patrimonyChartsGridV24 .evolutionCard')||document.querySelector('.evolutionCard');if(!card)return;
+  const h2=card.querySelector('.evolutionHeader h2');if(h2)h2.textContent='Evolução do Patrimônio';const p=card.querySelector('.evolutionHeader p');if(p)p.textContent='Acompanhe valor aplicado e ganho de capital ao longo do tempo.';
+  const monthly=document.getElementById('modeMonthly'),annual=document.getElementById('modeAnnual');if(monthly)monthly.style.display='none';if(annual)annual.style.display='none';if(typeof v14!=='undefined')v14.chartMode='monthly';
+  const range=document.getElementById('chartRange');if(range){range.innerHTML='<option value="12">12 Meses</option><option value="24">24 Meses</option><option value="all">Todo o histórico</option>';range.value=String(v14?.chartRange||'12');range.disabled=false;}
+  const controls=card.querySelector('.chartControls');if(controls&&!document.getElementById('patrimonyTypeV24')){const sel=document.createElement('select');sel.id='patrimonyTypeV24';controls.appendChild(sel);sel.onchange=e=>{v24Type=e.target.value;saveUiV24();renderPatrimonyEvolutionV24();};}
+  const sel=document.getElementById('patrimonyTypeV24'),classes=scopesV24();if(v24Type!=='all'&&!classes.includes(v24Type))v24Type='all';if(sel){sel.innerHTML=`<option value="all">Todos os tipos</option>${classes.map(c=>`<option value="${escV24(c)}">${escV24(c)}</option>`).join('')}`;sel.value=v24Type;}
+  const legend=card.querySelector('.chartLegendV14');if(legend)legend.innerHTML='<span><i class="legendBar"></i>Valor aplicado</span><span><i class="legendGainV24"></i>Ganho de Capital</span>';
+}
+function renderPatrimonyEvolutionV24(){
+  prepareEvolutionTemplateV24();const box=document.getElementById('aportesChart');if(!box)return;const {data,perf}=patrimonySeriesV24();if(!data.length){box.innerHTML='<div class="chartEmpty">Não há dados suficientes para montar a evolução.</div>';return;}
+  const W=1000,H=330,left=88,right=18,top=28,bottom=54,plotW=W-left-right,plotH=H-top-bottom,max=Math.max(...data.map(d=>Math.max(d.applied,d.total)),1)*1.08,steps=4;let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução do patrimônio"><g font-family="Inter,system-ui,sans-serif">`;
+  for(let i=0;i<=steps;i++){const val=max*(steps-i)/steps,y=top+plotH*i/steps;svg+=`<line x1="${left}" y1="${y}" x2="${W-right}" y2="${y}" class="patrimonyGridV24"/><text x="${left-12}" y="${y+4}" text-anchor="end" class="patrimonyAxisTextV24">${escV24(compactMoneyV24(val))}</text>`;}
+  const slot=plotW/data.length,barW=Math.max(12,Math.min(52,slot*.58));data.forEach((d,i)=>{const x=left+slot*i+slot/2,baseY=top+plotH,appliedH=(d.applied/max)*plotH,appliedY=baseY-appliedH,gainPos=Math.max(0,d.gain),gainH=(gainPos/max)*plotH,gainY=appliedY-gainH;svg+=`<rect x="${x-barW/2}" y="${appliedY}" width="${barW}" height="${Math.max(0,appliedH)}" rx="4" class="patrimonyAppliedV24"><title>${d.label}: Valor aplicado ${moneyV24(d.applied)}</title></rect>`;if(gainH>0.5)svg+=`<rect x="${x-barW/2}" y="${gainY}" width="${barW}" height="${gainH}" rx="4" class="patrimonyGainV24"><title>${d.label}: Ganho de Capital ${moneyV24(d.gain)}</title></rect>`;if(data.length<=16||i%Math.ceil(data.length/12)===0)svg+=`<text x="${x}" y="${H-18}" text-anchor="end" class="patrimonyAxisTextV24" transform="rotate(-45 ${x} ${H-18})">${d.label}</text>`;});svg+='</g></svg>';box.innerHTML=svg;
+  const summary=document.getElementById('chartEvolutionSummary');if(summary)summary.innerHTML=`Atual: <strong>${moneyV24(perf.invested)}</strong> aplicado • <strong class="${perfClassV24(perf.delta)}">${moneyV24(perf.delta)}</strong> em ganho de capital`;
+  const foot=box.closest('.evolutionCard')?.querySelector('.chartFootV14');if(foot){const spans=foot.querySelectorAll('span');if(spans[1])spans[1].textContent='Histórico de ganho de capital estimado pela rentabilidade atual; o ponto mais recente usa o valor real.';}
+}
+
 function hideOldPatrimonySummariesV24(){const grid=document.getElementById('patrimonyOverviewGridV22');if(grid)grid.classList.add('hiddenPatrimonyOverviewV24');}
-function ensurePatrimonyLayoutV24(){const panel=document.getElementById('tabPatrimonioV22'),kpis=document.getElementById('kpis');if(!panel||!kpis)return;if(kpis.parentElement!==panel)panel.appendChild(kpis);renderPatrimonyKpisV24();hideOldPatrimonySummariesV24();renderDistributionV24();}
+function ensurePatrimonyLayoutV24(){const panel=document.getElementById('tabPatrimonioV22'),kpis=document.getElementById('kpis');if(!panel||!kpis)return;if(kpis.parentElement!==panel)panel.appendChild(kpis);renderPatrimonyKpisV24();hideOldPatrimonySummariesV24();renderDistributionV24();renderPatrimonyEvolutionV24();}
 
 function afterRenderV24(){if(!v24Ready)return;updateVersionV24();ensurePatrimonyLayoutV24();renderAllocationHealthV24();}
 function initV24(){
