@@ -58,6 +58,13 @@
         const q=document.createElement('script');
         q.src='v24-patrimonio.js?v=24.4';
         q.dataset.v24PatrimonioLoader='1';
+        q.onload=()=>{
+          if(document.querySelector('script[data-v25-structured-loader]'))return;
+          const r=document.createElement('script');
+          r.src='v25-structured.js?v=25.0';
+          r.dataset.v25StructuredLoader='1';
+          document.body.appendChild(r);
+        };
         document.body.appendChild(q);
       };
       document.body.appendChild(p);
