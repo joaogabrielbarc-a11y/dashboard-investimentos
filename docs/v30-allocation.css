@@ -1,5 +1,6 @@
 /* Pondera V2.10.2 — correção definitiva da Alocação estruturada */
-#tabMacroV22.allocationPanelV302{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;max-width:none!important;min-width:0!important}
+#tabMacroV22.allocationPanelV302:not(.hiddenV22){display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;max-width:none!important;min-width:0!important}
+#tabMacroV22.allocationPanelV302.hiddenV22{display:none!important;visibility:hidden!important;pointer-events:none!important}
 #tabMacroV22.allocationPanelV302>#allocationPulseV26,#tabMacroV22.allocationPanelV302>#macroStageV28{width:100%!important;max-width:none!important;min-width:0!important;align-self:stretch!important;flex:0 0 auto!important}
 #tabMacroV22.allocationSwitchGuardV302>*:not(.tabIntroV22){visibility:hidden!important}
 #allocationPulseV26.allocationPulseV302{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;margin:0 0 14px!important;order:0!important}
