@@ -66,6 +66,11 @@ async function boot(){
   await loadScript('v30.js?v=30.0','v30Loader');
   await waitFor(()=>window.__PONDERA_UI_V30__&&document.documentElement.dataset.ponderaUi==='2.10.0','integração V2.10');
 
+  if(!window.__PONDERA_FINAL_TAB_SYNC__){
+    window.__PONDERA_FINAL_TAB_SYNC__=true;
+    document.addEventListener('click',e=>{if(!e.target.closest?.('[data-tab-v23]'))return;setTimeout(()=>{try{render();}catch(err){console.error('[Pondera tab sync]',err);}},5);},true);
+  }
+
   window.__PONDERA_RUNTIME_VERSION__=RUNTIME_VERSION;document.documentElement.dataset.ponderaRuntime=RUNTIME_VERSION;setBootState('ready');
   const e=eye();if(e){e.textContent='CARTEIRA • V'+RUNTIME_VERSION;e.style.visibility='';}document.title='Pondera | Carteira';window.dispatchEvent(new CustomEvent('pondera:ready',{detail:{version:RUNTIME_VERSION}}));
 }
