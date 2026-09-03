@@ -1,0 +1,33 @@
+/* Pondera V2.9 — ledger como fonte única de verdade */
+.profitKpiV29{min-width:0}
+.profitBreakdownV29{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}
+.profitBreakdownV29>div{display:flex;flex-direction:column;gap:4px;padding:10px 11px;border:1px solid rgba(32,52,77,.68);border-radius:10px;background:rgba(5,16,29,.28);min-width:0}
+.profitBreakdownV29 span{font-size:10px;line-height:1.25;color:var(--muted)}
+.profitBreakdownV29 strong{font-size:14px;line-height:1.2;overflow-wrap:anywhere}
+.ledgerWarnV29{display:block;margin-top:9px;padding:8px 10px;border-radius:8px;background:rgba(255,189,102,.08);border:1px solid rgba(255,189,102,.18);color:#d6ae75;font-size:9px;line-height:1.4}
+.patrimonyTotalV29{fill:#30b77b;cursor:pointer;transition:filter .15s ease,opacity .15s ease}
+.patrimonyTotalV29:hover,.patrimonyTotalV29:focus{filter:brightness(1.18);outline:none}
+.patPointV29{border-color:rgba(67,211,158,.22)}
+.macroStageV29{display:grid!important;grid-template-columns:minmax(0,2.35fr) minmax(280px,.68fr)!important;gap:18px!important;align-items:start!important;width:100%;min-width:0}
+.macroDetailedV29{width:100%!important;max-width:none!important;min-width:0!important;overflow:hidden}
+.macroDetailedV29 .allocationMacroHeaderV25{align-items:flex-start;gap:14px;flex-wrap:wrap}
+.macroDetailedV29 .allocationMacroActionsV25{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.macroDetailedV29 .allocationMacroTableWrapV25{width:100%;max-width:100%;overflow-x:auto;padding-bottom:2px}
+.macroDetailedV29 .allocationMacroTableV25{width:100%;min-width:790px;table-layout:auto}
+.macroDetailedV29 .allocationMacroTableV25 th{font-size:10px;white-space:nowrap}
+.macroDetailedV29 .allocationMacroTableV25 td{font-size:11px;vertical-align:middle}
+.macroDetailedV29 .targetInputV25 input{min-width:62px;max-width:82px}
+.macroGraphicV29{width:100%!important;max-width:330px!important;min-width:280px!important;justify-self:end!important;padding:15px!important;box-sizing:border-box}
+.macroGraphicV29 .macroHeadV28{gap:8px;flex-wrap:wrap}
+.macroGraphicV29 .macroHeadV28 h2{font-size:17px}
+.macroGraphicV29 .macroHeadV28 p{font-size:10px;line-height:1.35}
+.macroGraphicV29 .macroDonutsV28{gap:8px;padding:12px 0}
+.macroGraphicV29 .macroDonutsV28.compare{grid-template-columns:1fr 1fr}
+.macroGraphicV29 .macroDonutV28{width:112px;height:112px}
+.macroGraphicV29 .macroDonutV28>span{width:62px;height:62px}
+.macroGraphicV29 .macroLegendV28{max-height:310px;overflow-y:auto;padding-right:3px}
+.macroGraphicV29 .macroLegendV28>div{padding:6px 3px}
+.macroGraphicV29 .macroLegendV28 strong{font-size:10px;line-height:1.25}
+.macroGraphicV29 .macroLegendV28 small{font-size:8.5px;line-height:1.3}
+@media(max-width:1180px){.macroStageV29{grid-template-columns:1fr!important}.macroGraphicV29{max-width:none!important;min-width:0!important;justify-self:stretch!important}.macroGraphicV29 .macroDonutsV28.compare{grid-template-columns:repeat(2,minmax(0,1fr))}.profitBreakdownV29{grid-template-columns:1fr}}
+@media(max-width:760px){.macroDetailedV29 .allocationMacroTableV25{min-width:720px}.macroGraphicV29 .macroDonutsV28.compare{grid-template-columns:1fr 1fr}}
