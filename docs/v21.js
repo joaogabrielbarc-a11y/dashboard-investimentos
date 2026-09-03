@@ -1,80 +1,144 @@
 (()=>{
-  const legacyHistory=typeof renderHistory==='function'?renderHistory:null;
-  if(legacyHistory){
-    renderHistory=function(){
-      if(!document.getElementById('historyRows'))return;
-      return legacyHistory();
-    };
-  }
+'use strict';
 
-  let attempts=0;
-  const refreshCopy=()=>{
-    const title=document.querySelector('.holdingsTitleV18 h2');
-    if(title&&title.innerHTML.includes('último fechamento'))title.innerHTML=title.innerHTML.replace('último fechamento disponível','cotação mais recente disponível');
-    const subtitle=document.querySelector('.holdingsTitleV18 p');
-    if(subtitle&&subtitle.textContent.includes('preço atual'))subtitle.textContent='Acompanhe custo, cotação mais recente, variação e estrutura setorial de cada classe.';
+const RUNTIME_VERSION='2.8.2';
+if(window.__PONDERA_STABLE_BOOTSTRAP__)return;
+window.__PONDERA_STABLE_BOOTSTRAP__={state:'booting',version:RUNTIME_VERSION};
+
+const eye=()=>document.querySelector('.topbar .eyebrow');
+const setBootState=(state)=>{
+  window.__PONDERA_STABLE_BOOTSTRAP__.state=state;
+  document.documentElement.dataset.ponderaRuntimeState=state;
+};
+
+// Protege o render legado do histórico enquanto a pilha V18/V19/V20 ainda está carregando.
+const legacyHistory=typeof renderHistory==='function'?renderHistory:null;
+if(legacyHistory&&!renderHistory.__ponderaSafeHistory){
+  const safeHistory=function(){
+    if(!document.getElementById('historyRows'))return;
+    return legacyHistory.apply(this,arguments);
   };
-  const boot=()=>{
-    attempts++;
-    if(typeof renderHistoryV20!=='function'||typeof renderPendingV20!=='function'||typeof renderTxSummaryV20!=='function'||typeof postRenderV20!=='function'||typeof render!=='function'){
-      if(attempts<240)setTimeout(boot,25);
+  safeHistory.__ponderaSafeHistory=true;
+  renderHistory=safeHistory;
+}
+
+function loadScript(src,datasetKey){
+  return new Promise((resolve,reject)=>{
+    const clean=src.split('?')[0];
+    const existing=[...document.scripts].find(s=>{
+      try{return new URL(s.src,location.href).pathname.endsWith('/'+clean);}catch(e){return false;}
+    });
+    if(existing){
+      if(existing.dataset.ponderaLoaded==='1'||existing.readyState==='complete')return resolve(existing);
+      existing.addEventListener('load',()=>resolve(existing),{once:true});
+      existing.addEventListener('error',()=>reject(new Error('Falha ao carregar '+src)),{once:true});
       return;
     }
-    renderHistory=renderHistoryV20;
-    renderPending=renderPendingV20;
-    renderTxSummary=renderTxSummaryV20;
-    const previousPostRenderV20=postRenderV20;
-    postRenderV20=function(){
-      previousPostRenderV20();
-      if(typeof renderTopPerformanceV19==='function')renderTopPerformanceV19();
-      refreshCopy();
-    };
-    try{render();}catch(err){console.error('[V2.1] falha na recuperação do render',err);}
-  };
-  boot();
-})();
+    const s=document.createElement('script');
+    s.src=src;
+    s.async=false;
+    s.dataset.ponderaStable='1';
+    if(datasetKey)s.dataset[datasetKey]='1';
+    s.onload=()=>{s.dataset.ponderaLoaded='1';resolve(s);};
+    s.onerror=()=>reject(new Error('Falha ao carregar '+src));
+    document.body.appendChild(s);
+  });
+}
 
-(()=>{
-  const loadV26=()=>{
-    if(document.querySelector('script[data-v26-loader]'))return;
-    const z=document.createElement('script');z.src='v26.js?v=26.0';z.dataset.v26Loader='1';document.body.appendChild(z);
-  };
-  const loadV25=()=>{
-    const existing=document.querySelector('script[data-v25-structured-loader]');
-    if(existing){setTimeout(loadV26,0);return;}
-    const r=document.createElement('script');
-    r.src='v25-structured.js?v=25.2';
-    r.dataset.v25StructuredLoader='1';
-    r.onload=loadV26;
-    document.body.appendChild(r);
-  };
-  const ensurePatrimonyLayer=()=>{
-    const existing=document.querySelector('script[data-v24-patrimonio-loader]');
-    if(existing){setTimeout(loadV25,0);return;}
-    const q=document.createElement('script');
-    q.src='v24-patrimonio.js?v=24.4';
-    q.dataset.v24PatrimonioLoader='1';
-    q.onload=loadV25;
-    document.body.appendChild(q);
-  };
-  if(document.querySelector('script[data-v22-loader]')){setTimeout(ensurePatrimonyLayer,0);return;}
-  const s=document.createElement('script');
-  s.src='v22.js?v=22.0';
-  s.dataset.v22Loader='1';
-  s.onload=()=>{
-    if(document.querySelector('script[data-v23-loader]')){setTimeout(ensurePatrimonyLayer,0);return;}
-    const n=document.createElement('script');
-    n.src='v23.js?v=23.1';
-    n.dataset.v23Loader='1';
-    n.onload=()=>{
-      if(document.querySelector('script[data-v24-loader]')){setTimeout(ensurePatrimonyLayer,0);return;}
-      const p=document.createElement('script');
-      p.src='v24.js?v=24.1';
-      p.dataset.v24Loader='1';
-      p.onload=ensurePatrimonyLayer;
-      document.body.appendChild(p);
+function waitFor(test,label,timeout=15000){
+  return new Promise((resolve,reject)=>{
+    const started=Date.now();
+    const tick=()=>{
+      let ok=false;
+      try{ok=!!test();}catch(e){}
+      if(ok)return resolve();
+      if(Date.now()-started>timeout)return reject(new Error('Timeout aguardando '+label));
+      setTimeout(tick,25);
     };
-    document.body.appendChild(n);
-  };
-  document.body.appendChild(s);
+    tick();
+  });
+}
+
+function recoverV20(){
+  if(window.__PONDERA_V21_RECOVERY__)return;
+  window.__PONDERA_V21_RECOVERY__=true;
+  if(typeof renderHistoryV20==='function')renderHistory=renderHistoryV20;
+  if(typeof renderPendingV20==='function')renderPending=renderPendingV20;
+  if(typeof renderTxSummaryV20==='function')renderTxSummary=renderTxSummaryV20;
+
+  if(typeof postRenderV20==='function'&&!postRenderV20.__ponderaRecovered){
+    const previous=postRenderV20;
+    const wrapped=function(){
+      const result=previous.apply(this,arguments);
+      try{if(typeof renderTopPerformanceV19==='function')renderTopPerformanceV19();}catch(e){}
+      const title=document.querySelector('.holdingsTitleV18 h2');
+      if(title&&title.innerHTML.includes('último fechamento'))title.innerHTML=title.innerHTML.replace('último fechamento disponível','cotação mais recente disponível');
+      const subtitle=document.querySelector('.holdingsTitleV18 p');
+      if(subtitle&&subtitle.textContent.includes('preço atual'))subtitle.textContent='Acompanhe custo, cotação mais recente, variação e estrutura setorial de cada classe.';
+      return result;
+    };
+    wrapped.__ponderaRecovered=true;
+    postRenderV20=wrapped;
+  }
+}
+
+async function boot(){
+  setBootState('loading');
+  const versionEl=eye();
+  if(versionEl)versionEl.style.visibility='hidden';
+
+  // Carregamento determinístico das camadas que antes dependiam de loaders encadeados e cache.
+  const legacyStack=[
+    'v15.js?v=15.2',
+    'v16.js?v=16.2',
+    'v17.js?v=17.2',
+    'v18-core.js?v=18.2',
+    'v18-ui.js?v=18.2',
+    'v18-dialogs.js?v=18.2',
+    'v18-init.js?v=18.2',
+    'v19-core.js?v=19.2',
+    'v19-holdings.js?v=19.2',
+    'v19-transactions.js?v=19.2',
+    'v19-planning.js?v=19.2',
+    'v19-fixes.js?v=19.2',
+    'v19-init.js?v=19.2',
+    'v20-core.js?v=20.2',
+    'v20-ui.js?v=20.2',
+    'v20-fixes.js?v=20.2',
+    'v20-init.js?v=20.2'
+  ];
+  for(const src of legacyStack)await loadScript(src);
+
+  await waitFor(()=>typeof postRenderV20==='function'&&typeof openLaunchV20==='function'&&typeof segmentRowsV18==='function'&&typeof portfolioPerformanceV19==='function','núcleo V2.0');
+  recoverV20();
+
+  await loadScript('v22.js?v=22.2','v22Loader');
+  await waitFor(()=>document.getElementById('tabPatrimonioV22')&&document.getElementById('tabMacroV22')&&document.getElementById('tabMicroV22'),'abas V2.2');
+  await loadScript('v23.js?v=23.2','v23Loader');
+  await loadScript('v24.js?v=24.2','v24Loader');
+  await loadScript('v24-patrimonio.js?v=24.5','v24PatrimonioLoader');
+  await loadScript('v25-structured.js?v=25.3','v25StructuredLoader');
+  await loadScript('v26.js?v=26.2','v26Loader');
+  await waitFor(()=>document.getElementById('contributionPlannerV26')&&document.getElementById('allocationPulseV26'),'camada V2.6');
+  await loadScript('v28.js?v=28.2','v28Loader');
+  await waitFor(()=>document.getElementById('macroStageV28')||document.getElementById('patPointV28'),'camada V2.8');
+
+  window.__PONDERA_RUNTIME_VERSION__=RUNTIME_VERSION;
+  document.documentElement.dataset.ponderaRuntime=RUNTIME_VERSION;
+  setBootState('ready');
+  const e=eye();
+  if(e){e.textContent='CARTEIRA • V'+RUNTIME_VERSION;e.style.visibility='';}
+  document.title='Pondera | Carteira';
+  window.dispatchEvent(new CustomEvent('pondera:ready',{detail:{version:RUNTIME_VERSION}}));
+}
+
+boot().catch(err=>{
+  console.error('[Pondera bootstrap]',err);
+  setBootState('error');
+  const e=eye();
+  if(e){e.textContent='PONDERA • ERRO DE CARREGAMENTO';e.style.visibility='';}
+  let box=document.getElementById('ponderaRuntimeError');
+  if(!box){box=document.createElement('div');box.id='ponderaRuntimeError';box.style.cssText='margin:12px 0;padding:12px 14px;border:1px solid #7f3640;border-radius:10px;background:#2b151a;color:#ffd7dc;font:600 13px/1.4 system-ui';document.querySelector('.topbar')?.insertAdjacentElement('afterend',box);}
+  if(box)box.textContent='O Pondera encontrou um erro ao carregar uma camada do dashboard. Recarregue a página com Ctrl+F5. Detalhe: '+err.message;
+});
 })();
