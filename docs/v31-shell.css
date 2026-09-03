@@ -1,0 +1,10 @@
+/* Pondera V2.11.0 — isolamento das abas e accordions da micro alocação */
+#tabPatrimonioV22.hiddenV22,#tabMacroV22.hiddenV22,#tabMicroV22.hiddenV22,#tabProventosV22.hiddenV22{display:none!important;visibility:hidden!important;pointer-events:none!important}
+#tabPatrimonioV22:not(.hiddenV22),#tabMacroV22:not(.hiddenV22),#tabMicroV22:not(.hiddenV22),#tabProventosV22:not(.hiddenV22){visibility:visible!important;pointer-events:auto!important}
+#tabMacroV22.allocationPanelV302.hiddenV22{display:none!important}
+#tabMacroV22.allocationPanelV302:not(.hiddenV22){display:flex!important}
+#tabMacroV22.allocationSwitchGuardV302>*{visibility:visible!important}
+#tabMacroV22 .classDashboardV18.collapsedClassV31 .classMicroChartV25{display:none!important}
+#tabMacroV22 .classDashboardV18.collapsedClassV31 .classGridV18{display:none!important}
+#tabMacroV22 .collapseButtonV31{white-space:nowrap}
+#tabMacroV22 .classDashboardV18.collapsedClassV31 .classHeaderV18{border-bottom:0!important}
