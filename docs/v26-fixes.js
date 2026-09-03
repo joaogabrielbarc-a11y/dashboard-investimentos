@@ -3,6 +3,7 @@
 let reasserting=false;
 const norm=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
 
+function fixVersion(){const e=document.querySelector('.topbar .eyebrow');if(e)e.textContent='CARTEIRA • V2.6.1';}
 function fixImpactOrder(){
   const tx=document.getElementById('transactionsSection');
   const impact=document.getElementById('contributionImpactV26');
@@ -50,6 +51,7 @@ function reassertV26(){
   if(reasserting)return;
   reasserting=true;
   try{
+    fixVersion();
     fixImpactOrder();
     fixImpactAssetCounts();
     if(!dividendsLookHistorical())window.dispatchEvent(new HashChangeEvent('hashchange'));
