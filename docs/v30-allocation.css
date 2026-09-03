@@ -1,0 +1,28 @@
+/* Pondera V2.10.2 — correção definitiva da Alocação estruturada */
+#tabMacroV22.allocationPanelV302{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;max-width:none!important;min-width:0!important}
+#tabMacroV22.allocationPanelV302>#allocationPulseV26,#tabMacroV22.allocationPanelV302>#macroStageV28{width:100%!important;max-width:none!important;min-width:0!important;align-self:stretch!important;flex:0 0 auto!important}
+#tabMacroV22.allocationSwitchGuardV302>*:not(.tabIntroV22){visibility:hidden!important}
+#allocationPulseV26.allocationPulseV302{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;margin:0 0 14px!important;order:0!important}
+#allocationPulseV26 .pulseCardV302{min-height:0!important;height:auto!important;padding:14px 16px!important;border-radius:14px!important}
+#allocationPulseV26 .pulseCardV302 .pulseTitleV26{margin-bottom:7px!important;gap:2px!important}
+#allocationPulseV26 .pulseCardV302 .pulseTitleV26>span{font-size:8.5px!important}
+#allocationPulseV26 .pulseCardV302 .pulseTitleV26>strong{font-size:15px!important}
+#allocationPulseV26 .pulseCardV302 .pulseRowsV26{gap:1px!important}
+#allocationPulseV26 .pulseCardV302 .pulseRowsV26>div{grid-template-columns:22px minmax(0,1fr) auto auto!important;gap:8px!important;padding:5px 0!important;min-height:38px!important}
+#allocationPulseV26 .pulseCardV302 .pulseRowsV26 b{width:20px!important;height:20px!important;font-size:9px!important}
+#allocationPulseV26 .pulseCardV302 .pulseRowsV26 span strong{font-size:11.5px!important}
+#allocationPulseV26 .pulseCardV302 .pulseRowsV26 small{font-size:8.5px!important}
+#allocationPulseV26 .pulseCardV302 .pulseRowsV26 em{font-size:10px!important}
+#allocationPulseV26 .pulseCardV302 .v28Value.v30PositionValue{font-size:9px!important;color:#8da3bd!important;white-space:nowrap!important}
+#allocationPulseV26 .pulseCardV302 .dispersionMainV26{margin:10px 0 8px!important;gap:8px!important}
+#allocationPulseV26 .pulseCardV302 .dispersionMainV26>strong{font-size:27px!important}
+#allocationPulseV26 .pulseCardV302 .dispersionMetaV26{font-size:9.5px!important;gap:2px!important}
+/* A V2.6 define #allocationMacroSnapshotV23{order:1}. `order` também vale em CSS Grid, o que invertia visualmente tabela e gráfico. */
+#tabMacroV22 #macroStageV28.macroStageV302{display:grid!important;grid-template-columns:minmax(0,1fr) 310px!important;grid-auto-flow:row!important;gap:16px!important;align-items:start!important;justify-items:stretch!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0 0 18px!important;padding:0!important;overflow:visible!important;order:1!important}
+#tabMacroV22 #allocationMacroSnapshotV23.macroDetailedV302{order:0!important;grid-column:1!important;grid-row:1!important;width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important;margin:0!important;padding:18px 20px!important;box-sizing:border-box!important;overflow:hidden!important}
+#tabMacroV22 #macroGraphicV28.macroGraphicV302{order:1!important;grid-column:2!important;grid-row:1!important;width:310px!important;max-width:310px!important;min-width:310px!important;justify-self:end!important;margin:0!important;box-sizing:border-box!important;overflow:hidden!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableWrapV25{width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:auto!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25{width:100%!important;min-width:760px!important;max-width:none!important;table-layout:auto!important}
+#tabMacroV22>#allocationHealthV24,#tabMacroV22>.chartsCard.v28LegacyMacro{display:none!important}
+@media(max-width:1100px){#allocationPulseV26.allocationPulseV302{grid-template-columns:repeat(2,minmax(0,1fr))!important}#allocationPulseV26 .dispersionPulseV26{grid-column:1/-1}#tabMacroV22 #macroStageV28.macroStageV302{grid-template-columns:1fr!important}#tabMacroV22 #allocationMacroSnapshotV23.macroDetailedV302,#tabMacroV22 #macroGraphicV28.macroGraphicV302{grid-column:1!important;grid-row:auto!important;width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important}}
+@media(max-width:720px){#allocationPulseV26.allocationPulseV302{grid-template-columns:1fr!important}#allocationPulseV26 .dispersionPulseV26{grid-column:auto}}
