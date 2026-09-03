@@ -11,6 +11,16 @@ const setBootState=(state)=>{
   document.documentElement.dataset.ponderaRuntimeState=state;
 };
 
+// O texto de versão é controlado visualmente por uma única camada. Versões
+// legadas podem continuar atualizando o textContent internamente sem causar
+// flicker na interface.
+if(!document.getElementById('ponderaStableRuntimeStyle')){
+  const st=document.createElement('style');
+  st.id='ponderaStableRuntimeStyle';
+  st.textContent='.topbar .eyebrow{font-size:0!important}.topbar .eyebrow::after{content:"CARTEIRA • V2.8.2";font-size:11px;letter-spacing:.08em;font-weight:800}';
+  document.head.appendChild(st);
+}
+
 // Protege o render legado do histórico enquanto a pilha V18/V19/V20 ainda está carregando.
 const legacyHistory=typeof renderHistory==='function'?renderHistory:null;
 if(legacyHistory&&!renderHistory.__ponderaSafeHistory){
@@ -28,8 +38,11 @@ function loadScript(src,datasetKey){
     const existing=[...document.scripts].find(s=>{
       try{return new URL(s.src,location.href).pathname.endsWith('/'+clean);}catch(e){return false;}
     });
+    // Scripts que vieram diretamente do HTML já foram/estão sendo processados pelo
+    // parser. Não criamos uma segunda cópia: os boots internos aguardam dependências.
+    if(existing&&!existing.dataset.ponderaStable)return resolve(existing);
     if(existing){
-      if(existing.dataset.ponderaLoaded==='1'||existing.readyState==='complete')return resolve(existing);
+      if(existing.dataset.ponderaLoaded==='1')return resolve(existing);
       existing.addEventListener('load',()=>resolve(existing),{once:true});
       existing.addEventListener('error',()=>reject(new Error('Falha ao carregar '+src)),{once:true});
       return;
@@ -45,7 +58,7 @@ function loadScript(src,datasetKey){
   });
 }
 
-function waitFor(test,label,timeout=15000){
+function waitFor(test,label,timeout=18000){
   return new Promise((resolve,reject)=>{
     const started=Date.now();
     const tick=()=>{
@@ -87,7 +100,8 @@ async function boot(){
   const versionEl=eye();
   if(versionEl)versionEl.style.visibility='hidden';
 
-  // Carregamento determinístico das camadas que antes dependiam de loaders encadeados e cache.
+  // Carregamento determinístico das camadas que antes dependiam de loaders
+  // encadeados, cache e condições de corrida.
   const legacyStack=[
     'v15.js?v=15.2',
     'v16.js?v=16.2',
