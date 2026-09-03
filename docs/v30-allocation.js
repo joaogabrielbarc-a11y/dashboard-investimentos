@@ -1,14 +1,14 @@
 (()=>{
 'use strict';
 if(window.__PONDERA_ALLOCATION_V302__)return;
-const VERSION='2.10.2';
+const VERSION='2.11.1';
 const COLORS=['#43d39e','#69a7ff','#f2b66d','#b28cff','#5ed1dc','#ff8f9b','#93c86f','#cf9bff','#6fb6a7','#e1cf6a'];
 let applying=false, pulseObserver=null, stageObserver=null, releaseTimer=null;
 const finite=v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));
 const esc=v=>typeof escapeHtml==='function'?escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const money=v=>finite(v)&&typeof fmt!=='undefined'&&fmt?.format?fmt.format(Number(v)):'—';
 const pct=(v,d=1)=>finite(v)?`${Number(v).toFixed(d).replace('.',',')}%`:'—';
-function ensureCss(){let l=document.querySelector('link[href^="v30-allocation.css"]');if(!l){l=document.createElement('link');l.rel='stylesheet';document.head.appendChild(l);}l.href='v30-allocation.css?v=30.2';}
+function ensureCss(){let l=document.querySelector('link[href^="v30-allocation.css"]');if(!l){l=document.createElement('link');l.rel='stylesheet';document.head.appendChild(l);}l.href='v30-allocation.css?v=30.3';}
 function rows(){try{return typeof getRows==='function'?getRows():[];}catch(e){return[];}}
 function activePositions(){
   const map=new Map();
