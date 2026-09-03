@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
 
-const RUNTIME_VERSION='2.9.0';
+const RUNTIME_VERSION='2.10.0';
 if(window.__PONDERA_STABLE_BOOTSTRAP__)return;
 window.__PONDERA_STABLE_BOOTSTRAP__={state:'booting',version:RUNTIME_VERSION};
 
@@ -14,7 +14,7 @@ const setBootState=(state)=>{
 if(!document.getElementById('ponderaStableRuntimeStyle')){
   const st=document.createElement('style');
   st.id='ponderaStableRuntimeStyle';
-  st.textContent='.topbar .eyebrow{font-size:0!important}.topbar .eyebrow::after{content:"CARTEIRA • V2.9.0";font-size:11px;letter-spacing:.08em;font-weight:800}';
+  st.textContent='.topbar .eyebrow{font-size:0!important}.topbar .eyebrow::after{content:"CARTEIRA • V2.10.0";font-size:11px;letter-spacing:.08em;font-weight:800}';
   document.head.appendChild(st);
 }
 
@@ -63,6 +63,8 @@ async function boot(){
   await waitFor(()=>document.getElementById('macroStageV28')||document.getElementById('patPointV28'),'camada V2.8');
   await loadScript('v29.js?v=29.0','v29Loader');
   await waitFor(()=>window.__PONDERA_LEDGER_V29__&&window.PonderaLedgerV29?.version==='2.9.0','ledger V2.9');
+  await loadScript('v30.js?v=30.0','v30Loader');
+  await waitFor(()=>window.__PONDERA_UI_V30__&&document.documentElement.dataset.ponderaUi==='2.10.0','integração V2.10');
 
   window.__PONDERA_RUNTIME_VERSION__=RUNTIME_VERSION;document.documentElement.dataset.ponderaRuntime=RUNTIME_VERSION;setBootState('ready');
   const e=eye();if(e){e.textContent='CARTEIRA • V'+RUNTIME_VERSION;e.style.visibility='';}document.title='Pondera | Carteira';window.dispatchEvent(new CustomEvent('pondera:ready',{detail:{version:RUNTIME_VERSION}}));
