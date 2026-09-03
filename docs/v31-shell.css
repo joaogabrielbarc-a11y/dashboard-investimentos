@@ -1,4 +1,4 @@
-/* Pondera V2.11.0 — isolamento das abas e accordions da micro alocação */
+/* Pondera V2.11.2 — isolamento das abas e micro alocação compacta */
 #tabPatrimonioV22.hiddenV22,#tabMacroV22.hiddenV22,#tabMicroV22.hiddenV22,#tabProventosV22.hiddenV22{display:none!important;visibility:hidden!important;pointer-events:none!important}
 #tabPatrimonioV22:not(.hiddenV22),#tabMacroV22:not(.hiddenV22),#tabMicroV22:not(.hiddenV22),#tabProventosV22:not(.hiddenV22){visibility:visible!important;pointer-events:auto!important}
 #tabMacroV22.allocationPanelV302.hiddenV22{display:none!important}
@@ -8,3 +8,37 @@
 #tabMacroV22 .classDashboardV18.collapsedClassV31 .classGridV18{display:none!important}
 #tabMacroV22 .collapseButtonV31{white-space:nowrap}
 #tabMacroV22 .classDashboardV18.collapsedClassV31 .classHeaderV18{border-bottom:0!important}
+
+/* Mais área para ativos e menos desperdício na lateral setorial. */
+#tabMacroV22 .classGridV18{grid-template-columns:minmax(0,1.72fr) minmax(350px,.68fr)!important}
+#tabMacroV22 .assetsPaneV18,#tabMacroV22 .segmentsPaneV18{min-width:0!important}
+#tabMacroV22 .assetsPaneV18{padding:14px 14px!important}
+#tabMacroV22 .segmentsPaneV18{padding:14px 14px!important}
+
+/* Tabela específica de ativos: coluna Investido removida pelo JS e distribuição sem scroll lateral. */
+#tabMacroV22 .assetTableWrapV31{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31{width:100%!important;min-width:0!important;max-width:100%!important;table-layout:fixed!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th,#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td{box-sizing:border-box!important;padding:9px 6px!important;vertical-align:middle!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th{font-size:8.5px!important;white-space:normal!important;line-height:1.25!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td{font-size:10.5px!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th:nth-child(1),#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td:nth-child(1){width:14%!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th:nth-child(2),#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td:nth-child(2){width:14%!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th:nth-child(3),#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td:nth-child(3){width:7%!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th:nth-child(4),#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td:nth-child(4){width:11%!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th:nth-child(5),#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td:nth-child(5){width:11%!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th:nth-child(6),#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td:nth-child(6){width:11%!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th:nth-child(7),#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td:nth-child(7){width:10%!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th:nth-child(8),#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td:nth-child(8){width:8%!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 th:nth-child(9),#tabMacroV22 .assetsTableV18.assetsTableCompactV31 td:nth-child(9){width:14%!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 .holdingTicker strong{font-size:11px!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 .holdingTicker small,#tabMacroV22 .assetsTableV18.assetsTableCompactV31 .priceCellV18 small{font-size:8px!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 .segmentBadgeV18{font-size:9px!important;padding:4px 6px!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 .rowActions{display:flex!important;gap:4px!important;flex-wrap:nowrap!important;justify-content:flex-start!important}
+#tabMacroV22 .assetsTableV18.assetsTableCompactV31 .rowActions button{font-size:8.5px!important;padding:5px 6px!important;min-width:0!important;white-space:nowrap!important}
+
+@media(max-width:1280px){
+  #tabMacroV22 .classGridV18{grid-template-columns:1fr!important}
+  #tabMacroV22 .segmentsPaneV18{border-left:0!important;border-top:1px solid rgba(32,52,77,.75)!important}
+  #tabMacroV22 .assetTableWrapV31{overflow-x:auto!important}
+  #tabMacroV22 .assetsTableV18.assetsTableCompactV31{min-width:820px!important;table-layout:auto!important}
+}
