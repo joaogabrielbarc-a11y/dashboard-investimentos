@@ -1,4 +1,4 @@
-/* Pondera V2.10.2 — correção definitiva da Alocação estruturada */
+/* Pondera V2.11.1 — proporções refinadas da Alocação estruturada */
 #tabMacroV22.allocationPanelV302:not(.hiddenV22){display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;max-width:none!important;min-width:0!important}
 #tabMacroV22.allocationPanelV302.hiddenV22{display:none!important;visibility:hidden!important;pointer-events:none!important}
 #tabMacroV22.allocationPanelV302>#allocationPulseV26,#tabMacroV22.allocationPanelV302>#macroStageV28{width:100%!important;max-width:none!important;min-width:0!important;align-self:stretch!important;flex:0 0 auto!important}
@@ -18,12 +18,68 @@
 #allocationPulseV26 .pulseCardV302 .dispersionMainV26{margin:10px 0 8px!important;gap:8px!important}
 #allocationPulseV26 .pulseCardV302 .dispersionMainV26>strong{font-size:27px!important}
 #allocationPulseV26 .pulseCardV302 .dispersionMetaV26{font-size:9.5px!important;gap:2px!important}
-/* A V2.6 define #allocationMacroSnapshotV23{order:1}. `order` também vale em CSS Grid, o que invertia visualmente tabela e gráfico. */
-#tabMacroV22 #macroStageV28.macroStageV302{display:grid!important;grid-template-columns:minmax(0,1fr) 310px!important;grid-auto-flow:row!important;gap:16px!important;align-items:start!important;justify-items:stretch!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0 0 18px!important;padding:0!important;overflow:visible!important;order:1!important}
-#tabMacroV22 #allocationMacroSnapshotV23.macroDetailedV302{order:0!important;grid-column:1!important;grid-row:1!important;width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important;margin:0!important;padding:18px 20px!important;box-sizing:border-box!important;overflow:hidden!important}
-#tabMacroV22 #macroGraphicV28.macroGraphicV302{order:1!important;grid-column:2!important;grid-row:1!important;width:310px!important;max-width:310px!important;min-width:310px!important;justify-self:end!important;margin:0!important;box-sizing:border-box!important;overflow:hidden!important}
-#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableWrapV25{width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:auto!important}
-#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25{width:100%!important;min-width:760px!important;max-width:none!important;table-layout:auto!important}
+
+/* Macro detalhada + visão gráfica. A coluna gráfica cresce sem sacrificar a leitura da tabela. */
+#tabMacroV22 #macroStageV28.macroStageV302{display:grid!important;grid-template-columns:minmax(0,1fr) clamp(350px,29vw,390px)!important;grid-auto-flow:row!important;gap:18px!important;align-items:start!important;justify-items:stretch!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0 0 18px!important;padding:0!important;overflow:visible!important;order:1!important}
+#tabMacroV22 #allocationMacroSnapshotV23.macroDetailedV302{order:0!important;grid-column:1!important;grid-row:1!important;width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important;margin:0!important;padding:16px 18px!important;box-sizing:border-box!important;overflow:hidden!important}
+#tabMacroV22 #macroGraphicV28.macroGraphicV302{order:1!important;grid-column:2!important;grid-row:1!important;width:100%!important;max-width:390px!important;min-width:350px!important;justify-self:stretch!important;margin:0!important;padding:17px 18px!important;box-sizing:border-box!important;overflow:hidden!important}
+
+/* Compactação seletiva da tabela para preservar todas as colunas sem scroll horizontal em desktop. */
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroHeaderV25{gap:12px!important;margin-bottom:8px!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroHeaderV25 h2{font-size:17px!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroHeaderV25 p{font-size:9.5px!important;line-height:1.4!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroActionsV25{gap:7px!important;flex-wrap:nowrap!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroActionsV25 .pill{font-size:9px!important;padding:6px 9px!important;white-space:nowrap!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroActionsV25 button{font-size:10px!important;padding:8px 11px!important;white-space:nowrap!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableWrapV25{width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:visible!important;margin-top:8px!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25{width:100%!important;min-width:0!important;max-width:none!important;table-layout:fixed!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th,#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td{padding:10px 7px!important;box-sizing:border-box!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th{font-size:8.5px!important;white-space:nowrap!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td{font-size:10px!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(1),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(1){width:22%}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(2),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(2){width:14%}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(3),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(3){width:11%}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(4),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(4){width:13%}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(5),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(5){width:15%}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(6),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(6){width:9%}
+#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(7),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(7){width:16%}
+#tabMacroV22 #allocationMacroSnapshotV23 .macroClassNameV25{min-width:0!important;gap:7px!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .macroClassNameV25 strong{font-size:10.5px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .targetInputV25{max-width:88px!important;min-width:0!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .targetInputV25 input{padding:7px 7px!important;font-size:10px!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .rowActions{gap:5px!important;flex-wrap:nowrap!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .rowActions button{font-size:9px!important;padding:6px 8px!important;min-width:0!important;white-space:nowrap!important}
+
+/* A visão gráfica ganha área útil: donut, textos e legenda ficam maiores sem perder clareza. */
+#tabMacroV22 #macroGraphicV28 .macroHeadV28{gap:10px!important;padding-bottom:13px!important}
+#tabMacroV22 #macroGraphicV28 .macroHeadV28 h2{font-size:17px!important}
+#tabMacroV22 #macroGraphicV28 .macroHeadV28 p{font-size:9.5px!important;line-height:1.4!important;max-width:240px!important}
+#tabMacroV22 #macroGraphicV28 .macroHeadV28 button{font-size:10px!important;padding:8px 11px!important}
+#tabMacroV22 #macroGraphicV28 .macroDonutsV28{padding:16px 0 14px!important;gap:14px!important}
+#tabMacroV22 #macroGraphicV28 .macroDonutsV28.compare{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#tabMacroV22 #macroGraphicV28 .macroDonutV28{width:136px!important;height:136px!important}
+#tabMacroV22 #macroGraphicV28 .macroDonutV28>span{width:72px!important;height:72px!important}
+#tabMacroV22 #macroGraphicV28 .macroDonutV28 strong{font-size:11px!important}
+#tabMacroV22 #macroGraphicV28 .macroDonutV28 em{font-size:8.5px!important}
+#tabMacroV22 #macroGraphicV28 .macroLegendV28{max-height:none!important;overflow:visible!important;gap:1px!important}
+#tabMacroV22 #macroGraphicV28 .macroLegendV28>div{padding:7px 4px!important;grid-template-columns:10px minmax(0,1fr)!important;gap:9px!important}
+#tabMacroV22 #macroGraphicV28 .macroLegendV28 i{width:10px!important;height:10px!important}
+#tabMacroV22 #macroGraphicV28 .macroLegendV28 strong{font-size:10.5px!important;line-height:1.25!important}
+#tabMacroV22 #macroGraphicV28 .macroLegendV28 small{font-size:8.5px!important;line-height:1.35!important}
+
 #tabMacroV22>#allocationHealthV24,#tabMacroV22>.chartsCard.v28LegacyMacro{display:none!important}
-@media(max-width:1100px){#allocationPulseV26.allocationPulseV302{grid-template-columns:repeat(2,minmax(0,1fr))!important}#allocationPulseV26 .dispersionPulseV26{grid-column:1/-1}#tabMacroV22 #macroStageV28.macroStageV302{grid-template-columns:1fr!important}#tabMacroV22 #allocationMacroSnapshotV23.macroDetailedV302,#tabMacroV22 #macroGraphicV28.macroGraphicV302{grid-column:1!important;grid-row:auto!important;width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important}}
-@media(max-width:720px){#allocationPulseV26.allocationPulseV302{grid-template-columns:1fr!important}#allocationPulseV26 .dispersionPulseV26{grid-column:auto}}
+
+@media(max-width:1180px){
+  #allocationPulseV26.allocationPulseV302{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #allocationPulseV26 .dispersionPulseV26{grid-column:1/-1}
+  #tabMacroV22 #macroStageV28.macroStageV302{grid-template-columns:1fr!important}
+  #tabMacroV22 #allocationMacroSnapshotV23.macroDetailedV302,#tabMacroV22 #macroGraphicV28.macroGraphicV302{grid-column:1!important;grid-row:auto!important;width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important}
+  #tabMacroV22 #macroGraphicV28 .macroDonutsV28{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25{table-layout:auto!important;min-width:760px!important}
+  #tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableWrapV25{overflow-x:auto!important}
+}
+@media(max-width:720px){
+  #allocationPulseV26.allocationPulseV302{grid-template-columns:1fr!important}
+  #allocationPulseV26 .dispersionPulseV26{grid-column:auto}
+  #tabMacroV22 #macroGraphicV28 .macroDonutsV28.compare{grid-template-columns:1fr 1fr!important}
+}
