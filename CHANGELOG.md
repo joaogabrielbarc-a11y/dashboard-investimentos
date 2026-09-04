@@ -10,6 +10,22 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.12.0 — 2026-09-04
+
+**Área:** Alocação estruturada
+**Tipo:** Minor
+
+### Solicitação
+Adicionar controles `−` e `+` em todos os ajustes percentuais da aba, sempre em passos de 1 ponto percentual, com recálculo automático dos indicadores dependentes.
+
+### Alterações
+- Os controles de meta macro, banda geral, bandas por classe e metas por segmento receberam seletores `− / percentual / +`.
+- Cada clique altera exatamente 1 p.p.
+- Faixas, status, totais de metas, gráficos e indicadores são atualizados imediatamente.
+- A digitação manual também passa a ser aplicada automaticamente sem exigir a saída do campo.
+- Os diálogos relacionados à alocação usam o mesmo padrão visual.
+- Nenhuma chave de `localStorage`, posição, lançamento ou meta existente foi migrada ou apagada.
+
 ## V2.4.1 — 2026-09-02
 
 **Área:** Patrimônio  

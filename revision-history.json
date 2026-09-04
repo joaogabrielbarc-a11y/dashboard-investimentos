@@ -1,9 +1,30 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.4.1",
+  "currentVersion": "2.12.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.12.0",
+      "date": "2026-09-04",
+      "type": "minor",
+      "area": "Alocação estruturada",
+      "status": "deployed",
+      "request": "Adicionar controles de aumentar e diminuir percentuais em passos de 1 ponto percentual e recalcular faixas e status automaticamente.",
+      "motivation": "Os campos percentuais dependiam do evento change e não atualizavam os indicadores enquanto o usuário ainda editava o valor.",
+      "changes": [
+        "Adiciona botões de menos e mais aos controles percentuais de macro alocação, bandas e micro alocação.",
+        "Padroniza cada clique em exatamente 1 ponto percentual.",
+        "Recalcula meta, faixa, status, totais e gráficos imediatamente após cada clique.",
+        "Aplica atualização automática também à digitação manual, sem exigir que o campo perca o foco.",
+        "Inclui o mesmo componente nos diálogos de classe, segmento e micro alocação acessíveis pela aba Alocação estruturada."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false
+      }
+    },
     {
       "version": "2.4.1",
       "date": "2026-09-02",
