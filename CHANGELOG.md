@@ -10,6 +10,17 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.12.1 — 2026-09-04
+
+**Área:** Alocação estruturada
+**Tipo:** Patch
+
+### Correção
+- Os seletores agora atualizam diretamente o modelo de metas e bandas antes do novo `render()`.
+- Faixas, status, totais e gráficos passam a refletir cada clique imediatamente.
+- A correção cobre macro alocação, banda geral, bandas por classe e metas por segmento.
+- Nenhum dado existente ou chave de `localStorage` foi migrado.
+
 ## V2.12.0 — 2026-09-04
 
 **Área:** Alocação estruturada
