@@ -10,6 +10,19 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.13.0 — 2026-09-04
+
+**Área:** Patrimônio e Alocação estruturada
+**Tipo:** Minor
+
+### Ajustes
+- A visão gráfica da macro alocação ganhou mais espaço, com redução proporcional da área da tabela.
+- “Ativos na Carteira” foi renomeado para “Resumo da carteira”.
+- O resumo agora permite navegar em três níveis: Macro, Segmentos e Ativos.
+- Clicar em uma classe abre sua distribuição por segmentos; clicar em um segmento abre os ativos correspondentes.
+- Controles de nível, seletor de classe, contexto atual e botão de retorno mantêm a navegação clara.
+- Nenhuma posição, lançamento, meta ou chave de `localStorage` foi migrada.
+
 ## V2.12.4 — 2026-09-04
 
 **Área:** Alocação estruturada

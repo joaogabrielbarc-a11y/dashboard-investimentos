@@ -1,15 +1,36 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.12.4",
+  "currentVersion": "2.13.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.13.0",
+      "date": "2026-09-04",
+      "type": "minor",
+      "area": "Patrimônio e Alocação estruturada",
+      "status": "deployed",
+      "request": "Ampliar a visão gráfica da macro alocação e transformar o gráfico patrimonial em um resumo navegável por classe, segmento e ativo.",
+      "motivation": "A visão gráfica da macro precisava de mais espaço e a composição patrimonial precisava permitir análise progressiva, do panorama geral até cada posição individual.",
+      "changes": [
+        "Aumenta proporcionalmente a largura da visão gráfica da macro alocação e reduz a área da tabela sem alterar suas funções.",
+        "Renomeia o gráfico patrimonial para Resumo da carteira.",
+        "Adiciona os níveis Macro, Segmentos e Ativos ao resumo patrimonial.",
+        "Permite abrir os segmentos clicando em uma classe e abrir os ativos clicando em um segmento.",
+        "Inclui controles de nível, seletor de classe, contexto atual e navegação de retorno."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false
+      }
+    },
     {
       "version": "2.12.4",
       "date": "2026-09-04",
       "type": "patch",
       "area": "Alocação estruturada",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Corrigir cortes nos seletores percentuais e exibir o total das metas por distribuição setorial.",
       "motivation": "Regras antigas mais específicas ainda limitavam a largura da Meta e do campo de Banda geral; o total setorial não estava visível junto à tabela de segmentos.",
       "changes": [

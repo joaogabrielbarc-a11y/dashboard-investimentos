@@ -7,6 +7,8 @@ let v24DividendLoaded=false;
 const v24Saved=(()=>{try{return JSON.parse(localStorage.getItem(V24_UI_KEY)||'null')||{};}catch(e){return {};}})();
 let v24Scope=v24Saved.scope||'macro';
 let v24Type=v24Saved.type||'all';
+let v24DistributionView=v24Saved.distributionView||(v24Scope==='macro'?'macro':'segments');
+let v24DistributionSegment=v24Saved.distributionSegment||null;
 
 function escV24(v){return typeof escapeHtml==='function'?escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function finiteV24(v){return v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));}
@@ -19,8 +21,8 @@ function tickerV24(v){const t=String(v||'').trim().toUpperCase();return t==='BTC
 function isoV24(v){const s=String(v||'').slice(0,10);return /^\d{4}-\d{2}-\d{2}$/.test(s)?s:null;}
 function todayV24(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function fxV24(){try{const x=typeof fxUsdBrlV20==='function'?fxUsdBrlV20():null;return Number.isFinite(+x)?+x:null;}catch(e){return null;}}
-function saveUiV24(){try{localStorage.setItem(V24_UI_KEY,JSON.stringify({scope:v24Scope,type:v24Type}));}catch(e){}}
-function ensureCssV24(){if(document.querySelector('link[href^="v24.css"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='v24.css?v=24.1';document.head.appendChild(l);}
+function saveUiV24(){try{localStorage.setItem(V24_UI_KEY,JSON.stringify({scope:v24Scope,type:v24Type,distributionView:v24DistributionView,distributionSegment:v24DistributionSegment}));}catch(e){}}
+function ensureCssV24(){if(document.querySelector('link[href^="v24.css"]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='v24.css?v=24.2';document.head.appendChild(l);}
 function updateVersionV24(){const e=document.querySelector('.topbar .eyebrow');if(e)e.textContent='CARTEIRA • V2.4';}
 
 function txHistoryV24(){if(typeof v14==='undefined')return[];if(Array.isArray(v14.executed))return v14.executed;if(Array.isArray(v14.history))return v14.history;return[];}
@@ -70,20 +72,38 @@ function renderAllocationHealthV24(){
 
 function activeHoldingsV24(){return (state.holdings||[]).filter(h=>(+h.qty||0)>1e-10&&(+h.value||0)>0);}
 function scopesV24(){const set=[];activeHoldingsV24().forEach(h=>{if(h.className&&!set.includes(h.className))set.push(h.className);});return set;}
-function rowsForScopeV24(scope){
+function rowsForScopeV24(scope,view='macro',segment=null){
   const items=activeHoldingsV24();if(scope==='macro'){
     const map=new Map();(state.assets||[]).forEach(a=>map.set(a.name,0));items.forEach(h=>map.set(h.className,(map.get(h.className)||0)+Math.max(0,+h.value||0)));return [...map.entries()].filter(([,value])=>value>0).map(([name,value])=>({name,value,key:name}));
   }
-  return items.filter(h=>h.className===scope).map(h=>({name:tickerV24(h.ticker),subtitle:h.name||'',value:Math.max(0,+h.value||0),key:h.id||h.ticker})).sort((a,b)=>b.value-a.value);
+  const scoped=items.filter(h=>h.className===scope);
+  if(view==='segments'){
+    const map=new Map();scoped.forEach(h=>{const name=String(h.segment||'Sem segmento').trim()||'Sem segmento',entry=map.get(name)||{name,value:0,count:0,key:name};entry.value+=Math.max(0,+h.value||0);entry.count++;map.set(name,entry);});
+    return [...map.values()].map(r=>({...r,subtitle:`${r.count} ${r.count===1?'ativo':'ativos'}`})).sort((a,b)=>b.value-a.value);
+  }
+  return scoped.filter(h=>!segment||(String(h.segment||'Sem segmento').trim()||'Sem segmento')===segment).map(h=>({name:tickerV24(h.ticker),subtitle:h.name||'',value:Math.max(0,+h.value||0),key:h.id||h.ticker})).sort((a,b)=>b.value-a.value);
 }
 function gradientV24(rows){const total=rows.reduce((s,r)=>s+r.value,0);if(total<=0)return '#14283d';let acc=0,stops=[];rows.forEach((r,i)=>{const start=acc,end=acc+r.value/total*100;stops.push(`${V24_COLORS[i%V24_COLORS.length]} ${start}% ${end}%`);acc=end;});return `conic-gradient(${stops.join(',')})`;}
 function ensureDistributionCardV24(){
   const panel=document.getElementById('tabPatrimonioV22'),evo=document.querySelector('.evolutionCard');if(!panel||!evo)return null;let grid=document.getElementById('patrimonyChartsGridV24');if(!grid){grid=document.createElement('div');grid.id='patrimonyChartsGridV24';grid.className='patrimonyChartsGridV24';const kpis=document.getElementById('kpis');if(kpis)kpis.insertAdjacentElement('afterend',grid);else panel.appendChild(grid);}if(evo.parentElement!==grid)grid.appendChild(evo);let card=document.getElementById('portfolioDistributionV24');if(!card){card=document.createElement('section');card.id='portfolioDistributionV24';card.className='card portfolioDistributionV24';grid.appendChild(card);}else if(card.parentElement!==grid)grid.appendChild(card);return card;
 }
 function renderDistributionV24(){
-  const card=ensureDistributionCardV24();if(!card)return;const classes=scopesV24();if(v24Scope!=='macro'&&!classes.includes(v24Scope))v24Scope='macro';const rows=rowsForScopeV24(v24Scope),total=rows.reduce((s,r)=>s+r.value,0),title=v24Scope==='macro'?'Ativos na Carteira':v24Scope;
-  card.innerHTML=`<div class="distributionHeaderV24"><div><h2>${escV24(title)}</h2></div><select id="distributionScopeV24"><option value="macro">Todos os tipos</option>${classes.map(c=>`<option value="${escV24(c)}">${escV24(c)}</option>`).join('')}</select></div><div class="distributionBodyV24"><div class="distributionDonutV24" style="background:${gradientV24(rows)}"><div aria-hidden="true"></div></div><div class="distributionLegendV24">${rows.map((r,i)=>{const w=total?r.value/total*100:0;return `<button type="button" ${v24Scope==='macro'?`data-drill-v24="${escV24(r.name)}"`:''}><i style="background:${V24_COLORS[i%V24_COLORS.length]}"></i><span><strong>${escV24(r.name)}</strong>${r.subtitle?`<small>${escV24(r.subtitle)}</small>`:''}</span><b>${pctV24(w)}</b></button>`;}).join('')||'<div class="emptyState">Sem posições para exibir.</div>'}</div></div>${v24Scope!=='macro'?'<button type="button" id="distributionBackV24" class="ghost compact distributionBackV24">← Voltar à carteira</button>':''}`;
-  const sel=card.querySelector('#distributionScopeV24');if(sel){sel.value=v24Scope;sel.onchange=e=>{v24Scope=e.target.value;saveUiV24();renderDistributionV24();};}card.querySelectorAll('[data-drill-v24]').forEach(b=>b.onclick=()=>{v24Scope=b.dataset.drillV24;saveUiV24();renderDistributionV24();});card.querySelector('#distributionBackV24')?.addEventListener('click',()=>{v24Scope='macro';saveUiV24();renderDistributionV24();});
+  const card=ensureDistributionCardV24();if(!card)return;const classes=scopesV24();
+  if(v24Scope!=='macro'&&!classes.includes(v24Scope)){v24Scope='macro';v24DistributionView='macro';v24DistributionSegment=null;}
+  if(v24Scope==='macro')v24DistributionView='macro';
+  if(v24Scope!=='macro'&&v24DistributionView==='macro')v24DistributionView='segments';
+  const segmentRows=v24Scope==='macro'?[]:rowsForScopeV24(v24Scope,'segments');
+  if(v24DistributionSegment&&!segmentRows.some(r=>r.name===v24DistributionSegment))v24DistributionSegment=null;
+  const rows=rowsForScopeV24(v24Scope,v24DistributionView,v24DistributionView==='assets'?v24DistributionSegment:null),total=rows.reduce((s,r)=>s+r.value,0);
+  const context=v24Scope==='macro'?'Macro alocação':v24DistributionView==='segments'?`${v24Scope} • Segmentos`:`${v24Scope}${v24DistributionSegment?` • ${v24DistributionSegment}`:''} • Ativos`;
+  const interactive=v24DistributionView!=='assets';
+  card.dataset.distributionViewV24=v24DistributionView;
+  card.innerHTML=`<div class="distributionHeaderV24"><div><h2>Resumo da carteira</h2><p class="distributionContextV213">${escV24(context)}</p></div><div class="distributionHeaderToolsV213"><div class="distributionViewsV213" role="group" aria-label="Nível de visualização"><button type="button" data-distribution-view-v24="macro" class="${v24DistributionView==='macro'?'active':''}">Macro</button><button type="button" data-distribution-view-v24="segments" class="${v24DistributionView==='segments'?'active':''}" ${v24Scope==='macro'?'disabled':''}>Segmentos</button><button type="button" data-distribution-view-v24="assets" class="${v24DistributionView==='assets'?'active':''}" ${v24Scope==='macro'?'disabled':''}>Ativos</button></div><select id="distributionScopeV24" aria-label="Classe de ativos"><option value="macro">Carteira completa</option>${classes.map(c=>`<option value="${escV24(c)}">${escV24(c)}</option>`).join('')}</select></div></div><div class="distributionBodyV24"><div class="distributionDonutV24" style="background:${gradientV24(rows)}"><div aria-hidden="true"></div></div><div class="distributionLegendV24">${rows.map((r,i)=>{const w=total?r.value/total*100:0,drill=v24DistributionView==='macro'?`data-drill-v24="${escV24(r.name)}"`:v24DistributionView==='segments'?`data-segment-drill-v24="${escV24(r.name)}"`:'';return `<button type="button" ${drill} class="${interactive?'distributionDrillV213':''}"><i style="background:${V24_COLORS[i%V24_COLORS.length]}"></i><span><strong>${escV24(r.name)}</strong>${r.subtitle?`<small>${escV24(r.subtitle)}</small>`:''}</span><b>${pctV24(w)}</b>${interactive?'<em aria-hidden="true">›</em>':''}</button>`;}).join('')||'<div class="emptyState">Sem posições para exibir.</div>'}</div></div>${v24Scope!=='macro'?`<button type="button" id="distributionBackV24" class="ghost compact distributionBackV24">← ${v24DistributionView==='assets'?'Voltar aos segmentos':'Voltar à carteira'}</button>`:''}`;
+  const sel=card.querySelector('#distributionScopeV24');if(sel){sel.value=v24Scope;sel.onchange=e=>{v24Scope=e.target.value;v24DistributionView=v24Scope==='macro'?'macro':'segments';v24DistributionSegment=null;saveUiV24();renderDistributionV24();};}
+  card.querySelectorAll('[data-distribution-view-v24]').forEach(b=>b.onclick=()=>{const view=b.dataset.distributionViewV24;if(view==='macro'){v24Scope='macro';v24DistributionSegment=null;}else if(v24Scope!=='macro'){v24DistributionView=view;if(view==='assets')v24DistributionSegment=null;}v24DistributionView=view;saveUiV24();renderDistributionV24();});
+  card.querySelectorAll('[data-drill-v24]').forEach(b=>b.onclick=()=>{v24Scope=b.dataset.drillV24;v24DistributionView='segments';v24DistributionSegment=null;saveUiV24();renderDistributionV24();});
+  card.querySelectorAll('[data-segment-drill-v24]').forEach(b=>b.onclick=()=>{v24DistributionView='assets';v24DistributionSegment=b.dataset.segmentDrillV24;saveUiV24();renderDistributionV24();});
+  card.querySelector('#distributionBackV24')?.addEventListener('click',()=>{if(v24DistributionView==='assets'){v24DistributionView='segments';v24DistributionSegment=null;}else{v24Scope='macro';v24DistributionView='macro';}saveUiV24();renderDistributionV24();});
 }
 
 function txBrlV24(t){if(finiteV24(t?.brlTotal))return Number(t.brlTotal);if(String(t?.currency||'').toUpperCase()==='USD'&&finiteV24(t?.totalNative)&&finiteV24(fxV24()))return Number(t.totalNative)*fxV24();return null;}

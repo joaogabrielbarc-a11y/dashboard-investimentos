@@ -1,0 +1,29 @@
+/* Pondera V2.13.0 — proporção macro e resumo patrimonial hierárquico */
+#tabMacroV22 #macroStageV28.macroStageV302{grid-template-columns:minmax(0,1fr) clamp(410px,33vw,460px)!important}
+#tabMacroV22 #macroGraphicV28.macroGraphicV302{min-width:410px!important;max-width:460px!important}
+#tabMacroV22 #macroGraphicV28 .macroDonutV28{width:158px!important;height:158px!important}
+#tabMacroV22 #macroGraphicV28 .macroDonutV28>span{width:80px!important;height:80px!important}
+
+#tabPatrimonioV22 .distributionHeaderV24{align-items:flex-start!important}
+#tabPatrimonioV22 .distributionHeaderV24 p.distributionContextV213{display:block!important;margin:5px 0 0!important;color:var(--muted)!important;font-size:11px!important;line-height:1.35!important}
+#tabPatrimonioV22 .distributionHeaderToolsV213{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+#tabPatrimonioV22 .distributionViewsV213{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#081522;overflow:hidden}
+#tabPatrimonioV22 .distributionViewsV213 button{appearance:none;border:0;border-left:1px solid var(--line);border-radius:0;background:transparent;color:#829ab4;padding:9px 10px;font-size:10px;font-weight:800;cursor:pointer}
+#tabPatrimonioV22 .distributionViewsV213 button:first-child{border-left:0}
+#tabPatrimonioV22 .distributionViewsV213 button.active{background:rgba(105,167,255,.14);color:#dbeaff}
+#tabPatrimonioV22 .distributionViewsV213 button:disabled{opacity:.34;cursor:not-allowed}
+#tabPatrimonioV22 .distributionLegendV24 button.distributionDrillV213{grid-template-columns:11px minmax(0,1fr) auto 12px}
+#tabPatrimonioV22 .distributionLegendV24 button.distributionDrillV213 em{display:block;color:#6f8eae;font-size:18px;font-style:normal;line-height:1}
+#tabPatrimonioV22 .distributionLegendV24 button.distributionDrillV213:hover{background:rgba(105,167,255,.07)}
+#tabPatrimonioV22 .distributionLegendV24 button:not(.distributionDrillV213){cursor:default}
+
+@media(max-width:1180px){
+  #tabMacroV22 #macroStageV28.macroStageV302{grid-template-columns:1fr!important}
+  #tabMacroV22 #macroGraphicV28.macroGraphicV302{min-width:0!important;max-width:none!important}
+}
+@media(max-width:760px){
+  #tabPatrimonioV22 .distributionHeaderToolsV213{justify-content:flex-start;width:100%}
+  #tabPatrimonioV22 .distributionViewsV213{width:100%}
+  #tabPatrimonioV22 .distributionViewsV213 button{flex:1}
+  #tabPatrimonioV22 .distributionHeaderV24 select{width:100%}
+}
