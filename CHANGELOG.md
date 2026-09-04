@@ -10,6 +10,18 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.12.4 — 2026-09-04
+
+**Área:** Alocação estruturada
+**Tipo:** Patch
+
+### Ajustes
+- A Banda geral ganhou dimensionamento próprio para exibir o percentual completo.
+- A coluna Meta não herda mais o limite antigo de 88 px e passa a exibir o botão `+` integralmente.
+- Cada Distribuição setorial mostra a soma dos alvos ao lado de “+ Segmento”.
+- O total setorial muda de status conforme a soma esteja ou não em 100% e é atualizado imediatamente.
+- Nenhum dado existente ou chave de `localStorage` foi alterado.
+
 ## V2.12.3 — 2026-09-04
 
 **Área:** Alocação estruturada

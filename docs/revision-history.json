@@ -1,15 +1,35 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.12.3",
+  "currentVersion": "2.12.4",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.12.4",
+      "date": "2026-09-04",
+      "type": "patch",
+      "area": "Alocação estruturada",
+      "status": "deployed",
+      "request": "Corrigir cortes nos seletores percentuais e exibir o total das metas por distribuição setorial.",
+      "motivation": "Regras antigas mais específicas ainda limitavam a largura da Meta e do campo de Banda geral; o total setorial não estava visível junto à tabela de segmentos.",
+      "changes": [
+        "Sobrescreve os limites antigos da coluna Meta e preserva espaço para o botão de aumento.",
+        "Dimensiona separadamente a Banda geral para exibir integralmente valores de até três dígitos.",
+        "Adiciona o indicador de soma das metas ao cabeçalho de cada Distribuição setorial.",
+        "Atualiza o indicador setorial imediatamente quando um alvo é alterado."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false
+      }
+    },
     {
       "version": "2.12.3",
       "date": "2026-09-04",
       "type": "patch",
       "area": "Alocação estruturada",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Tornar os ajustes percentuais fluidos, completos e alinhados dentro das células.",
       "motivation": "O recálculo reconstruía seções inteiras, o botão de aumento podia ser cortado na coluna Meta e o sinal de tolerância antigo permanecia junto aos novos controles.",
       "changes": [

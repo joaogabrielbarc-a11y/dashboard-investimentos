@@ -1,4 +1,4 @@
-/* Pondera V2.12.3 — controles estáveis, completos e alinhados */
+/* Pondera V2.12.4 — controles estáveis, completos e alinhados */
 .ppStepperV32{display:inline-grid!important;grid-template-columns:26px minmax(36px,1fr) 18px 26px!important;align-items:stretch!important;width:108px!important;min-width:108px!important;max-width:108px!important;min-height:34px!important;box-sizing:border-box!important;border:1px solid var(--line,#20344d)!important;border-radius:9px!important;background:#081522!important;overflow:hidden!important;margin-top:0!important;vertical-align:middle!important}
 .ppStepperV32 .ppStepButtonV32{appearance:none!important;display:grid!important;place-items:center!important;width:100%!important;min-width:0!important;padding:0!important;border:0!important;border-radius:0!important;background:rgba(255,255,255,.025)!important;color:#b9c9da!important;font:500 19px/1 system-ui,sans-serif!important;cursor:pointer!important;transition:background .14s ease,color .14s ease!important}
 .ppStepperV32 .ppStepButtonV32:first-child{border-right:1px solid rgba(32,52,77,.72)!important}
@@ -11,7 +11,10 @@
 .ppStepperV32.ppDialogStepperV32{grid-template-columns:38px minmax(44px,1fr) 22px 38px!important;width:100%!important;min-width:0!important;max-width:none!important;min-height:42px!important;margin-top:6px!important}
 .ppStepperV32.ppDialogStepperV32 input[type="number"]{width:100%!important;max-width:none!important;flex:1 1 auto!important;text-align:center!important;font-size:13px!important}
 .ppStepperV32.ppDialogStepperV32 .ppStepButtonV32{width:100%!important;min-width:0!important}
-#tabMacroV22 .targetInputV25.ppStepperV32{width:108px!important;min-width:108px!important;max-width:108px!important;margin-inline:auto!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .targetInputV25.ppStepperV32{width:108px!important;min-width:108px!important;max-width:108px!important;margin-inline:auto!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .macroBandV302>div.ppStepperV32{display:inline-grid!important;grid-template-columns:26px minmax(40px,1fr) 18px 26px!important;align-items:stretch!important;width:112px!important;min-width:112px!important;max-width:112px!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .macroBandV302>div.ppStepperV32 input[type="number"]{width:100%!important;min-width:0!important;max-width:none!important;padding:7px 1px!important;text-align:center!important}
+#tabMacroV22 #allocationMacroSnapshotV23 .macroBandV302>div.ppStepperV32>b{width:18px!important;min-width:18px!important;padding:0!important}
 #tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(1),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(1){width:21%!important}
 #tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(3),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(3){width:10%!important}
 #tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 th:nth-child(4),#tabMacroV22 #allocationMacroSnapshotV23 .allocationMacroTableV25 td:nth-child(4){width:16%!important;text-align:center!important}
@@ -19,7 +22,9 @@
 #tabMacroV22 .macroBandV302>div.ppStepperV32{height:34px!important}
 #tabMacroV22 .bandInputV18.ppStepperV32,#tabMacroV22 .targetInputV18.ppStepperV32{margin-top:5px!important}
 #tabMacroV22 .targetInputV18.ppStepperV32{margin-top:0!important}
+.segmentHeaderActionsV32{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;flex-wrap:wrap!important}
+.segmentTargetTotalV32{white-space:nowrap!important}
 @keyframes ppRefreshV32{0%{background:rgba(105,167,255,.18)}100%{background:transparent}}
 .ppUpdatedV32{animation:ppRefreshV32 .34s ease-out!important}
-@media(max-width:620px){.ppStepperV32{grid-template-columns:25px minmax(34px,1fr) 17px 25px!important;width:102px!important;min-width:102px!important;max-width:102px!important}.ppStepperV32.ppDialogStepperV32{grid-template-columns:36px minmax(42px,1fr) 20px 36px!important;width:100%!important;min-width:0!important;max-width:none!important}}
+@media(max-width:620px){.ppStepperV32{grid-template-columns:25px minmax(34px,1fr) 17px 25px!important;width:102px!important;min-width:102px!important;max-width:102px!important}#tabMacroV22 #allocationMacroSnapshotV23 .targetInputV25.ppStepperV32{width:102px!important;min-width:102px!important;max-width:102px!important}#tabMacroV22 #allocationMacroSnapshotV23 .macroBandV302>div.ppStepperV32{grid-template-columns:25px minmax(38px,1fr) 17px 25px!important;width:105px!important;min-width:105px!important;max-width:105px!important}.ppStepperV32.ppDialogStepperV32{grid-template-columns:36px minmax(42px,1fr) 20px 36px!important;width:100%!important;min-width:0!important;max-width:none!important}}
 @media(prefers-reduced-motion:reduce){.ppUpdatedV32{animation:none!important}}
