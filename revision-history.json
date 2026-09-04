@@ -1,15 +1,35 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.12.1",
+  "currentVersion": "2.12.2",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.12.2",
+      "date": "2026-09-04",
+      "type": "patch",
+      "area": "Alocação estruturada",
+      "status": "deployed",
+      "request": "Concluir o recálculo imediato de faixas e status nos novos seletores percentuais.",
+      "motivation": "O renderizador-base ainda acessava campos removidos pelas camadas atuais da interface e interrompia a reconstrução da tabela após alterar uma meta.",
+      "changes": [
+        "Torna opcionais os campos legados de aporte e banda durante a renderização.",
+        "Evita o carregamento concorrente e duplicado das camadas legadas após o bootstrap estável.",
+        "Garante que cada clique em menos ou mais reconstrua faixas, status, totais e gráficos sem erro.",
+        "Atualiza as referências de cache dos arquivos corrigidos."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false
+      }
+    },
     {
       "version": "2.12.1",
       "date": "2026-09-04",
       "type": "patch",
       "area": "Alocação estruturada",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Garantir que os seletores percentuais recalculassem efetivamente faixas e status após cada alteração.",
       "motivation": "A primeira camada visual disparava o evento legado, mas o modelo interno de alocação não era atualizado em todas as reconstruções do DOM.",
       "changes": [

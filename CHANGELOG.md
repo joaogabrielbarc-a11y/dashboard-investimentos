@@ -10,6 +10,17 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.12.2 — 2026-09-04
+
+**Área:** Alocação estruturada
+**Tipo:** Patch
+
+### Correção
+- O renderizador-base não interrompe mais a atualização ao encontrar campos legados removidos pela interface atual.
+- A cadeia antiga de scripts não é mais carregada em paralelo com o bootstrap estável.
+- Os controles `− / percentual / +` agora atualizam faixas, status, totais e gráficos a cada clique.
+- As referências de cache dos arquivos corrigidos foram renovadas, sem migração de dados.
+
 ## V2.12.1 — 2026-09-04
 
 **Área:** Alocação estruturada

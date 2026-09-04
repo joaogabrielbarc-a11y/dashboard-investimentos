@@ -127,10 +127,10 @@
 <dialog id="txDialog" class="modal modalWide"><form id="txForm" method="dialog" class="modalCard"><div class="modalHeader"><div><span class="eyebrow">SIMULAÇÃO</span><h3>Novo lançamento</h3></div><button id="closeTxDialog" type="button" class="iconButton">×</button></div><div class="txFormGrid"><label>Ativo / ticker<input id="txTicker" type="text" required placeholder="Ex.: ITUB4"></label><label>Nome / descrição<input id="txName" type="text" placeholder="Opcional"></label></div><div class="txFormGrid three"><label>Classe<select id="txClass"></select></label><label>Ordem<select id="txSide"><option>Compra</option><option>Venda</option></select></label><label>Moeda<select id="txCurrency"><option value="BRL">BRL</option><option value="USD">USD</option></select></label></div><div class="txFormGrid three"><label>Quantidade<input id="txQty" type="number" min="0" step="0.000001" required></label><label>Preço unitário<input id="txPrice" type="number" min="0" step="0.000001" required></label><label id="txFxWrap" class="fxField hidden">Câmbio USD/BRL<input id="txFx" type="number" min="0" step="0.0001" placeholder="Ex.: 5,40"></label></div><div class="txFormGrid"><label>Data do lançamento<input id="txDate" type="date" required></label><div></div></div><div class="txPreview"><div class="txPreviewBox"><span>Total na moeda</span><strong id="txNativePreview">R$ 0,00</strong></div><div class="txPreviewBox"><span>Total consolidado</span><strong id="txBrlPreview">R$ 0,00</strong></div><div class="txPreviewBox"><span>Aporte ideal da classe</span><strong id="txIdealPreview">R$ 0,00</strong></div></div><div class="modalHelp">Para ativos em USD, informe o câmbio usado na operação. O dashboard precisa do valor equivalente em reais para projetar e consolidar a macro alocação.</div><div class="modalActions"><button type="button" class="ghost" onclick="document.getElementById('txDialog').close()">Cancelar</button><button type="submit" class="primary">Adicionar à simulação</button></div></form></dialog>
 
 <div id="globalTooltip" class="globalTooltip" role="tooltip" aria-hidden="true"></div>
-<script src="app.js"></script>
+<script src="app.js?v=12.2"></script>
 <script src="v13-core.js"></script>
-<script src="v13-tooltips.js"></script>
+<script src="v13-tooltips.js?v=13.1"></script>
 <script src="v14.js"></script>
-<script src="v21.js?v=21.11"></script>
+<script src="v21.js?v=21.12"></script>
 </body>
 </html>

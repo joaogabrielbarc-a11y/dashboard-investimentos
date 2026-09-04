@@ -1,11 +1,11 @@
 (()=>{
 'use strict';
-const RUNTIME_VERSION='2.12.1';
+const RUNTIME_VERSION='2.12.2';
 if(window.__PONDERA_STABLE_BOOTSTRAP__)return;
 window.__PONDERA_STABLE_BOOTSTRAP__={state:'booting',version:RUNTIME_VERSION};
 const eye=()=>document.querySelector('.topbar .eyebrow');
 const setBootState=state=>{window.__PONDERA_STABLE_BOOTSTRAP__.state=state;document.documentElement.dataset.ponderaRuntimeState=state;};
-if(!document.getElementById('ponderaStableRuntimeStyle')){const st=document.createElement('style');st.id='ponderaStableRuntimeStyle';st.textContent='.topbar .eyebrow{font-size:0!important}.topbar .eyebrow::after{content:"CARTEIRA • V2.12.1";font-size:11px;letter-spacing:.08em;font-weight:800}';document.head.appendChild(st);}
+if(!document.getElementById('ponderaStableRuntimeStyle')){const st=document.createElement('style');st.id='ponderaStableRuntimeStyle';st.textContent='.topbar .eyebrow{font-size:0!important}.topbar .eyebrow::after{content:"CARTEIRA • V2.12.2";font-size:11px;letter-spacing:.08em;font-weight:800}';document.head.appendChild(st);}
 const legacyHistory=typeof renderHistory==='function'?renderHistory:null;if(legacyHistory&&!renderHistory.__ponderaSafeHistory){const safeHistory=function(){if(!document.getElementById('historyRows'))return;return legacyHistory.apply(this,arguments);};safeHistory.__ponderaSafeHistory=true;renderHistory=safeHistory;}
 function loadScript(src,datasetKey){return new Promise((resolve,reject)=>{const clean=src.split('?')[0],existing=[...document.scripts].find(s=>{try{return new URL(s.src,location.href).pathname.endsWith('/'+clean);}catch(e){return false;}});if(existing&&!existing.dataset.ponderaStable)return resolve(existing);if(existing){if(existing.dataset.ponderaLoaded==='1')return resolve(existing);existing.addEventListener('load',()=>resolve(existing),{once:true});existing.addEventListener('error',()=>reject(new Error('Falha ao carregar '+src)),{once:true});return;}const s=document.createElement('script');s.src=src;s.async=false;s.dataset.ponderaStable='1';if(datasetKey)s.dataset[datasetKey]='1';s.onload=()=>{s.dataset.ponderaLoaded='1';resolve(s);};s.onerror=()=>reject(new Error('Falha ao carregar '+src));document.body.appendChild(s);});}
 function waitFor(test,label,timeout=18000){return new Promise((resolve,reject)=>{const started=Date.now();const tick=()=>{let ok=false;try{ok=!!test();}catch(e){}if(ok)return resolve();if(Date.now()-started>timeout)return reject(new Error('Timeout aguardando '+label));setTimeout(tick,25);};tick();});}

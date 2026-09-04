@@ -11,7 +11,7 @@ document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest
 window.addEventListener('resize',()=>{if(activeTooltipEl)positionTooltip(activeTooltipEl);});
 window.addEventListener('scroll',()=>{if(activeTooltipEl)positionTooltip(activeTooltipEl);},{passive:true});
 window.addEventListener('load',()=>{
-  if(document.querySelector('script[data-v15-loader]'))return;
+  if(window.__PONDERA_STABLE_BOOTSTRAP__||document.querySelector('script[data-v15-loader]'))return;
   const s=document.createElement('script');s.src='v15.js?v=15.4';s.dataset.v15Loader='1';
   s.onload=()=>{
     if(document.querySelector('script[data-v16-loader]'))return;

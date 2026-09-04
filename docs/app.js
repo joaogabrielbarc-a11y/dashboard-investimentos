@@ -232,7 +232,9 @@ function render(){
     <article class="card kpi dispersion"><span class="kpiLabel">Índice de dispersão da meta ${info('Mede a distância entre a alocação atual e a ideal. 0% significa carteira exatamente na meta. O cálculo usa metade da soma dos desvios absolutos entre os pesos atuais e os pesos-alvo normalizados.')}</span><strong>${pct(dispersion)}</strong><small>Após o aporte planejado: ${pct(postDispersion)}</small></article>
     <article class="card kpi accent"><span class="kpiLabel">Maior prioridade ${info('Classe com menor relação entre peso atual e peso-alvo. Em geral, é a classe mais subalocada proporcionalmente.')}</span><strong>${priority?.name||'—'}</strong><small>${priority?`${pct(priority.currentWeight)} atual vs ${pct(priority.target)} alvo`:'—'}</small></article>`;
 
-  $('#contribution').value=state.contribution;$('#band').value=state.band;
+  const contributionInput=$('#contribution'),bandInput=$('#band');
+  if(contributionInput)contributionInput.value=state.contribution;
+  if(bandInput)bandInput.value=state.band;
   const balance=$('#contributionBalance');
   balance.className='balanceBox '+(remaining<0?'over':remaining>0?'warn':'good');
   balance.innerHTML=remaining<0?`<strong>${fmt.format(remaining)}</strong><small>Excedeu o orçamento</small>`:remaining>0?`<strong>${fmt.format(remaining)}</strong><small>Ainda falta distribuir</small>`:`<strong>${fmt.format(0)}</strong><small>Aporte fechado</small>`;
