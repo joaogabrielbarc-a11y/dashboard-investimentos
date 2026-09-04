@@ -1,15 +1,36 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.12.2",
+  "currentVersion": "2.12.3",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.12.3",
+      "date": "2026-09-04",
+      "type": "patch",
+      "area": "Alocação estruturada",
+      "status": "deployed",
+      "request": "Tornar os ajustes percentuais fluidos, completos e alinhados dentro das células.",
+      "motivation": "O recálculo reconstruía seções inteiras, o botão de aumento podia ser cortado na coluna Meta e o sinal de tolerância antigo permanecia junto aos novos controles.",
+      "changes": [
+        "Substitui a reconstrução completa por atualização pontual de faixa, status, totais e indicadores dependentes.",
+        "Mantém foco, posição de rolagem e o próprio controle durante cada ajuste.",
+        "Reserva largura para os quatro elementos do seletor e garante a exibição do botão de aumento na macro alocação.",
+        "Remove os sinais de mais ou menos antigos que ficavam sobrepostos aos seletores de banda.",
+        "Centraliza os valores percentuais com algarismos tabulares, independentemente da quantidade de dígitos."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false
+      }
+    },
     {
       "version": "2.12.2",
       "date": "2026-09-04",
       "type": "patch",
       "area": "Alocação estruturada",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Concluir o recálculo imediato de faixas e status nos novos seletores percentuais.",
       "motivation": "O renderizador-base ainda acessava campos removidos pelas camadas atuais da interface e interrompia a reconstrução da tabela após alterar uma meta.",
       "changes": [

@@ -10,6 +10,19 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.12.3 — 2026-09-04
+
+**Área:** Alocação estruturada
+**Tipo:** Patch
+
+### Ajustes
+- Alterações percentuais passam a atualizar somente as células e indicadores dependentes, sem apagar e recriar a seção.
+- O seletor mantém foco e posição enquanto faixa, status, totais e gráficos são atualizados.
+- A coluna Meta reserva espaço para `−`, percentual, `%` e `+`, evitando o corte do botão de aumento.
+- O sinal `±` antigo foi removido dos campos de banda.
+- Valores com um, dois ou três dígitos permanecem centralizados.
+- Nenhum dado existente ou chave de `localStorage` foi alterado.
+
 ## V2.12.2 — 2026-09-04
 
 **Área:** Alocação estruturada
