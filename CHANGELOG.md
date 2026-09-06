@@ -10,6 +10,20 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.13.1 — 2026-09-06
+
+**Área:** Alocação estruturada
+**Tipo:** Patch
+
+### Ajustes
+- O donut de micro alocação foi substituído por uma barra horizontal de composição em 100%.
+- Cada faixa representa proporcionalmente o peso real do segmento.
+- As faixas maiores exibem o nome e o percentual diretamente no gráfico.
+- A legenda compacta mantém peso real, alvo e status para todos os segmentos.
+- Segmentos pequenos ou zerados continuam identificados sem distorcer a escala do gráfico.
+- O botão de minimizar e o comportamento responsivo foram preservados.
+- Nenhum dado da carteira foi alterado.
+
 ## V2.13.0 — 2026-09-04
 
 **Área:** Patrimônio e Alocação estruturada

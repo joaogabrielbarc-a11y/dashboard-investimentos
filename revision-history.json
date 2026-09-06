@@ -1,15 +1,36 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.13.0",
+  "currentVersion": "2.13.1",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.13.1",
+      "date": "2026-09-06",
+      "type": "patch",
+      "area": "Alocação estruturada",
+      "status": "deployed",
+      "request": "Transformar o gráfico de micro alocação da classe em uma visualização horizontal proporcional, inspirada em um gráfico de composição empilhada.",
+      "motivation": "O gráfico de rosca ocupava uma coluna exclusiva e reduzia o espaço disponível para comparar segmentos, percentuais, metas e status.",
+      "changes": [
+        "Substitui o gráfico de rosca por uma barra horizontal de composição em 100%.",
+        "Dimensiona cada faixa proporcionalmente ao peso real do segmento.",
+        "Exibe nome e percentual dentro das faixas que possuem espaço suficiente.",
+        "Mantém uma legenda compacta com peso real, alvo e status para todos os segmentos, inclusive os pequenos ou zerados.",
+        "Preserva o botão de minimizar e o comportamento responsivo da seção."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false
+      }
+    },
     {
       "version": "2.13.0",
       "date": "2026-09-04",
       "type": "minor",
       "area": "Patrimônio e Alocação estruturada",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Ampliar a visão gráfica da macro alocação e transformar o gráfico patrimonial em um resumo navegável por classe, segmento e ativo.",
       "motivation": "A visão gráfica da macro precisava de mais espaço e a composição patrimonial precisava permitir análise progressiva, do panorama geral até cada posição individual.",
       "changes": [
