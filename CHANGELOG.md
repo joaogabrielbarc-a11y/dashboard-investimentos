@@ -10,6 +10,24 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.14.0 — 2026-09-07
+
+**Área:** Alocação estruturada e Patrimônio
+**Tipo:** Minor
+
+### Correções e melhorias
+- A edição de ativos agora persiste nome, classe, segmento e meta de micro alocação na fonte de verdade da carteira.
+- A classificação editada é sincronizada com os lançamentos do mesmo ticker, impedindo que a reconstrução do patrimônio restaure o valor antigo.
+- O editor de ativo ganhou abertura e salvamento delegados, tolerantes às reconstruções frequentes da interface.
+- As sugestões de segmento acompanham a classe escolhida e incluem segmentos planejados e já utilizados.
+- O card “Lucro total” agora mostra também quanto o lucro representa do patrimônio atual.
+- Foi adicionada uma auditoria funcional interna para conferir cobertura de classes, ativos, controles, editores, identificadores e renderização válida.
+- A aba foi revisada para carteiras com múltiplas classes, classes sem posição, segmentos planejados sem ativos e posições em BRL ou USD.
+
+### Impacto nos dados
+- Nenhum dado é migrado automaticamente ao carregar a versão.
+- Ao salvar a edição de um ativo, seus metadados são atualizados nos lançamentos do mesmo ticker para manter toda a carteira consistente.
+
 ## V2.13.1 — 2026-09-06
 
 **Área:** Alocação estruturada

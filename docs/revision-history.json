@@ -1,15 +1,38 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.13.1",
+  "currentVersion": "2.14.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.14.0",
+      "date": "2026-09-07",
+      "type": "minor",
+      "area": "Alocação estruturada e Patrimônio",
+      "status": "deployed",
+      "request": "Corrigir a edição dos metadados dos ativos, revisar detalhadamente os comandos da alocação estruturada e mostrar o lucro total como percentual do patrimônio.",
+      "motivation": "A edição alterava apenas a posição em memória; a reconstrução pelo histórico restaurava o segmento anterior. A aba também precisava de uma verificação sistemática de cobertura funcional para diferentes composições de carteira.",
+      "changes": [
+        "Sincroniza nome, classe, segmento e meta de micro alocação com todos os lançamentos do mesmo ticker ao salvar a edição do ativo.",
+        "Adiciona um fluxo delegado de abertura e salvamento do editor, resistente às reconstruções do DOM.",
+        "Mantém as sugestões de segmento alinhadas à classe selecionada.",
+        "Adiciona uma auditoria interna de cobertura para classes, ativos, controles, editores, identificadores e valores renderizados.",
+        "Inclui no card Lucro total o percentual correspondente ao patrimônio atual.",
+        "Valida o comportamento com classes múltiplas, classes sem posição, segmentos zerados e posições em BRL e USD."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false,
+        "metadataSynchronizedWhenUserEditsAsset": true
+      }
+    },
     {
       "version": "2.13.1",
       "date": "2026-09-06",
       "type": "patch",
       "area": "Alocação estruturada",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Transformar o gráfico de micro alocação da classe em uma visualização horizontal proporcional, inspirada em um gráfico de composição empilhada.",
       "motivation": "O gráfico de rosca ocupava uma coluna exclusiva e reduzia o espaço disponível para comparar segmentos, percentuais, metas e status.",
       "changes": [
