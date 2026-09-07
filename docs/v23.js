@@ -1,9 +1,9 @@
 (()=>{
 const V23_TAB_KEY='carteira-v23-tab';
-const V23_TABS=['patrimonio','alocacao','aportes','proventos'];
-const V23_LABELS={patrimonio:'Patrimônio',alocacao:'Alocação estruturada',aportes:'Aportes & lançamentos',proventos:'Proventos'};
-const V23_ICONS={patrimonio:'◫',alocacao:'◎',aportes:'↗',proventos:'◌'};
-const V23_PANEL={patrimonio:'tabPatrimonioV22',alocacao:'tabMacroV22',aportes:'tabMicroV22',proventos:'tabProventosV22'};
+const V23_TABS=['patrimonio','alocacao','aportes','proventos','quantitativa'];
+const V23_LABELS={patrimonio:'Patrimônio',alocacao:'Alocação estruturada',aportes:'Aportes & lançamentos',proventos:'Proventos',quantitativa:'Análise Quantitativa'};
+const V23_ICONS={patrimonio:'◫',alocacao:'◎',aportes:'↗',proventos:'◌',quantitativa:'∿'};
+const V23_PANEL={patrimonio:'tabPatrimonioV22',alocacao:'tabMacroV22',aportes:'tabMicroV22',proventos:'tabProventosV22',quantitativa:'tabQuantitativaV37'};
 let v23Ready=false;
 let v23ActiveTab=(()=>{const raw=String(location.hash||'').replace('#','');const migrated=raw==='macro'?'alocacao':raw==='micro'?'aportes':raw;if(V23_TABS.includes(migrated))return migrated;const saved=localStorage.getItem(V23_TAB_KEY);return V23_TABS.includes(saved)?saved:'patrimonio';})();
 function escV23(v){return typeof escapeHtml==='function'?escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
