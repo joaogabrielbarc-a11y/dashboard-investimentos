@@ -1,0 +1,31 @@
+/* Pondera V2.20.0 — análise quantitativa em lote e decomposições */
+.quantPrimaryChartV37{padding:22px;min-width:0}
+.quantPrimaryChartV37 .quantCardHeadV37{margin-bottom:14px}
+.quantBreakdownV37{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 16px;padding:8px;border:1px solid rgba(32,52,77,.78);border-radius:13px;background:#091827}
+.quantModeToggleV37{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.quantModeToggleV37 button{min-height:36px;padding:8px 13px;border:0;border-radius:9px;background:transparent;color:#879db4;font:800 12px/1.2 Inter,system-ui,sans-serif;cursor:pointer;transition:background .18s ease,color .18s ease,box-shadow .18s ease}
+.quantModeToggleV37 button:hover{color:#dce9f5;background:rgba(105,167,255,.08)}
+.quantModeToggleV37 button.active{color:#eff8ff;background:#17314a;box-shadow:inset 0 0 0 1px rgba(105,167,255,.3)}
+.quantEntitySelectV37{display:flex;align-items:center;gap:9px;color:#7890aa;font-size:12px;font-weight:800}
+.quantEntitySelectV37.hiddenV37{display:none}
+.quantEntitySelectV37 select{min-width:205px;min-height:36px;padding:7px 34px 7px 11px;border:1px solid #29435e;border-radius:9px;background:#0b1d2e;color:#e4f0fb;font:700 12px/1.2 Inter,system-ui,sans-serif;outline:none}
+.quantEntitySelectV37 select:focus{border-color:#69a7ff;box-shadow:0 0 0 3px rgba(105,167,255,.12)}
+.quantInlineMetricsV37{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.quantInlineMetricV37{min-height:86px;padding:13px 15px;border:1px solid rgba(32,52,77,.75);border-radius:12px;background:linear-gradient(145deg,#0a1b2c,#0d2237);display:grid;grid-template-columns:1fr auto;grid-template-areas:"label value" "detail value";column-gap:14px;align-items:center}
+.quantInlineMetricV37 span{grid-area:label;color:#7890aa;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.quantInlineMetricV37 strong{grid-area:value;font-size:22px;line-height:1;letter-spacing:-.025em;color:#dce9f5}
+.quantInlineMetricV37 small{grid-area:detail;color:var(--muted);font-size:11px;line-height:1.3}
+.quantInlineMetricV37.positive strong{color:#5bd7a8}.quantInlineMetricV37.negative strong{color:#ff8f9b}
+.quantPrimaryChartV37 .quantChartV37{min-height:300px;border-top:1px solid rgba(32,52,77,.58);padding-top:10px}
+.quantVolHeadV37{align-items:stretch}
+.quantVolMetricV37{flex:0 0 245px;min-height:82px;padding:12px 15px;border:1px solid rgba(32,52,77,.75);border-radius:12px;background:#091827;display:grid;grid-template-columns:1fr auto;grid-template-areas:"label value" "detail detail";gap:5px 12px;align-items:center}
+.quantVolMetricV37 span{grid-area:label;color:#7890aa;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}.quantVolMetricV37 strong{grid-area:value;font-size:21px}.quantVolMetricV37 small{grid-area:detail;color:var(--muted);font-size:11px}.quantVolMetricV37.positive strong{color:#5bd7a8}.quantVolMetricV37.negative strong{color:#ff8f9b}
+.quantVolChartV37{min-height:300px}
+.quantLegendV37{max-height:72px;overflow:auto;padding-bottom:2px}
+.quantLegendV37 i{width:18px;height:3px}
+.quantLowerGridV37{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+.quantCurveHeadV37{margin-top:22px!important;padding-top:20px;border-top:1px solid rgba(32,52,77,.72)}
+.quantLowerGridV37 .correlationTableV37{min-width:560px}
+@media(max-width:1180px){.quantLowerGridV37{grid-template-columns:1fr}.quantVolMetricV37{flex-basis:230px}}
+@media(max-width:820px){.quantModeToggleV37{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.quantModeToggleV37 button{width:100%}.quantEntitySelectV37{width:100%;justify-content:space-between}.quantEntitySelectV37 select{flex:1;min-width:0}.quantInlineMetricsV37{grid-template-columns:1fr}.quantInlineMetricV37{min-height:72px}.quantVolHeadV37{flex-direction:column}.quantVolMetricV37{width:100%;flex:0 0 auto}}
+@media(max-width:700px){.quantPrimaryChartV37{padding:16px}.quantBreakdownV37{padding:6px;margin-bottom:12px}.quantModeToggleV37 button{padding:8px 7px;font-size:11px}.quantInlineMetricV37{padding:12px 13px}.quantInlineMetricV37 strong{font-size:20px}.quantPrimaryChartV37 .quantChartV37,.quantVolChartV37{min-height:220px;overflow-x:auto}.quantPrimaryChartV37 .quantChartV37 svg{min-width:620px}.quantLegendV37{font-size:11px;gap:12px}}
