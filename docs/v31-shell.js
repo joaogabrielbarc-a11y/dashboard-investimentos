@@ -3,7 +3,7 @@
 if(window.__PONDERA_SHELL_V31__)return;
 const VERSION='2.11.2';
 const TAB_KEY='carteira-v23-tab';
-const TABS={patrimonio:'tabPatrimonioV22',alocacao:'tabMacroV22',aportes:'tabMicroV22',proventos:'tabProventosV22'};
+const TABS={patrimonio:'tabPatrimonioV22',alocacao:'tabMacroV22',aportes:'tabMicroV22',proventos:'tabProventosV22',quantitativa:'tabQuantitativaV37'};
 let currentTab='patrimonio',syncTimer=null,holdingsObserver=null;
 function normalizeTab(raw){const v=String(raw||'').replace(/^#/,'');if(v==='macro')return'alocacao';if(v==='micro')return'aportes';return Object.prototype.hasOwnProperty.call(TABS,v)?v:null;}
 function preferredTab(){return normalizeTab(location.hash)||normalizeTab(localStorage.getItem(TAB_KEY))||'patrimonio';}
