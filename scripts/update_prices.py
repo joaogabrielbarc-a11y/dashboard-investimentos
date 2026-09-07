@@ -6,7 +6,7 @@ import unicodedata
 import zipfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
-from io import BytesIO
+from io import BytesIO, StringIO
 from pathlib import Path
 from urllib.parse import quote
 from zoneinfo import ZoneInfo
@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PRICE_OUTS = [ROOT / 'docs' / 'prices.json', ROOT / 'web-v1' / 'prices.json']
 INDEX_OUTS = [ROOT / 'docs' / 'market-indexes.json', ROOT / 'web-v1' / 'market-indexes.json']
 FUND_OUTS = [ROOT / 'docs' / 'fund-prices.json', ROOT / 'web-v1' / 'fund-prices.json']
+QUANT_OUTS = [ROOT / 'docs' / 'quant-market-history.json', ROOT / 'web-v1' / 'quant-market-history.json']
 
 # Ativos que precisam estar disponíveis no site estático mesmo quando o Yahoo bloqueia CORS no navegador.
 BR = [
@@ -195,6 +196,78 @@ def bcb_last(series, n=1):
     return out
 
 
+def fred_last(series='DFF'):
+    """Latest observation from the Federal Reserve Bank of St. Louis."""
+    url = f'https://fred.stlouisfed.org/graph/fredgraph.csv?id={quote(series, safe="")}'
+    r = requests.get(url, headers=HEADERS, timeout=12)
+    r.raise_for_status()
+    frame = pd.read_csv(StringIO(r.text))
+    date_col = next((c for c in frame.columns if 'date' in str(c).lower()), frame.columns[0] if len(frame.columns) else None)
+    value_col = next((c for c in frame.columns if c != date_col), None)
+    if not date_col or not value_col:
+        return None
+    frame[value_col] = pd.to_numeric(frame[value_col], errors='coerce')
+    frame = frame.dropna(subset=[value_col])
+    if frame.empty:
+        return None
+    row = frame.iloc[-1]
+    return {'date': str(row[date_col]), 'value': clean(row[value_col]), 'series': series}
+
+
+def treasury_yield_curves():
+    """Brazilian sovereign nominal and real yield curves from Tesouro Transparente."""
+    url = 'https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/precotaxatesourodireto.csv'
+    r = requests.get(url, headers=HEADERS, timeout=12)
+    r.raise_for_status()
+    frame = None
+    for enc in ('latin1', 'utf-8'):
+        try:
+            candidate = pd.read_csv(BytesIO(r.content), sep=';', encoding=enc, decimal=',', thousands='.')
+            if len(candidate.columns) > 3:
+                frame = candidate
+                break
+        except Exception:
+            pass
+    if frame is None:
+        return {'date': None, 'source': 'Tesouro Transparente', 'nominal': [], 'real': []}
+    cols = {norm(c): c for c in frame.columns}
+    type_col = next((cols[k] for k in cols if 'tipo titulo' in k), None)
+    mat_col = next((cols[k] for k in cols if 'vencimento' in k), None)
+    date_col = next((cols[k] for k in cols if 'data base' in k), None)
+    rate_col = next((cols[k] for k in cols if 'taxa compra manha' in k), None) or next((cols[k] for k in cols if 'taxa venda manha' in k), None)
+    if not all((type_col, mat_col, date_col, rate_col)):
+        return {'date': None, 'source': 'Tesouro Transparente', 'nominal': [], 'real': []}
+    frame['_date'] = pd.to_datetime(frame[date_col], dayfirst=True, errors='coerce')
+    frame['_maturity'] = pd.to_datetime(frame[mat_col], dayfirst=True, errors='coerce')
+    frame['_rate'] = pd.to_numeric(frame[rate_col], errors='coerce')
+    frame = frame.dropna(subset=['_date', '_maturity', '_rate'])
+    today = pd.Timestamp(datetime.now(ZoneInfo('America/Sao_Paulo')).date())
+    frame = frame[frame['_date'] <= today]
+    if frame.empty:
+        return {'date': None, 'source': 'Tesouro Transparente', 'nominal': [], 'real': []}
+    latest = frame['_date'].max()
+    frame = frame[frame['_date'] == latest]
+    curves = {'date': latest.date().isoformat(), 'source': 'Tesouro Transparente', 'nominal': [], 'real': []}
+    for _, row in frame.sort_values('_maturity').iterrows():
+        kind = norm(row[type_col])
+        bucket = 'real' if 'ipca' in kind else 'nominal' if 'prefixado' in kind else None
+        if not bucket:
+            continue
+        point = {
+            'label': f"{str(row[type_col]).strip()} {int(row['_maturity'].year)}",
+            'maturity': row['_maturity'].date().isoformat(),
+            'annualPct': clean(row['_rate']),
+        }
+        if point['annualPct'] is not None:
+            curves[bucket].append(point)
+    for bucket in ('nominal', 'real'):
+        unique = {}
+        for point in curves[bucket]:
+            unique[point['maturity']] = point
+        curves[bucket] = list(unique.values())
+    return curves
+
+
 def market_indexes():
     out = {
         'updatedAt': datetime.now(ZoneInfo('America/Sao_Paulo')).isoformat(),
@@ -221,7 +294,83 @@ def market_indexes():
         out['indexes']['IPCA'] = {'annualPct': (factor - 1) * 100, 'lastMonthlyPct': last['value'], 'date': last['date'], 'series': 433}
     except Exception as exc:
         print('IPCA warning:', exc)
+    try:
+        fed = fred_last('DFF')
+        if fed and fed.get('value') is not None:
+            out['indexes']['FED_FUNDS'] = {'annualPct': fed['value'], 'date': fed['date'], 'series': fed['series'], 'source': 'Federal Reserve Bank of St. Louis'}
+    except Exception as exc:
+        print('Fed Funds warning:', exc)
+    try:
+        out['indexes']['YIELD_CURVE_BR'] = treasury_yield_curves()
+    except Exception as exc:
+        print('Yield curve warning:', exc)
     return out
+
+
+def yahoo_history(symbol: str, market_tz: str):
+    """Two years of adjusted daily closes for quantitative portfolio analysis."""
+    errors = []
+    for host in ('query1.finance.yahoo.com', 'query2.finance.yahoo.com'):
+        try:
+            url = f'https://{host}/v8/finance/chart/{quote(symbol, safe="")}?range=2y&interval=1d&events=div%2Csplits&includeAdjustedClose=true'
+            r = requests.get(url, headers=HEADERS, timeout=15)
+            r.raise_for_status()
+            result = ((r.json().get('chart') or {}).get('result') or [None])[0]
+            if not result:
+                continue
+            timestamps = result.get('timestamp') or []
+            indicators = result.get('indicators') or {}
+            adjusted = ((indicators.get('adjclose') or [{}])[0]).get('adjclose') or []
+            closes = adjusted or ((indicators.get('quote') or [{}])[0]).get('close') or []
+            rows = []
+            for ts, px in zip(timestamps, closes):
+                value = clean(px)
+                if value is not None and value > 0:
+                    rows.append((_quote_date(ts, market_tz), value))
+            if rows:
+                return rows
+        except Exception as exc:
+            errors.append(f'{host}: {exc}')
+    print(f'History warning {symbol}: no series found' + (f' | {errors[-1]}' if errors else ''))
+    return []
+
+
+def quantitative_history():
+    """BRL total-price histories consumed by the browser-side TWR engine."""
+    specs = {'BRL=X': ('BRL=X', 'America/Sao_Paulo')}
+    specs.update({ticker: (ticker + '.SA', 'America/Sao_Paulo') for ticker in BR})
+    specs.update({ticker: (ticker, 'America/New_York') for ticker in US})
+    specs['BTCUSD'] = ('BTC-USD', 'America/Sao_Paulo')
+    raw = {}
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(yahoo_history, symbol, timezone): ticker for ticker, (symbol, timezone) in specs.items()}
+        for future in as_completed(futures):
+            ticker = futures[future]
+            try:
+                raw[ticker] = future.result()
+            except Exception as exc:
+                print('Quant history warning', ticker, exc)
+                raw[ticker] = []
+    fx_rows = raw.pop('BRL=X', [])
+    fx_series = pd.Series({date: value for date, value in fx_rows}, dtype='float64').sort_index()
+    output = {}
+    for ticker, rows in raw.items():
+        if not rows:
+            continue
+        series = pd.Series({date: value for date, value in rows}, dtype='float64').sort_index()
+        if ticker in US or ticker == 'BTCUSD':
+            if fx_series.empty:
+                continue
+            aligned_fx = fx_series.reindex(series.index).ffill().bfill()
+            series = series * aligned_fx
+        output[ticker] = [[date, round(float(value), 8)] for date, value in series.items() if clean(value) is not None]
+    return {
+        'updatedAt': datetime.now(ZoneInfo('America/Sao_Paulo')).isoformat(),
+        'source': 'Yahoo Finance adjusted close; USD assets converted by daily USD/BRL',
+        'currency': 'BRL',
+        'period': '2y',
+        'prices': output,
+    }
 
 
 def digits(s):
@@ -354,6 +503,21 @@ def main():
             'source': 'Banco Central do Brasil',
             'indexes': merged_indexes,
         })
+
+    quant = quantitative_history()
+    for out_path in QUANT_OUTS:
+        old = {}
+        if out_path.exists():
+            try:
+                old = json.loads(out_path.read_text(encoding='utf-8'))
+            except Exception:
+                pass
+        if quant.get('prices'):
+            write_json(out_path, quant)
+        elif old.get('prices'):
+            print('Quantitative history unavailable; keeping cached file in', out_path)
+        else:
+            write_json(out_path, quant)
 
     try:
         funds = cvm_fund_prices()
