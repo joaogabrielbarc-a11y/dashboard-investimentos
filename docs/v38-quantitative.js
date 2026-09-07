@@ -2,7 +2,7 @@
 'use strict';
 if(window.__PONDERA_QUANT_V38__)return;
 
-const VERSION='2.20.0',MS_DAY=86400000,DATA_CACHE_TTL=MS_DAY,DATA_CACHE_PREFIX='pondera-quant-daily-v39:',VOL_WINDOW=21;
+const VERSION='2.20.0',MS_DAY=86400000,DATA_CACHE_TTL=MS_DAY,DATA_CACHE_PREFIX='pondera-quant-daily-v39-1:',VOL_WINDOW=21;
 const MODES={portfolio:'Carteira',classes:'Classes de ativos',segments:'Segmentos',assets:'Ativos individuais'};
 const COLORS=['#43d39e','#69a7ff','#b786f4','#ffbd69','#67d3df','#ff8f9b','#9dd66f','#f28bd2'];
 let data={history:null,indexes:null,prices:null,failed:[],cacheHits:0},curveMode='nominal',rendering=false,revealTimer=null,analysisMemo=null;
