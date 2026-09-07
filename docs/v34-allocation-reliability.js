@@ -172,6 +172,11 @@ function openClosePosition(holding){
   }catch(e){console.error('[Pondera V2.14] Falha ao preparar o encerramento da posição.',e);return false;}
 }
 
+function classNameFromButton(button){
+  const id=button?.dataset?.removeClassV25,asset=(state.assets||[]).find(item=>String(item.id)===String(id));
+  return asset?.name||button?.closest('tr')?.querySelector('.macroClassNameV25 strong')?.textContent?.trim()||'';
+}
+
 function prepareRemovalCommands(){
   document.querySelectorAll('[data-remove-asset-v18]').forEach(button=>{
     const holding=(state.holdings||[]).find(item=>String(item.id)===String(button.dataset.removeAssetV18));
@@ -179,7 +184,7 @@ function prepareRemovalCommands(){
     button.setAttribute('aria-label',`Encerrar posição${holding?.ticker?' de '+holding.ticker:''}`);
   });
   document.querySelectorAll('[data-remove-class-v25]').forEach(button=>{
-    const asset=(state.assets||[]).find(item=>String(item.id)===String(button.dataset.removeClassV25)),linked=asset?(state.holdings||[]).filter(holding=>holding.className===asset.name).length:0;
+    const className=classNameFromButton(button),linked=(state.holdings||[]).filter(holding=>holding.className===className).length;
     if(linked)button.title=`${linked} posição(ões) vinculada(s). Realocar ou encerrar antes de excluir a classe.`;
   });
 }
@@ -192,9 +197,9 @@ function removalCapture(event){
   }
   const classButton=event.target.closest?.('[data-remove-class-v25]');
   if(!classButton)return;
-  const asset=(state.assets||[]).find(item=>String(item.id)===String(classButton.dataset.removeClassV25)),linked=asset?(state.holdings||[]).filter(holding=>holding.className===asset.name):[];
+  const className=classNameFromButton(classButton),linked=(state.holdings||[]).filter(holding=>holding.className===className);
   if(!linked.length)return;
-  event.preventDefault();event.stopImmediatePropagation();alert(`A classe “${asset.name}” possui ${linked.length} posição(ões) ativa(s). Realocar os ativos pelo editor ou encerrar as posições antes de excluir a classe.`);
+  event.preventDefault();event.stopImmediatePropagation();alert(`A classe “${className}” possui ${linked.length} posição(ões) ativa(s). Realocar os ativos pelo editor ou encerrar as posições antes de excluir a classe.`);
 }
 
 function editCapture(event){
