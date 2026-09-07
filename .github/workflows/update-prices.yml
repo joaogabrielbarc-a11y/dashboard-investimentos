@@ -2,10 +2,8 @@ name: Update market prices
 
 on:
   schedule:
-    # Atualiza durante a janela em que B3/EUA podem estar negociando (UTC).
-    - cron: '15 13-22 * * 1-5'
-    # Fechamento adicional no fim do dia.
-    - cron: '30 23 * * 1-5'
+    # Uma consolidação diária após o fechamento de B3 e dos mercados dos EUA (UTC).
+    - cron: '30 23 * * *'
   workflow_dispatch:
   push:
     paths:
