@@ -10,6 +10,24 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.20.0 — 2026-09-07
+
+**Área:** Análise Quantitativa
+**Tipo:** Minor
+
+### Correções e melhorias
+- A barra superior mantém somente Sharpe, Sortino e o novo YTM/TIR anualizado da carteira.
+- Rentabilidade acumulada, retorno anualizado e drawdown máximo foram integrados ao card do gráfico de retorno.
+- Foi criado um gráfico próprio de volatilidade histórica móvel, acompanhado da volatilidade atual em uma janela de 21 pregões.
+- Os dois gráficos permitem alternar entre carteira, classes, segmentos e ativos, com seleção individual ou comparação das principais séries.
+- Posições, classes, segmentos e ativos agora são derivados exclusivamente do Histórico de Lançamentos.
+- Um único processamento inicial consolida todas as séries, decomposições, matrizes, métricas e rankings; os filtros não refazem consultas nem cálculos históricos.
+- O pacote calculado continua protegido pelo cache diário e é invalidado quando qualquer lançamento ou classificação histórica muda.
+
+### Impacto nos dados
+- Nenhum lançamento, posição, meta ou banda foi alterado.
+- Foi criada apenas uma nova versão do cache derivado das análises.
+
 ## V2.19.0 — 2026-09-07
 
 **Área:** Análise Quantitativa
