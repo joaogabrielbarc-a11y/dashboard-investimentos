@@ -2,7 +2,7 @@
 'use strict';
 if(window.__PONDERA_CONTRIBUTION_PLANNER_V35__)return;
 
-const VERSION='2.15.0',EPS=.005;
+const VERSION='2.15.1',EPS=.005;
 let updateTimer=null,renderTimer=null;
 const finite=value=>value!==null&&value!==undefined&&value!==''&&Number.isFinite(Number(value));
 const norm=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
@@ -17,7 +17,7 @@ const pending=()=>typeof v14!=='undefined'&&Array.isArray(v14.pending)?v14.pendi
 function ensureCss(){
   let link=document.querySelector('link[href^="v35-contribution-planner.css"]');
   if(!link){link=document.createElement('link');link.rel='stylesheet';document.head.appendChild(link);}
-  link.href='v35-contribution-planner.css?v=35.0';
+  link.href='v35-contribution-planner.css?v=35.1';
 }
 
 function currentFx(){

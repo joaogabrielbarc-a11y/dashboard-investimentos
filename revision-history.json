@@ -1,15 +1,34 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.15.0",
+  "currentVersion": "2.15.1",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.15.1",
+      "date": "2026-09-07",
+      "type": "patch",
+      "area": "Aportes & lançamentos",
+      "status": "deployed",
+      "request": "Impedir que o renderizador legado volte a substituir a distribuição planejada depois da troca de aba.",
+      "motivation": "A primeira publicação estabilizou os cálculos, mas uma atualização tardia da camada V2.6 ainda podia recolocar o conteúdo antigo no mesmo cartão.",
+      "changes": [
+        "Bloqueia a sobrescrita do planejador quando a estrutura estável já assumiu o cartão.",
+        "Reconstrói a estrutura atual apenas quando o campo de orçamento ou as linhas de classe estiverem ausentes.",
+        "Renova as referências de cache das camadas envolvidas."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false
+      }
+    },
     {
       "version": "2.15.0",
       "date": "2026-09-07",
       "type": "minor",
       "area": "Aportes & lançamentos",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Estabilizar a distribuição planejada, simplificar o indicador de ideal no lançamento e incluir sugestões de venda para rebalanceamento quando o aporte for inferior a 1% do patrimônio.",
       "motivation": "A reconstrução integral do planejador causava desaparecimento visual e perda de continuidade. A carteira também precisava de uma alternativa de rebalanceamento quando um aporte pequeno não consegue corrigir classes ou segmentos acima da banda.",
       "changes": [

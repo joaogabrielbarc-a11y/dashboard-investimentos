@@ -10,6 +10,17 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.15.1 — 2026-09-07
+
+**Área:** Aportes & lançamentos
+**Tipo:** Patch
+
+### Correção
+- A camada antiga do planejador não pode mais sobrescrever a Distribuição planejada estável após uma troca de aba ou renderização geral.
+- A estrutura atual se autocorrige caso detecte ausência do campo de orçamento ou divergência na quantidade de classes.
+- As referências de cache do planejador foram renovadas.
+- Nenhum dado da carteira foi alterado.
+
 ## V2.15.0 — 2026-09-07
 
 **Área:** Aportes & lançamentos
