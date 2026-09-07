@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07T11:27:35.631496-03:00",
+  "updatedAt": "2026-09-07T11:50:01.630974-03:00",
   "source": "Banco Central do Brasil",
   "indexes": {
     "CDI": {
@@ -19,6 +19,110 @@
       "lastMonthlyPct": 0.07,
       "date": "01/07/2026",
       "series": 433
+    },
+    "FED_FUNDS": {
+      "annualPct": 3.63,
+      "date": "2026-09-03",
+      "series": "DFF",
+      "source": "Federal Reserve Bank of St. Louis"
+    },
+    "YIELD_CURVE_BR": {
+      "date": "2026-09-04",
+      "source": "Tesouro Transparente",
+      "nominal": [
+        {
+          "label": "Tesouro Prefixado 2027",
+          "maturity": "2027-01-01",
+          "annualPct": 13.49
+        },
+        {
+          "label": "Tesouro Prefixado 2028",
+          "maturity": "2028-01-01",
+          "annualPct": 13.6
+        },
+        {
+          "label": "Tesouro Prefixado 2029",
+          "maturity": "2029-01-01",
+          "annualPct": 13.94
+        },
+        {
+          "label": "Tesouro Prefixado 2031",
+          "maturity": "2031-01-01",
+          "annualPct": 14.21
+        },
+        {
+          "label": "Tesouro Prefixado 2032",
+          "maturity": "2032-01-01",
+          "annualPct": 14.31
+        },
+        {
+          "label": "Tesouro Prefixado com Juros Semestrais 2033",
+          "maturity": "2033-01-01",
+          "annualPct": 14.35
+        },
+        {
+          "label": "Tesouro Prefixado com Juros Semestrais 2035",
+          "maturity": "2035-01-01",
+          "annualPct": 14.37
+        },
+        {
+          "label": "Tesouro Prefixado com Juros Semestrais 2037",
+          "maturity": "2037-01-01",
+          "annualPct": 14.36
+        }
+      ],
+      "real": [
+        {
+          "label": "Tesouro IPCA+ 2029",
+          "maturity": "2029-05-15",
+          "annualPct": 7.8
+        },
+        {
+          "label": "Tesouro IPCA+ com Juros Semestrais 2030",
+          "maturity": "2030-08-15",
+          "annualPct": 7.93
+        },
+        {
+          "label": "Tesouro IPCA+ com Juros Semestrais 2032",
+          "maturity": "2032-08-15",
+          "annualPct": 7.89
+        },
+        {
+          "label": "Tesouro IPCA+ com Juros Semestrais 2035",
+          "maturity": "2035-05-15",
+          "annualPct": 7.69
+        },
+        {
+          "label": "Tesouro IPCA+ com Juros Semestrais 2037",
+          "maturity": "2037-05-15",
+          "annualPct": 7.57
+        },
+        {
+          "label": "Tesouro IPCA+ 2040",
+          "maturity": "2040-08-15",
+          "annualPct": 7.34
+        },
+        {
+          "label": "Tesouro IPCA+ com Juros Semestrais 2045",
+          "maturity": "2045-05-15",
+          "annualPct": 7.42
+        },
+        {
+          "label": "Tesouro IPCA+ com Juros Semestrais 2050",
+          "maturity": "2050-08-15",
+          "annualPct": 7.39
+        },
+        {
+          "label": "Tesouro IPCA+ com Juros Semestrais 2055",
+          "maturity": "2055-05-15",
+          "annualPct": 7.35
+        },
+        {
+          "label": "Tesouro IPCA+ com Juros Semestrais 2060",
+          "maturity": "2060-08-15",
+          "annualPct": 7.34
+        }
+      ]
     }
   }
 }
