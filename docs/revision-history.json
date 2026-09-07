@@ -1,15 +1,41 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.17.0",
+  "currentVersion": "2.18.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.18.0",
+      "date": "2026-09-07",
+      "type": "minor",
+      "area": "Alocação estruturada e Análise Quantitativa",
+      "status": "deployed",
+      "request": "Sincronizar a entrada visual da Alocação estruturada e criar uma análise quantitativa integrada à evolução patrimonial e aos lançamentos.",
+      "motivation": "A aba de alocação revelava o título antes dos componentes e a carteira precisava separar fluxos de aporte do retorno para oferecer métricas de risco consistentes.",
+      "changes": [
+        "Revela cabeçalho e conteúdo da Alocação estruturada em uma única transição após a estabilização.",
+        "Adiciona uma aba de análise quantitativa ao sistema de navegação existente.",
+        "Calcula retorno ponderado pelo tempo, retorno anualizado, volatilidade, drawdown máximo, Sharpe e Sortino.",
+        "Neutraliza compras e vendas no cálculo de retorno e exige ao menos 30 pregões para exibir as métricas.",
+        "Calcula correlação de Pearson entre classes com séries históricas em comum.",
+        "Exibe USD/BRL, Selic, IPCA em 12 meses, Fed Funds e curvas de juros nominal e real do Tesouro Nacional.",
+        "Amplia o atualizador Python para gerar dois anos de preços ajustados em BRL.",
+        "Mostra período, quantidade de pregões e cobertura de ativos usados nos cálculos."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false,
+        "derivedMarketHistoryAdded": true,
+        "minimumObservations": 30
+      }
+    },
     {
       "version": "2.17.0",
       "date": "2026-09-07",
       "type": "minor",
       "area": "Patrimônio e Proventos",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Sincronizar o percentual de lucro e revisar integralmente layout, paginação e consolidação histórica da aba Proventos.",
       "motivation": "O lucro percentual aparecia depois dos demais dados e a aba Proventos combinava renderizadores e fontes de quantidade diferentes, gerando atraso e risco de inconsistência.",
       "changes": [
