@@ -10,6 +10,25 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.17.0 — 2026-09-07
+
+**Área:** Patrimônio e Proventos
+**Tipo:** Minor
+
+### Correções e melhorias
+- O valor e o percentual do lucro total passam a ser renderizados juntos na carga estável da aba Patrimônio.
+- A base de proventos é pré-carregada uma única vez e compartilhada entre os componentes, eliminando resultados intermediários divergentes.
+- Gráfico, indicadores, distribuição por classe e lista usam a mesma consolidação de proventos.
+- As quantidades elegíveis são reconstruídas exclusivamente pelos lançamentos executados até a data de corte de cada evento, inclusive para ativos já encerrados.
+- Eventos duplicados da base são eliminados antes da consolidação.
+- A lista de proventos ganhou paginação de 15 itens, navegação entre páginas e total de registros.
+- Espaçamentos, alturas, margens e comportamento responsivo dos cards foram padronizados com as demais abas.
+- Foi incluída uma auditoria interna de fonte histórica, duplicidades, paginação, controles e unicidade dos componentes.
+
+### Impacto nos dados
+- Nenhum lançamento, posição ou meta foi alterado.
+- A consolidação histórica pode mudar valores antes estimados pela posição atual, pois agora respeita integralmente compras e vendas registradas em cada data de corte.
+
 ## V2.16.0 — 2026-09-07
 
 **Área:** Aportes & lançamentos
