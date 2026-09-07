@@ -2,8 +2,8 @@
 'use strict';
 if(window.__PONDERA_QUANT_V37__)return;
 
-const VERSION='2.18.0',MS_DAY=86400000;
-let data={history:null,indexes:null,prices:null,failed:[]},curveMode='nominal',rendering=false,revealTimer=null;
+const VERSION='2.19.0',MS_DAY=86400000,DATA_CACHE_TTL=MS_DAY,DATA_CACHE_PREFIX='pondera-quant-daily-v38:';
+let data={history:null,indexes:null,prices:null,failed:[],cacheHits:0},curveMode='nominal',rendering=false,revealTimer=null,analysisMemo=null;
 const finite=value=>value!==null&&value!==undefined&&value!==''&&Number.isFinite(Number(value));
 const esc=value=>typeof escapeHtml==='function'?escapeHtml(String(value??'')):String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const ticker=value=>{const key=String(value||'').trim().toUpperCase();return key==='BTC'?'BTCUSD':key;};
@@ -30,7 +30,14 @@ function revealAllocation(){
   revealTimer=setTimeout(()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{panel.classList.remove('allocationEnteringV37');panel.classList.add('allocationReadyV37');})),110);
 }
 
-async function fetchJson(path){const response=await fetch(`${path}?v=${VERSION}`,{cache:'no-store'});if(!response.ok)throw new Error(`${path}: HTTP ${response.status}`);return response.json();}
+function readCache(key,allowExpired=false){try{const parsed=JSON.parse(localStorage.getItem(key)||'null');if(!parsed||!parsed.savedAt||parsed.value===undefined)return null;const age=Date.now()-Number(parsed.savedAt);return allowExpired||age<DATA_CACHE_TTL?{...parsed,age}:null;}catch(e){return null;}}
+function writeCache(key,value){try{localStorage.setItem(key,JSON.stringify({savedAt:Date.now(),value}));}catch(e){}}
+async function fetchJson(path){
+  const key=DATA_CACHE_PREFIX+path,fresh=readCache(key);
+  if(fresh){data.cacheHits++;return fresh.value;}
+  try{const response=await fetch(`${path}?v=${VERSION}`,{cache:'default'});if(!response.ok)throw new Error(`${path}: HTTP ${response.status}`);const value=await response.json();writeCache(key,value);return value;}
+  catch(error){const stale=readCache(key,true);if(stale){data.cacheHits++;return stale.value;}throw error;}
+}
 async function load(){
   const jobs=[['history','quant-market-history.json'],['indexes','market-indexes.json'],['prices','prices.json']];
   const results=await Promise.allSettled(jobs.map(([,path])=>fetchJson(path)));
@@ -43,6 +50,9 @@ function priceMaps(){
   Object.entries(data.history?.prices||{}).forEach(([key,rows])=>{const clean=(Array.isArray(rows)?rows:[]).map(row=>[date(row?.[0]),Number(row?.[1])]).filter(row=>row[0]&&finite(row[1])&&row[1]>0).sort((a,b)=>a[0].localeCompare(b[0]));if(clean.length)output.set(ticker(key),clean);});
   return output;
 }
+function fingerprint(transactions){let hash=2166136261;const text=transactions.map(item=>[item.id,item.ticker,item.className,item.side,item.qty,item.date].join('|')).join('~');for(let index=0;index<text.length;index++){hash^=text.charCodeAt(index);hash=Math.imul(hash,16777619);}return(hash>>>0).toString(36);}
+function seriesFromCache(value){if(!value||!Array.isArray(value.returns)||!Array.isArray(value.curve))return null;return{...value,classReturns:new Map(Object.entries(value.classReturns||{})),_cached:true};}
+function persistAnalysis(key,series,metrics){const value={key,series:{returns:series.returns,curve:series.curve,classReturns:Object.fromEntries(series.classReturns),covered:series.covered,total:series.total,start:series.start,end:series.end},metrics};writeCache(DATA_CACHE_PREFIX+'analysis',value);analysisMemo={key,series,metrics};}
 function valueAt(rows,key){
   let low=0,high=rows.length-1,found=null;
   while(low<=high){const middle=(low+high)>>1;if(rows[middle][0]<=key){found=rows[middle][1];low=middle+1;}else high=middle-1;}
@@ -50,8 +60,12 @@ function valueAt(rows,key){
 }
 function quantitativeSeries(){
   const transactions=executed().filter(item=>date(item.date)&&Number(item.qty)>0).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date))),maps=priceMaps();
+  const cacheKey=[data.history?.updatedAt||'',data.indexes?.updatedAt||'',fingerprint(transactions)].join('|');
+  if(analysisMemo?.key===cacheKey)return analysisMemo.series;
+  const stored=readCache(DATA_CACHE_PREFIX+'analysis');
+  if(stored?.value?.key===cacheKey){const restored=seriesFromCache(stored.value.series);if(restored){analysisMemo={key:cacheKey,series:restored,metrics:stored.value.metrics};data.cacheHits++;return restored;}}
   const allTickers=[...new Set(transactions.map(item=>ticker(item.ticker)))],covered=allTickers.filter(key=>maps.has(key)),firstTx=transactions[0]?.date;
-  if(!firstTx||!covered.length)return{returns:[],curve:[],classReturns:new Map(),covered,total:allTickers.length,start:null,end:null};
+  if(!firstTx||!covered.length)return{returns:[],curve:[],classReturns:new Map(),covered,total:allTickers.length,start:null,end:null,_cacheKey:cacheKey};
   const txByDate=new Map(),classByTicker=new Map();
   transactions.forEach(item=>{const key=date(item.date);if(!txByDate.has(key))txByDate.set(key,[]);txByDate.get(key).push(item);classByTicker.set(ticker(item.ticker),item.className||'Sem classe');});
   const dateSet=new Set(txByDate.keys());maps.forEach(rows=>rows.forEach(([key])=>{if(key>=firstTx)dateSet.add(key);}));
@@ -66,7 +80,7 @@ function quantitativeSeries(){
     (txByDate.get(key)||[]).forEach(item=>{const symbol=ticker(item.ticker);if(!maps.has(symbol))return;const qty=Math.max(0,Number(item.qty)||0),before=quantities.get(symbol)||0;quantities.set(symbol,item.side==='Venda'?Math.max(0,before-qty):before+qty);});
     currentPrices.forEach((value,symbol)=>previousPrices.set(symbol,value));
   }
-  return{returns,curve,classReturns,covered,total:allTickers.length,start:returns[0]?.date||firstTx,end:returns[returns.length-1]?.date||firstTx};
+  return{returns,curve,classReturns,covered,total:allTickers.length,start:returns[0]?.date||firstTx,end:returns[returns.length-1]?.date||firstTx,_cacheKey:cacheKey};
 }
 
 function riskMetrics(series){
@@ -100,12 +114,13 @@ function renderCorrelation(series){
 }
 function render(){
   if(rendering)return;rendering=true;try{
-    const panel=ensurePanel(),host=document.getElementById('quantBodyV37');if(!host)return;const series=quantitativeSeries(),metrics=riskMetrics(series),enough=metrics.count>=30,coverage=series.total?series.covered.length/series.total:0,updated=data.history?.updatedAt||data.indexes?.updatedAt;
+    const panel=ensurePanel(),host=document.getElementById('quantBodyV37');if(!host)return;const series=quantitativeSeries(),memoMetrics=analysisMemo?.key===series._cacheKey||series._cached?analysisMemo?.metrics:null,metrics=memoMetrics||riskMetrics(series),enough=metrics.count>=30,coverage=series.total?series.covered.length/series.total:0,updated=data.history?.updatedAt||data.indexes?.updatedAt;
+    if(series._cacheKey&&!series._cached)persistAnalysis(series._cacheKey,series,metrics);
     host.className='quantBodyV37';host.innerHTML=`<div class="quantQualityV37"><span><strong class="${coverage>=.75?'good':'warn'}">${series.covered.length} de ${series.total} ativos cobertos</strong> • ${metrics.count} pregões válidos • ${brDate(series.start)} a ${brDate(series.end)}</span><span>Dados de mercado: <strong>${updated?new Date(updated).toLocaleString('pt-BR'):'indisponíveis'}</strong></span></div><section class="quantKpisV37">${[['Rentabilidade acumulada',metrics.total,'Retorno ponderado pelo tempo, líquido do efeito dos aportes.','pct'],['Retorno anualizado',metrics.cagr,'Crescimento anual composto no período observado.','pct'],['Volatilidade',metrics.volatility,'Desvio-padrão diário anualizado em 252 pregões.','pct'],['Drawdown máximo',metrics.drawdown,'Maior queda acumulada desde um pico histórico.','pct'],['Índice de Sharpe',metrics.sharpe,'Excesso de retorno sobre a Selic por unidade de volatilidade.','num'],['Índice de Sortino',metrics.sortino,'Excesso de retorno dividido apenas pelo risco de queda.','num']].map(([label,value,detail,format])=>`<article class="card quantKpiV37 ${tone(value)}"><span>${label}</span><strong>${enough?(format==='pct'?pct(value):num(value)):'—'}</strong><small>${enough?detail:'Histórico mínimo: 30 pregões com posição e preço.'}</small></article>`).join('')}</section><section class="quantGridV37"><article class="card quantCardV37"><div class="quantCardHeadV37"><div><h2>Evolução do retorno e drawdown</h2><p>Retorno total em BRL reconstruído com preços ajustados e lançamentos executados.</p></div></div><div class="quantChartV37">${lineChart(series)}</div><div class="quantLegendV37"><span><i class="portfolio"></i>Retorno acumulado</span><span><i class="drawdown"></i>Drawdown</span></div></article><article class="card quantCardV37"><div class="quantCardHeadV37"><div><h2>Indicadores de mercado</h2><p>Referências macro usadas para interpretar a carteira.</p></div></div><div class="quantMacroGridV37">${macroCards()}</div><div class="quantCardHeadV37" style="margin-top:19px"><div><h2>Curva de juros brasileira</h2><p>Títulos públicos disponíveis no Tesouro Transparente.</p></div><div class="curveToggleV37"><button type="button" data-curve-v37="nominal" class="${curveMode==='nominal'?'active':''}">Nominal</button><button type="button" data-curve-v37="real" class="${curveMode==='real'?'active':''}">Real (IPCA+)</button></div></div><div class="curveChartV37">${curveChart()}</div></article></section><section class="card quantCardV37"><div class="quantCardHeadV37"><div><h2>Correlação entre classes</h2><p>Correlação de Pearson dos retornos diários em BRL nas datas em comum.</p></div></div>${renderCorrelation(series)}<p class="correlationNoteV37">Valores próximos de 1 indicam movimentos semelhantes; próximos de −1 indicam movimentos opostos. Classes sem histórico suficiente permanecem sem valor.</p></section><section class="card quantMethodV37"><h2>Metodologia e limites</h2><p>Sharpe, Sortino, volatilidade e drawdown seguem as definições usuais de avaliação conjunta de retorno e risco apresentadas pela <a href="https://quantumfinance.com.br/indicadores-financeiros/" target="_blank" rel="noopener noreferrer">Quantum Finance</a>. Os cálculos usam retorno ponderado pelo tempo para neutralizar compras e vendas. A Selic é a taxa livre de risco; preços ajustados incorporam proventos e desdobramentos, e ativos em dólar são convertidos pelo câmbio diário. Resultados com menos de 30 pregões não são exibidos e não representam previsão de retorno.</p></section>`;
     host.querySelectorAll('[data-curve-v37]').forEach(button=>button.onclick=()=>{curveMode=button.dataset.curveV37;render();});panel.dataset.ponderaOwner='v37';document.documentElement.dataset.ponderaQuant=VERSION;
   }finally{rendering=false;}
 }
-function audit(){const panel=document.getElementById('tabQuantitativaV37'),result={version:VERSION,panel:!!panel,nav:!!document.querySelector('[data-tab-v23="quantitativa"]'),kpis:panel?.querySelectorAll('.quantKpiV37').length===6,portfolioChart:!!panel?.querySelector('.quantChartV37 svg'),correlation:!!panel?.querySelector('.correlationTableV37'),marketCards:panel?.querySelectorAll('.quantMacroV37').length===4,allocationUnified:!document.getElementById('tabMacroV22')?.classList.contains('allocationEnteringV37')};result.ok=Object.values(result).every(value=>value!==false);window.__PONDERA_QUANT_AUDIT__=result;document.documentElement.dataset.ponderaQuantAudit=result.ok?'ok':'review';return result;}
+function audit(){const panel=document.getElementById('tabQuantitativaV37'),result={version:VERSION,panel:!!panel,nav:!!document.querySelector('[data-tab-v23="quantitativa"]'),kpis:panel?.querySelectorAll('.quantKpiV37').length===6,portfolioChart:!!panel?.querySelector('.quantChartV37 svg'),correlation:!!panel?.querySelector('.correlationTableV37'),marketCards:panel?.querySelectorAll('.quantMacroV37').length===4,dailyCache:DATA_CACHE_TTL===MS_DAY,allocationUnified:!document.getElementById('tabMacroV22')?.classList.contains('allocationEnteringV37')};result.ok=Object.values(result).every(value=>value!==false);window.__PONDERA_QUANT_AUDIT__=result;document.documentElement.dataset.ponderaQuantAudit=result.ok?'ok':'review';document.documentElement.dataset.ponderaQuantCache='24h';return result;}
 function boot(){ensurePanel();window.__PONDERA_QUANT_V37__=true;window.PonderaQuantV37={version:VERSION,render,audit,quantitativeSeries};window.addEventListener('pondera:tabchange',event=>{if(event.detail?.tab==='alocacao')revealAllocation();if(event.detail?.tab==='quantitativa')render();});window.addEventListener('pondera:ready',()=>{if(location.hash==='#alocacao')revealAllocation();setTimeout(audit,180);});if(location.hash==='#quantitativa'||localStorage.getItem('carteira-v23-tab')==='quantitativa')window.PonderaShellV31?.activate?.('quantitativa',{emit:false});load();}
 let attempts=0;const wait=()=>{attempts++;if(typeof state==='undefined'||typeof v14==='undefined'||!window.PonderaShellV31||!window.PonderaLedgerV29){if(attempts<500)setTimeout(wait,25);return;}boot();};wait();
 })();
