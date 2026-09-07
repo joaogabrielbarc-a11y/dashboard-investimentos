@@ -1,15 +1,42 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.16.0",
+  "currentVersion": "2.17.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.17.0",
+      "date": "2026-09-07",
+      "type": "minor",
+      "area": "Patrimônio e Proventos",
+      "status": "deployed",
+      "request": "Sincronizar o percentual de lucro e revisar integralmente layout, paginação e consolidação histórica da aba Proventos.",
+      "motivation": "O lucro percentual aparecia depois dos demais dados e a aba Proventos combinava renderizadores e fontes de quantidade diferentes, gerando atraso e risco de inconsistência.",
+      "changes": [
+        "Pré-carrega e compartilha uma única base de eventos de proventos entre as camadas da aplicação.",
+        "Renderiza valor e percentual do lucro total no mesmo ciclo estável da aba Patrimônio.",
+        "Unifica indicadores, gráfico, distribuição por classe e lista em uma única consolidação.",
+        "Reconstrói a quantidade elegível exclusivamente pelos lançamentos executados até a data de corte.",
+        "Inclui ativos já encerrados quando existia posição elegível na data do evento.",
+        "Remove eventos corporativos duplicados antes dos cálculos.",
+        "Adiciona paginação de 15 registros com resumo e navegação.",
+        "Padroniza espaçamentos, cartões e comportamento responsivo da aba Proventos.",
+        "Adiciona auditoria interna de origem histórica, duplicidades, controles, paginação e componentes únicos."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": true,
+        "migrationRequired": false,
+        "historicalConsolidationChanged": true,
+        "pageSize": 15
+      }
+    },
     {
       "version": "2.16.0",
       "date": "2026-09-07",
       "type": "minor",
       "area": "Aportes & lançamentos",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Compactar o indicador de ideal no lançamento e tornar o reinvestimento das vendas sugeridas uma escolha explícita.",
       "motivation": "O indicador ocupava largura excessiva no modal e as vendas precisavam priorizar os maiores desvios sem se misturar automaticamente ao orçamento de aporte.",
       "changes": [
