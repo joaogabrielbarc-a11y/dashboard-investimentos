@@ -258,7 +258,7 @@ function audit(){
   return result;
 }
 
-function scheduleAudit(ms=80){clearTimeout(auditTimer);auditTimer=setTimeout(()=>{try{audit();}catch(e){console.warn('[Pondera V2.14] Auditoria funcional incompleta.',e);}},ms);}
+function scheduleAudit(ms=80){clearTimeout(auditTimer);auditTimer=setTimeout(()=>{try{prepareRemovalCommands();audit();}catch(e){console.warn('[Pondera V2.14] Auditoria funcional incompleta.',e);}},ms);}
 
 function boot(){
   ensureCss();ensureEditorFields();refreshEditorSuggestions();prepareRemovalCommands();
