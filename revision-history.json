@@ -1,15 +1,41 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.19.0",
+  "currentVersion": "2.20.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.20.0",
+      "date": "2026-09-07",
+      "type": "minor",
+      "area": "Análise Quantitativa",
+      "status": "deployed",
+      "request": "Reorganizar métricas, adicionar YTM/TIR, criar volatilidade histórica e permitir decomposição dos gráficos por carteira, classe, segmento e ativo.",
+      "motivation": "Concentrar as métricas principais, aprofundar a leitura de retorno e risco e eliminar reconstruções do histórico durante a navegação.",
+      "changes": [
+        "Mantém Sharpe e Sortino no topo e adiciona YTM/TIR anualizado pelos fluxos da carteira.",
+        "Integra rentabilidade acumulada, retorno anualizado e drawdown máximo ao gráfico de retorno.",
+        "Adiciona volatilidade histórica móvel e indicador atual de 21 pregões.",
+        "Adiciona filtros de carteira, classes, segmentos e ativos nos dois gráficos.",
+        "Usa exclusivamente o Histórico de Lançamentos para posições e classificações.",
+        "Calcula todas as séries, métricas, decomposições, rankings e matriz em um único lote inicial.",
+        "Reutiliza o pacote consolidado nos filtros sem novas consultas ao histórico."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": true,
+        "migrationRequired": false,
+        "singleSource": "transaction-history",
+        "volatilityWindowSessions": 21,
+        "initialBatchProcessing": true
+      }
+    },
     {
       "version": "2.19.0",
       "date": "2026-09-07",
       "type": "minor",
       "area": "Análise Quantitativa",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Padronizar o layout da análise quantitativa e reduzir custos com cache e atualização diária.",
       "motivation": "A aba usava escala tipográfica menor que o restante do dashboard e repetia downloads, cálculos e atualizações de mercado além do necessário.",
       "changes": [
