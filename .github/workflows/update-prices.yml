@@ -47,6 +47,7 @@ jobs:
           publish_prices() {
             git add docs/prices.json web-v1/prices.json \
               docs/market-indexes.json web-v1/market-indexes.json \
+              docs/quant-market-history.json web-v1/quant-market-history.json \
               docs/fund-prices.json web-v1/fund-prices.json
             if git diff --cached --quiet; then
               echo "No price changes"
