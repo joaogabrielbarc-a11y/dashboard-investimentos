@@ -1,15 +1,39 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.18.0",
+  "currentVersion": "2.19.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.19.0",
+      "date": "2026-09-07",
+      "type": "minor",
+      "area": "Análise Quantitativa",
+      "status": "deployed",
+      "request": "Padronizar o layout da análise quantitativa e reduzir custos com cache e atualização diária.",
+      "motivation": "A aba usava escala tipográfica menor que o restante do dashboard e repetia downloads, cálculos e atualizações de mercado além do necessário.",
+      "changes": [
+        "Alinha grid, padding, espaçamentos e alturas ao padrão visual das demais abas.",
+        "Eleva a tipografia operacional para a mesma escala legível do restante do dashboard.",
+        "Padroniza gráfico, indicadores macro, curva de juros e matriz de correlação em desktop e celular.",
+        "Mantém preços e indicadores em cache local por 24 horas.",
+        "Mantém parâmetros de retorno e risco em cache por 24 horas e invalida o resultado quando os lançamentos mudam.",
+        "Reduz a automação de mercado para uma execução diária após o fechamento."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": true,
+        "migrationRequired": false,
+        "cacheHours": 24,
+        "scheduledUpdatesPerDay": 1
+      }
+    },
     {
       "version": "2.18.0",
       "date": "2026-09-07",
       "type": "minor",
       "area": "Alocação estruturada e Análise Quantitativa",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Sincronizar a entrada visual da Alocação estruturada e criar uma análise quantitativa integrada à evolução patrimonial e aos lançamentos.",
       "motivation": "A aba de alocação revelava o título antes dos componentes e a carteira precisava separar fluxos de aporte do retorno para oferecer métricas de risco consistentes.",
       "changes": [
