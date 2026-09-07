@@ -10,6 +10,23 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.19.0 — 2026-09-07
+
+**Área:** Análise Quantitativa
+**Tipo:** Minor
+
+### Correções e melhorias
+- Grid, espaçamentos, alturas e padding dos cards foram alinhados ao ritmo visual das abas Patrimônio, Alocação e Proventos.
+- Tipografia operacional passou a usar a mesma escala legível das demais abas, eliminando textos de 8–10 px na área quantitativa.
+- Indicadores macro, curva de juros, gráfico de retorno e matriz de correlação receberam dimensões e pontos de quebra responsivos consistentes.
+- As bases de preços, câmbio e indicadores agora permanecem em cache local por 24 horas, com recuperação do último dado válido em falhas temporárias.
+- Os parâmetros calculados de retorno e risco também são reutilizados por 24 horas e invalidados imediatamente quando o histórico de lançamentos muda.
+- A automação de mercado foi reduzida de múltiplas execuções intradiárias para uma consolidação diária após o fechamento dos mercados.
+
+### Impacto nos dados
+- Nenhum lançamento, posição, meta ou banda foi alterado.
+- Foram adicionadas somente chaves locais de cache derivado; não existe migração de dados da carteira.
+
 ## V2.18.0 — 2026-09-07
 
 **Área:** Alocação estruturada e Análise Quantitativa
