@@ -1,0 +1,19 @@
+/* Pondera V2.17.0 — Proventos consolidados e paginados */
+#tabProventosV22>.tabIntroV22{margin-bottom:18px!important}
+#dividendWorkspaceV22{display:flex!important;flex-direction:column!important;gap:18px!important;min-width:0}
+#dividendWorkspaceV22>.dividendKpisV36,#dividendWorkspaceV22>.dividendVisualGridV36,#dividendWorkspaceV22>.dividendListCardV22{margin:0!important}
+.dividendKpisV36{gap:18px!important}.dividendKpisV36>article{min-height:132px!important;padding:19px 20px!important}
+.dividendVisualGridV36{gap:18px!important;align-items:stretch!important}.dividendVisualGridV36>.card{height:100%;box-sizing:border-box}
+#tabProventosV22 .dividendChartCardV22,#tabProventosV22 .dividendClassPieV36,#tabProventosV22 .dividendListCardV22{padding:20px!important}
+#tabProventosV22 .dividendHeaderV22{margin-bottom:16px!important;gap:18px!important}
+#tabProventosV22 .dividendCoverageV22{margin:0 0 14px!important;padding:9px 0;border-top:1px solid rgba(32,52,77,.42);border-bottom:1px solid rgba(32,52,77,.42)}
+#tabProventosV22 .dividendListCardV22>.tableWrap{max-height:none!important;overflow:auto!important}
+#tabProventosV22 .dividendTableV22 tbody tr{height:48px}
+.historyQtyV36{display:block;color:#67d5ad;font-size:8px;margin-top:2px}
+.dividendStatusV22.undatedV36{color:#c6a36f;background:rgba(242,182,109,.08);border:1px solid rgba(242,182,109,.2)}
+.dividendPaginationV36{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:15px;padding-top:14px;border-top:1px solid rgba(32,52,77,.58)}
+.dividendPaginationV36>span{color:var(--muted);font-size:10px}.dividendPaginationV36>div{display:flex;align-items:center;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.dividendPaginationV36 button{min-width:31px;height:31px;padding:0 9px;border:1px solid var(--line);border-radius:8px;background:#091827;color:#9fb5ca;font-size:10px;font-weight:800;cursor:pointer}
+.dividendPaginationV36 button.active{border-color:rgba(67,211,158,.55);background:rgba(67,211,158,.12);color:#86e8c2}.dividendPaginationV36 button:disabled{opacity:.38;cursor:not-allowed}
+.dividendClassPieV36 .divPieV30{border:0;padding:0;color:var(--text)}.dividendClassPieV36 .divPieV30>span{width:74px;height:74px;border-radius:50%;background:#091827;border:1px solid rgba(32,52,77,.78);display:grid;place-items:center;align-content:center;text-align:center;padding:5px}.dividendClassPieV36 .divPieV30 small{font-size:8px;color:var(--muted)}
+@media(max-width:700px){#dividendWorkspaceV22{gap:14px!important}.dividendKpisV36{gap:14px!important}.dividendPaginationV36{align-items:flex-start;flex-direction:column}.dividendPaginationV36>div{justify-content:flex-start}#tabProventosV22 .dividendChartCardV22,#tabProventosV22 .dividendClassPieV36,#tabProventosV22 .dividendListCardV22{padding:16px!important}}
