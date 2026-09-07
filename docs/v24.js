@@ -41,7 +41,7 @@ function dividendStatsV24(){
   });
   return {loaded:true,received12,receivedTotal};
 }
-async function loadDividendsV24(){try{const r=await fetch(`dividends.json?v=${Date.now()}`,{cache:'no-store'});if(r.ok){const j=await r.json();v24DividendDb={events:Array.isArray(j.events)?j.events:[],updatedAt:j.updatedAt||null};}}catch(e){console.warn('[V2.4] falha ao carregar proventos',e);}v24DividendLoaded=true;renderPatrimonyKpisV24();}
+async function loadDividendsV24(){try{const j=await(window.__PONDERA_DIVIDENDS_DATA_PROMISE__||(window.__PONDERA_DIVIDENDS_DATA_PROMISE__=fetch('dividends.json?v=2.17.0',{cache:'no-store'}).then(response=>{if(!response.ok)throw new Error(`HTTP ${response.status}`);return response.json();})));v24DividendDb={events:Array.isArray(j.events)?j.events:[],updatedAt:j.updatedAt||null};}catch(e){console.warn('[V2.4] falha ao carregar proventos',e);}v24DividendLoaded=true;renderPatrimonyKpisV24();}
 
 function renderPatrimonyKpisV24(){
   const host=document.getElementById('kpis');if(!host||typeof state==='undefined')return;
