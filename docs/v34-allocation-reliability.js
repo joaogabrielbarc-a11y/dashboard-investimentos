@@ -123,6 +123,80 @@ function saveAssetEditor(event){
   scheduleAudit(260);
 }
 
+function normalizeSegment(value){
+  try{if(typeof normSegmentV18==='function')return normSegmentV18(value);}catch(e){}
+  return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+}
+
+function saveSegmentEditor(event){
+  const form=event.target;if(form?.id!=='segmentFormV18')return;
+  event.preventDefault();event.stopImmediatePropagation();
+  const className=document.getElementById('segmentClassV18')?.value||'',name=document.getElementById('segmentNameV18')?.value.trim()||'',id=document.getElementById('segmentEditIdV18')?.value||'';
+  const target=Math.min(100,Math.max(0,Number(document.getElementById('segmentTargetDialogV18')?.value)||0));
+  if(!className||!name)return;
+  const plan=ensureSegmentPlanV18(className);
+  if(plan.some(segment=>String(segment.id)!==String(id)&&normalizeSegment(segment.name)===normalizeSegment(name))){alert('Esse segmento já existe nesta classe.');return;}
+  if(id){
+    const segment=plan.find(item=>String(item.id)===String(id));
+    if(!segment)return;
+    const oldName=segment.name,affected=new Set((state.holdings||[]).filter(holding=>holding.className===className&&normalizeSegment(holding.segment)===normalizeSegment(oldName)).map(holding=>ticker(holding.ticker)));
+    segment.name=name;segment.target=target;
+    (state.holdings||[]).forEach(holding=>{if(holding.className===className&&normalizeSegment(holding.segment)===normalizeSegment(oldName))holding.segment=name;});
+    try{
+      [...(v14?.executed||[]),...(v14?.pending||[])].forEach(transaction=>{
+        if(affected.has(ticker(transaction.ticker))||(transaction.className===className&&normalizeSegment(transaction.segment)===normalizeSegment(oldName))){transaction.segment=name;transaction.metadataUpdatedAt=new Date().toISOString();}
+      });
+    }catch(e){}
+  }else plan.push({id:typeof segmentIdV18==='function'?segmentIdV18(name):`seg-${Date.now()}`,name,target});
+  try{if(typeof saveV18Plan==='function')saveV18Plan();if(typeof saveV14==='function')saveV14();if(typeof save==='function')save();}catch(e){console.warn('[Pondera V2.14] Não foi possível persistir o segmento.',e);}
+  document.getElementById('segmentDialogV18')?.close();
+  render();scheduleAudit(260);
+}
+
+function currentFxForHolding(holding){
+  if(finite(holding.currentPriceBRL)&&finite(holding.currentPriceNative)&&Number(holding.currentPriceNative)>0)return Number(holding.currentPriceBRL)/Number(holding.currentPriceNative);
+  try{const value=typeof fxUsdBrlV20==='function'?fxUsdBrlV20():null;return finite(value)?Number(value):null;}catch(e){return null;}
+}
+
+function openClosePosition(holding){
+  if(!holding)return false;
+  try{
+    buildTxDialogV20();v20EditingPendingId=null;setSideV20('Venda');
+    const currency=String(holding.currentCurrency||holding.avgCurrency||'BRL').toUpperCase(),native=finite(holding.currentPriceNative)?Number(holding.currentPriceNative):Number(holding.currentPriceBRL)||Number(holding.price)||0,fx=currency==='USD'?currentFxForHolding(holding):null;
+    const data={ticker:holding.ticker,name:holding.name||holding.ticker,className:holding.className,side:'Venda',qty:Number(holding.qty)||0,unitPrice:native,currency,fx,totalNative:(Number(holding.qty)||0)*native,brlTotal:currency==='USD'&&finite(fx)?(Number(holding.qty)||0)*native*fx:(Number(holding.qty)||0)*native,date:new Date().toISOString().slice(0,10),segment:holding.segment||'Sem segmento',microTarget:finite(holding.microTarget)?Number(holding.microTarget):null,otherCostsNative:0,priceHint:'Venda total preparada a partir da posição atual.'};
+    document.getElementById('txTitleV20').textContent='Encerrar posição';
+    document.getElementById('txSaveV20').textContent='Adicionar venda à simulação';
+    renderLaunchTemplateV20(holding.className,data);setSideV20('Venda');
+    document.getElementById('txDialog').showModal();
+    return true;
+  }catch(e){console.error('[Pondera V2.14] Falha ao preparar o encerramento da posição.',e);return false;}
+}
+
+function prepareRemovalCommands(){
+  document.querySelectorAll('[data-remove-asset-v18]').forEach(button=>{
+    const holding=(state.holdings||[]).find(item=>String(item.id)===String(button.dataset.removeAssetV18));
+    button.textContent='Encerrar';button.title='Prepara uma venda total na simulação, preservando o histórico da carteira.';
+    button.setAttribute('aria-label',`Encerrar posição${holding?.ticker?' de '+holding.ticker:''}`);
+  });
+  document.querySelectorAll('[data-remove-class-v25]').forEach(button=>{
+    const asset=(state.assets||[]).find(item=>String(item.id)===String(button.dataset.removeClassV25)),linked=asset?(state.holdings||[]).filter(holding=>holding.className===asset.name).length:0;
+    if(linked)button.title=`${linked} posição(ões) vinculada(s). Realocar ou encerrar antes de excluir a classe.`;
+  });
+}
+
+function removalCapture(event){
+  const assetButton=event.target.closest?.('[data-remove-asset-v18]');
+  if(assetButton){
+    event.preventDefault();event.stopImmediatePropagation();
+    const holding=(state.holdings||[]).find(item=>String(item.id)===String(assetButton.dataset.removeAssetV18));openClosePosition(holding);return;
+  }
+  const classButton=event.target.closest?.('[data-remove-class-v25]');
+  if(!classButton)return;
+  const asset=(state.assets||[]).find(item=>String(item.id)===String(classButton.dataset.removeClassV25)),linked=asset?(state.holdings||[]).filter(holding=>holding.className===asset.name):[];
+  if(!linked.length)return;
+  event.preventDefault();event.stopImmediatePropagation();alert(`A classe “${asset.name}” possui ${linked.length} posição(ões) ativa(s). Realocar os ativos pelo editor ou encerrar as posições antes de excluir a classe.`);
+}
+
 function editCapture(event){
   const button=event.target.closest?.('[data-edit-asset-v18],[data-edit-holding-v17]');
   if(!button)return;
@@ -187,13 +261,15 @@ function audit(){
 function scheduleAudit(ms=80){clearTimeout(auditTimer);auditTimer=setTimeout(()=>{try{audit();}catch(e){console.warn('[Pondera V2.14] Auditoria funcional incompleta.',e);}},ms);}
 
 function boot(){
-  ensureCss();ensureEditorFields();refreshEditorSuggestions();
+  ensureCss();ensureEditorFields();refreshEditorSuggestions();prepareRemovalCommands();
   document.addEventListener('click',editCapture,true);
+  document.addEventListener('click',removalCapture,true);
   document.addEventListener('submit',saveAssetEditor,true);
+  document.addEventListener('submit',saveSegmentEditor,true);
   document.getElementById('holdingClass')?.addEventListener('change',refreshEditorSuggestions);
   const kpis=document.getElementById('kpis');
   if(kpis){profitObserver=new MutationObserver(()=>scheduleProfit(0));profitObserver.observe(kpis,{childList:true,subtree:true,characterData:true});}
-  if(typeof render==='function'&&!window.__PONDERA_V34_RENDER_WRAP__){window.__PONDERA_V34_RENDER_WRAP__=true;const previous=render;render=function(){const result=previous.apply(this,arguments);scheduleProfit(220);scheduleAudit(260);return result;};}
+  if(typeof render==='function'&&!window.__PONDERA_V34_RENDER_WRAP__){window.__PONDERA_V34_RENDER_WRAP__=true;const previous=render;render=function(){const result=previous.apply(this,arguments);setTimeout(prepareRemovalCommands,210);scheduleProfit(220);scheduleAudit(260);return result;};}
   window.addEventListener('pondera:tabchange',()=>{scheduleProfit(20);scheduleAudit(120);});
   window.addEventListener('hashchange',()=>{scheduleProfit(40);scheduleAudit(140);});
   window.PonderaReliabilityV34={version:VERSION,audit,openAssetEditor,enhanceProfitShare};

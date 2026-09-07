@@ -20,6 +20,9 @@ O histórico estruturado e legível por máquina fica em `revision-history.json`
 - A classificação editada é sincronizada com os lançamentos do mesmo ticker, impedindo que a reconstrução do patrimônio restaure o valor antigo.
 - O editor de ativo ganhou abertura e salvamento delegados, tolerantes às reconstruções frequentes da interface.
 - As sugestões de segmento acompanham a classe escolhida e incluem segmentos planejados e já utilizados.
+- Renomear um segmento pela tabela setorial agora atualiza também os lançamentos dos ativos afetados.
+- A ação antes chamada “Excluir” nos ativos passou a “Encerrar” e prepara uma venda total na simulação, preservando o histórico.
+- Classes com posições ativas não podem mais ser excluídas antes da realocação ou do encerramento dos ativos vinculados.
 - O card “Lucro total” agora mostra também quanto o lucro representa do patrimônio atual.
 - Foi adicionada uma auditoria funcional interna para conferir cobertura de classes, ativos, controles, editores, identificadores e renderização válida.
 - A aba foi revisada para carteiras com múltiplas classes, classes sem posição, segmentos planejados sem ativos e posições em BRL ou USD.

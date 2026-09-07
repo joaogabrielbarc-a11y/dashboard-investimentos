@@ -16,6 +16,9 @@
         "Sincroniza nome, classe, segmento e meta de micro alocação com todos os lançamentos do mesmo ticker ao salvar a edição do ativo.",
         "Adiciona um fluxo delegado de abertura e salvamento do editor, resistente às reconstruções do DOM.",
         "Mantém as sugestões de segmento alinhadas à classe selecionada.",
+        "Sincroniza no histórico a renomeação de segmentos feita pela tabela setorial.",
+        "Substitui a exclusão ineficaz de uma posição ativa por um fluxo de encerramento que prepara uma venda total na simulação.",
+        "Impede a exclusão de classes que ainda possuem posições ativas e orienta a realocação ou o encerramento.",
         "Adiciona uma auditoria interna de cobertura para classes, ativos, controles, editores, identificadores e valores renderizados.",
         "Inclui no card Lucro total o percentual correspondente ao patrimônio atual.",
         "Valida o comportamento com classes múltiplas, classes sem posição, segmentos zerados e posições em BRL e USD."
