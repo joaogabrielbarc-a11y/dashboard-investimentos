@@ -10,6 +10,25 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.18.0 — 2026-09-07
+
+**Área:** Alocação estruturada e Análise Quantitativa
+**Tipo:** Minor
+
+### Correções e melhorias
+- A entrada da Alocação estruturada agora mantém cabeçalho e conteúdo ocultos durante a estabilização e revela toda a aba em uma única transição curta.
+- Foi criada a aba Análise Quantitativa, integrada ao histórico de lançamentos executados e às séries de preços ajustados em reais.
+- A nova área calcula retorno ponderado pelo tempo, retorno anualizado, volatilidade, drawdown máximo, Sharpe e Sortino.
+- Compras e vendas são tratadas como fluxos e não como rentabilidade; métricas com menos de 30 pregões não são exibidas.
+- Foi adicionada uma matriz de correlação de Pearson entre classes com histórico comum suficiente.
+- A área macro reúne USD/BRL, Selic, IPCA em 12 meses, Fed Funds e curvas nominal e real dos títulos públicos brasileiros.
+- O atualizador em Python passa a preparar dois anos de preços ajustados e a coletar dados do Banco Central, Federal Reserve e Tesouro Transparente.
+- Ativos em dólar são convertidos diariamente para reais antes dos cálculos e a aba informa sua cobertura histórica.
+
+### Impacto nos dados
+- Nenhum lançamento, posição, meta ou banda foi alterado.
+- Foi adicionado apenas um arquivo derivado de séries históricas de mercado, renovado pelo fluxo automático de preços.
+
 ## V2.17.0 — 2026-09-07
 
 **Área:** Patrimônio e Proventos
