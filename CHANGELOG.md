@@ -10,6 +10,22 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.16.0 — 2026-09-07
+
+**Área:** Aportes & lançamentos
+**Tipo:** Minor
+
+### Melhorias
+- O indicador “Ideal do segmento” foi compactado para ocupar apenas o espaço necessário dentro da janela de lançamento.
+- As sugestões de venda agora começam pelas posições ligadas às classes ou segmentos com maior desvio acima da banda.
+- O valor sugerido para venda permanece separado do orçamento de aporte e não altera automaticamente a distribuição planejada.
+- Foi incluída a ação opcional “Somar ao aporte” para reinvestir o total sugerido somente quando o usuário decidir.
+
+### Impacto nos dados
+- Nenhuma venda é executada automaticamente.
+- O orçamento só é alterado quando o usuário aciona “Somar ao aporte”.
+- Nenhuma posição, lançamento, meta ou chave de armazenamento existente foi migrada.
+
 ## V2.15.1 — 2026-09-07
 
 **Área:** Aportes & lançamentos

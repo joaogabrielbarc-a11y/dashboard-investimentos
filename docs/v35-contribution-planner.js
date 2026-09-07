@@ -2,7 +2,7 @@
 'use strict';
 if(window.__PONDERA_CONTRIBUTION_PLANNER_V35__)return;
 
-const VERSION='2.15.1',EPS=.005;
+const VERSION='2.16.0',EPS=.005;
 let updateTimer=null,renderTimer=null;
 const finite=value=>value!==null&&value!==undefined&&value!==''&&Number.isFinite(Number(value));
 const norm=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
@@ -17,7 +17,7 @@ const pending=()=>typeof v14!=='undefined'&&Array.isArray(v14.pending)?v14.pendi
 function ensureCss(){
   let link=document.querySelector('link[href^="v35-contribution-planner.css"]');
   if(!link){link=document.createElement('link');link.rel='stylesheet';document.head.appendChild(link);}
-  link.href='v35-contribution-planner.css?v=35.1';
+  link.href='v35-contribution-planner.css?v=35.2';
 }
 
 function currentFx(){
@@ -52,35 +52,42 @@ function calculateSales(budgetOverride=null){
   const plannedByTicker=new Map(),recommendations=new Map();
 
   function available(holding){const ticker=String(holding.ticker||'').trim().toUpperCase();return Math.max(0,(Number(holding.value)||0)-(pendingByTicker.get(ticker)||0)-(plannedByTicker.get(ticker)||0));}
-  function allocate(candidates,requested,reason){
+  function allocate(candidates,requested,reason,priority=0){
     let remaining=Math.max(0,requested),spent=0;
     for(const holding of candidates.slice().sort((a,b)=>available(b)-available(a))){
       if(remaining<=EPS)break;const ticker=String(holding.ticker||'').trim().toUpperCase(),free=available(holding);if(free<=EPS)continue;
       const atomic=holding.className==='Renda Fixa',amount=atomic?free:Math.min(free,remaining);plannedByTicker.set(ticker,(plannedByTicker.get(ticker)||0)+amount);
-      const current=recommendations.get(ticker)||{holding,amount:0,reasons:new Set()};current.amount+=amount;current.reasons.add(reason);recommendations.set(ticker,current);spent+=amount;remaining=Math.max(0,remaining-amount);
+      const current=recommendations.get(ticker)||{holding,amount:0,reasons:new Set(),priority:0};current.amount+=amount;current.reasons.add(reason);current.priority=Math.max(current.priority,priority);recommendations.set(ticker,current);spent+=amount;remaining=Math.max(0,remaining-amount);
     }
     return spent;
   }
 
-  rows.forEach(row=>{
+  const orderedRows=rows.map(row=>{let segments=[];try{segments=typeof segmentRowsV18==='function'?segmentRowsV18(row.name):[];}catch(e){}const classExcess=Math.max(0,(Number(row.currentWeight)||0)-(Number(row.max)||0)),segmentExcess=segments.reduce((highest,segment)=>Math.max(highest,Number(segment.target)>0?Math.max(0,(Number(segment.real)||0)-(Number(segment.max)||0)):0),0);return{row,segments,classExcess,priority:Math.max(classExcess,segmentExcess)};}).sort((a,b)=>b.priority-a.priority);
+  orderedRows.forEach(({row,segments,classExcess})=>{
     const className=row.name,classHoldings=openHoldings.filter(holding=>holding.className===className),classAbove=Number(row.currentWeight)>Number(row.max)+EPS;
     let classNeed=classAbove?Math.max(0,requiredSale(row.current,total,row.max)-(pendingByClass.get(className)||0)):0,segmentAllocated=0;
     if(classAbove)result.overweightClasses.push({name:className,current:Number(row.currentWeight)||0,max:Number(row.max)||0,required:classNeed});
-    let segmentRows=[];try{segmentRows=typeof segmentRowsV18==='function'?segmentRowsV18(className):[];}catch(e){}
-    segmentRows.filter(segment=>Number(segment.target)>0&&Number(segment.real)>Number(segment.max)+EPS).forEach(segment=>{
+    segments.filter(segment=>Number(segment.target)>0&&Number(segment.real)>Number(segment.max)+EPS).sort((a,b)=>(Number(b.real)-Number(b.max))-(Number(a.real)-Number(a.max))).forEach(segment=>{
       const pendingValue=pendingBySegment.get(`${className}|${norm(segment.name)}`)||0,need=Math.max(0,requiredSale(segment.value,row.current,segment.max)-pendingValue),reason=`Segmento acima da faixa (${pct(segment.real)} > ${pct(segment.max)})`;
       result.overweightSegments.push({className,name:segment.name,current:Number(segment.real)||0,max:Number(segment.max)||0,required:need});
-      const allocated=allocate(classHoldings.filter(holding=>norm(holding.segment||'Sem segmento')===norm(segment.name)),need,reason);segmentAllocated+=allocated;result.uncovered+=Math.max(0,need-allocated);
+      const allocated=allocate(classHoldings.filter(holding=>norm(holding.segment||'Sem segmento')===norm(segment.name)),need,reason,Number(segment.real)-Number(segment.max));segmentAllocated+=allocated;result.uncovered+=Math.max(0,need-allocated);
     });
     classNeed=Math.max(0,classNeed-segmentAllocated);
-    if(classNeed>EPS){const aboveSegments=new Set(result.overweightSegments.filter(segment=>segment.className===className).map(segment=>norm(segment.name))),ordered=classHoldings.slice().sort((a,b)=>Number(aboveSegments.has(norm(b.segment||'Sem segmento')))-Number(aboveSegments.has(norm(a.segment||'Sem segmento')))||available(b)-available(a)),reason=`Classe acima da faixa (${pct(row.currentWeight)} > ${pct(row.max)})`;const allocated=allocate(ordered,classNeed,reason);result.uncovered+=Math.max(0,classNeed-allocated);}
+    if(classNeed>EPS){const segmentPriority=new Map(segments.map(segment=>[norm(segment.name),Math.max(0,(Number(segment.real)||0)-(Number(segment.max)||0))])),ordered=classHoldings.slice().sort((a,b)=>(segmentPriority.get(norm(b.segment||'Sem segmento'))||0)-(segmentPriority.get(norm(a.segment||'Sem segmento'))||0)||available(b)-available(a)),reason=`Classe acima da faixa (${pct(row.currentWeight)} > ${pct(row.max)})`;const allocated=allocate(ordered,classNeed,reason,classExcess);result.uncovered+=Math.max(0,classNeed-allocated);}
   });
 
   result.recommendations=[...recommendations.values()].map(item=>{
     const holding=item.holding,value=Math.min(Number(holding.value)||0,item.amount),unitBrl=(Number(holding.qty)||0)>EPS?(Number(holding.value)||0)/Number(holding.qty):Number(holding.currentPriceBRL)||Number(holding.price)||0,qty=holding.className==='Renda Fixa'?Number(holding.qty)||1:(unitBrl>EPS?value/unitBrl:0);
-    return{holdingId:holding.id,ticker:holding.ticker,name:holding.name||holding.ticker,className:holding.className,segment:holding.segment||'Sem segmento',amount:value,qty,reasons:[...item.reasons],fullPosition:value>=(Number(holding.value)||0)-EPS};
-  }).filter(item=>item.amount>EPS&&item.qty>0).sort((a,b)=>b.amount-a.amount);
+    return{holdingId:holding.id,ticker:holding.ticker,name:holding.name||holding.ticker,className:holding.className,segment:holding.segment||'Sem segmento',amount:value,qty,priority:item.priority,reasons:[...item.reasons],fullPosition:value>=(Number(holding.value)||0)-EPS};
+  }).filter(item=>item.amount>EPS&&item.qty>0).sort((a,b)=>b.priority-a.priority||b.amount-a.amount);
   return result;
+}
+
+function addSuggestedSalesToBudget(amount){
+  const addition=Math.max(0,Number(amount)||0);if(addition<=EPS)return false;const next=Math.max(0,Number(state?.contribution)||0)+addition;
+  if(typeof commitBudget==='function')commitBudget(next);else{state.contribution=next;const plannerInput=document.getElementById('plannerBudgetV28'),legacyInput=document.getElementById('contribution');if(plannerInput)plannerInput.value=String(next);if(legacyInput)legacyInput.value=String(next);try{save();}catch(e){}}
+  try{if(typeof patchSimulator==='function')patchSimulator();if(typeof renderImpact==='function')renderImpact();if(typeof renderTxSummary==='function')renderTxSummary();}catch(e){}
+  refreshSales();return true;
 }
 
 function ensureSalesHost(){
@@ -93,8 +100,9 @@ function renderSales(){
   if(!plan.eligible){host.innerHTML=`<div class="rebalanceHeadV35"><div><span>REBALANCEAMENTO</span><h3>Vendas sugeridas</h3><p>A venda só é considerada quando o aporte fica abaixo de 1% do patrimônio.</p></div><small>${rule}</small></div><div class="rebalanceStateV35 ok"><strong>Somente aportes</strong><span>O orçamento de ${money(plan.budget)} atingiu o limite mínimo; nenhuma venda foi sugerida.</span></div>`;return;}
   if(!plan.recommendations.length){host.innerHTML=`<div class="rebalanceHeadV35"><div><span>REBALANCEAMENTO ATIVO</span><h3>Vendas sugeridas</h3><p>O aporte está abaixo de 1%, mas nenhuma classe ou segmento com meta está acima da faixa.</p></div><small>${rule}</small></div><div class="rebalanceStateV35 ok"><strong>Carteira dentro do critério</strong><span>Nenhuma venda é necessária pelas bandas atuais.</span></div>`;return;}
   const total=plan.recommendations.reduce((sum,item)=>sum+item.amount,0);
-  host.innerHTML=`<div class="rebalanceHeadV35"><div><span>REBALANCEAMENTO ATIVO</span><h3>Vendas sugeridas</h3><p>Como o aporte é menor que 1% do patrimônio, o plano considera somente posições de classes ou segmentos acima da faixa.</p></div><div class="rebalanceTotalsV35"><small>${rule}</small><strong>${money(total)}</strong><span>venda total sugerida</span></div></div><div class="rebalanceRowsV35">${plan.recommendations.map(item=>`<article class="rebalanceRowV35"><div class="rebalanceAssetV35"><strong>${escapeText(item.ticker)}</strong><span>${escapeText(item.name)}</span><small>${escapeText(item.className)} • ${escapeText(item.segment)}</small></div><div class="rebalanceReasonV35">${item.reasons.map(reason=>`<span>${escapeText(reason)}</span>`).join('')}</div><div class="rebalanceValueV35"><small>Venda sugerida</small><strong>− ${money(item.amount)}</strong><span>${quantity(item.qty)} un.${item.fullPosition?' • posição total':''}</span></div><button type="button" class="dangerGhost rebalanceActionV35" data-rebalance-sale-v35="${escapeAttribute(item.holdingId)}" data-rebalance-amount-v35="${item.amount}">Preparar venda</button></article>`).join('')}</div>${plan.uncovered>EPS?`<div class="rebalanceWarningV35">${money(plan.uncovered)} não pôde ser associado a uma posição disponível.</div>`:''}`;
+  host.innerHTML=`<div class="rebalanceHeadV35"><div><span>REBALANCEAMENTO ATIVO</span><h3>Vendas sugeridas</h3><p>As posições mais acima da banda aparecem primeiro. O dinheiro das vendas fica separado e só entra na distribuição se você escolher somá-lo ao aporte.</p></div><div class="rebalanceTotalsV35"><small>${rule}</small><strong>${money(total)}</strong><span>venda total sugerida</span><button type="button" class="ghost compact rebalanceAddBudgetV35" data-add-sales-to-budget-v35="${total}">Somar ao aporte</button></div></div><div class="rebalanceRowsV35">${plan.recommendations.map(item=>`<article class="rebalanceRowV35"><div class="rebalanceAssetV35"><strong>${escapeText(item.ticker)}</strong><span>${escapeText(item.name)}</span><small>${escapeText(item.className)} • ${escapeText(item.segment)}</small></div><div class="rebalanceReasonV35">${item.reasons.map(reason=>`<span>${escapeText(reason)}</span>`).join('')}</div><div class="rebalanceValueV35"><small>Venda sugerida</small><strong>− ${money(item.amount)}</strong><span>${quantity(item.qty)} un.${item.fullPosition?' • posição total':''}</span></div><button type="button" class="dangerGhost rebalanceActionV35" data-rebalance-sale-v35="${escapeAttribute(item.holdingId)}" data-rebalance-amount-v35="${item.amount}">Preparar venda</button></article>`).join('')}</div>${plan.uncovered>EPS?`<div class="rebalanceWarningV35">${money(plan.uncovered)} não pôde ser associado a uma posição disponível.</div>`:''}`;
   host.querySelectorAll('[data-rebalance-sale-v35]').forEach(button=>button.addEventListener('click',()=>openSuggestedSale(button.dataset.rebalanceSaleV35,Number(button.dataset.rebalanceAmountV35)||0)));
+  host.querySelector('[data-add-sales-to-budget-v35]')?.addEventListener('click',event=>{event.currentTarget.disabled=true;addSuggestedSalesToBudget(Number(event.currentTarget.dataset.addSalesToBudgetV35)||0);});
 }
 
 function segmentIdeal(){
@@ -127,14 +135,14 @@ function scheduleRefresh(delay=140){clearTimeout(renderTimer);renderTimer=setTim
 
 function audit(){
   const card=document.getElementById('contributionPlannerV26'),plan=calculateSales(),rows=typeof getRows==='function'?getRows():[],threshold=plan.threshold,under=threshold>EPS?calculateSales(Math.max(0,threshold-.01)):null,at=threshold>EPS?calculateSales(threshold):null,modalStrip=document.getElementById('txIdealSegmentV28');
-  const result={version:VERSION,planner:{present:!!card,stable:card?.dataset.plannerStableV28==='1',instance:card?.dataset.plannerInstanceV28||null,budgetInputs:card?.querySelectorAll('#plannerBudgetV28').length||0,classRows:card?.querySelectorAll('[data-planner-class-id-v28]').length||0,expectedClasses:rows.length},rebalance:{eligible:plan.eligible,threshold:plan.threshold,recommendations:plan.recommendations.length,onlyOverweightSources:plan.recommendations.every(item=>item.reasons.every(reason=>reason.startsWith('Classe acima')||reason.startsWith('Segmento acima'))),boundaryCorrect:!threshold||!!under?.eligible&&!at?.eligible},modal:{visibleMetrics:modalStrip?modalStrip.children.length:null,onlyIdeal:!modalStrip||modalStrip.children.length===1&&/Ideal do segmento/.test(modalStrip.textContent)}};
-  result.ok=result.planner.present&&result.planner.stable&&result.planner.budgetInputs===1&&result.planner.classRows===result.planner.expectedClasses&&result.rebalance.onlyOverweightSources&&result.rebalance.boundaryCorrect&&result.modal.onlyIdeal;document.documentElement.dataset.ponderaContributionAudit=result.ok?'ok':'review';return result;
+  const result={version:VERSION,planner:{present:!!card,stable:card?.dataset.plannerStableV28==='1',instance:card?.dataset.plannerInstanceV28||null,budgetInputs:card?.querySelectorAll('#plannerBudgetV28').length||0,classRows:card?.querySelectorAll('[data-planner-class-id-v28]').length||0,expectedClasses:rows.length},rebalance:{eligible:plan.eligible,threshold:plan.threshold,recommendations:plan.recommendations.length,onlyOverweightSources:plan.recommendations.every(item=>item.reasons.every(reason=>reason.startsWith('Classe acima')||reason.startsWith('Segmento acima'))),priorityOrder:plan.recommendations.every((item,index,list)=>index===0||list[index-1].priority>=item.priority),boundaryCorrect:!threshold||!!under?.eligible&&!at?.eligible},modal:{visibleMetrics:modalStrip?modalStrip.children.length:null,onlyIdeal:!modalStrip||modalStrip.children.length===1&&/Ideal do segmento/.test(modalStrip.textContent)}};
+  result.ok=result.planner.present&&result.planner.stable&&result.planner.budgetInputs===1&&result.planner.classRows===result.planner.expectedClasses&&result.rebalance.onlyOverweightSources&&result.rebalance.priorityOrder&&result.rebalance.boundaryCorrect&&result.modal.onlyIdeal;document.documentElement.dataset.ponderaContributionAudit=result.ok?'ok':'review';return result;
 }
 
 function boot(){
   ensureCss();patchLaunchModal();refreshSales();document.addEventListener('click',event=>{if(event.target.closest?.('#newTransaction,[data-edit-pending-v20],[data-rebalance-sale-v35]'))setTimeout(simplifyModalIdeal,0);},true);window.addEventListener('pondera:tabchange',event=>{if(event.detail?.tab==='aportes'){refreshSales();scheduleRefresh(180);}});window.addEventListener('hashchange',()=>scheduleRefresh(160));
   if(typeof render==='function'&&!window.__PONDERA_V35_RENDER_WRAP__){window.__PONDERA_V35_RENDER_WRAP__=true;const previous=render;render=function(){const result=previous.apply(this,arguments);scheduleRefresh(240);return result;};}
-  window.PonderaContributionPlannerV35={version:VERSION,calculateSales,refreshSales,openSuggestedSale,audit};window.__PONDERA_CONTRIBUTION_PLANNER_V35__=true;document.documentElement.dataset.ponderaContributionPlanner=VERSION;setTimeout(()=>{refreshSales();audit();},220);
+  window.PonderaContributionPlannerV35={version:VERSION,calculateSales,refreshSales,openSuggestedSale,addSuggestedSalesToBudget,audit};window.__PONDERA_CONTRIBUTION_PLANNER_V35__=true;document.documentElement.dataset.ponderaContributionPlanner=VERSION;setTimeout(()=>{refreshSales();audit();},220);
 }
 
 let attempts=0;const wait=()=>{attempts++;if(typeof state==='undefined'||typeof render!=='function'||typeof updateLaunchTotalV20!=='function'||!document.getElementById('contributionPlannerV26')){if(attempts<500)setTimeout(wait,25);return;}boot();};wait();
