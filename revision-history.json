@@ -1,15 +1,41 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.14.0",
+  "currentVersion": "2.15.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.15.0",
+      "date": "2026-09-07",
+      "type": "minor",
+      "area": "Aportes & lançamentos",
+      "status": "deployed",
+      "request": "Estabilizar a distribuição planejada, simplificar o indicador de ideal no lançamento e incluir sugestões de venda para rebalanceamento quando o aporte for inferior a 1% do patrimônio.",
+      "motivation": "A reconstrução integral do planejador causava desaparecimento visual e perda de continuidade. A carteira também precisava de uma alternativa de rebalanceamento quando um aporte pequeno não consegue corrigir classes ou segmentos acima da banda.",
+      "changes": [
+        "Mantém uma estrutura estável da Distribuição planejada ao trocar de aba e ao editar o orçamento.",
+        "Atualiza pontualmente orçamento, aporte ideal e demais valores dependentes sem recriar o bloco.",
+        "Preserva foco, estado expandido e posição visual durante o recálculo.",
+        "Exibe somente o Ideal do segmento na janela de adição e edição de lançamentos.",
+        "Ativa o cálculo de vendas apenas quando o aporte é estritamente menor que 1% do patrimônio.",
+        "Restringe sugestões de venda a classes ou segmentos acima do limite superior de suas bandas.",
+        "Calcula o valor necessário para retornar ao limite superior e desconta vendas já simuladas.",
+        "Permite preparar a venda sugerida por ativo antes de adicioná-la à simulação.",
+        "Mantém compatibilidade com posições em BRL, USD e títulos de renda fixa."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false,
+        "automaticSalesExecuted": false
+      }
+    },
     {
       "version": "2.14.0",
       "date": "2026-09-07",
       "type": "minor",
       "area": "Alocação estruturada e Patrimônio",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Corrigir a edição dos metadados dos ativos, revisar detalhadamente os comandos da alocação estruturada e mostrar o lucro total como percentual do patrimônio.",
       "motivation": "A edição alterava apenas a posição em memória; a reconstrução pelo histórico restaurava o segmento anterior. A aba também precisava de uma verificação sistemática de cobertura funcional para diferentes composições de carteira.",
       "changes": [

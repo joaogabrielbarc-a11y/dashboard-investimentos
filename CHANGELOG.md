@@ -10,6 +10,24 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.15.0 — 2026-09-07
+
+**Área:** Aportes & lançamentos
+**Tipo:** Minor
+
+### Correções e melhorias
+- A seção Distribuição planejada mantém a mesma estrutura ao entrar na aba e ao alterar o orçamento, eliminando o efeito de apagar e reaparecer.
+- A digitação do aporte atualiza os valores calculados pontualmente, preservando foco, expansão e posição visual.
+- A janela de lançamento passa a mostrar somente o Ideal do segmento, sem os cartões Já simulado e Falta.
+- Quando o aporte é menor que 1% do patrimônio, o planejador avalia classes e segmentos acima da faixa superior e calcula a venda necessária para retornar à banda.
+- As vendas são apresentadas como sugestões por ativo e podem ser abertas, já preenchidas, na simulação de lançamentos.
+- A lógica considera vendas já simuladas, posições em BRL e USD e títulos de renda fixa tratados como posições inteiras.
+- A regra é estrita: aporte igual ou superior a 1% não gera venda; classes e segmentos dentro ou abaixo da banda também não geram venda.
+
+### Impacto nos dados
+- Nenhum lançamento é executado automaticamente: a venda sugerida precisa ser revisada e adicionada à simulação.
+- Nenhuma chave de `localStorage`, posição, lançamento ou meta existente foi migrada.
+
 ## V2.14.0 — 2026-09-07
 
 **Área:** Alocação estruturada e Patrimônio
