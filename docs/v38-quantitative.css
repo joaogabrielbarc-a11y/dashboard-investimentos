@@ -1,4 +1,4 @@
-/* Pondera V2.20.0 — análise quantitativa em lote e decomposições */
+/* Pondera V2.20.1 — refinamento do grid quantitativo */
 .quantPrimaryChartV37{padding:22px;min-width:0}
 .quantPrimaryChartV37 .quantCardHeadV37{margin-bottom:14px}
 .quantBreakdownV37{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 16px;padding:8px;border:1px solid rgba(32,52,77,.78);border-radius:13px;background:#091827}
@@ -23,9 +23,19 @@
 .quantVolChartV37{min-height:300px}
 .quantLegendV37{max-height:72px;overflow:auto;padding-bottom:2px}
 .quantLegendV37 i{width:18px;height:3px}
-.quantLowerGridV37{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
-.quantCurveHeadV37{margin-top:22px!important;padding-top:20px;border-top:1px solid rgba(32,52,77,.72)}
-.quantLowerGridV37 .correlationTableV37{min-width:560px}
-@media(max-width:1180px){.quantLowerGridV37{grid-template-columns:1fr}.quantVolMetricV37{flex-basis:230px}}
+.quantWideCardV38{width:100%;padding:22px;min-width:0}
+.quantWideCardV38 .correlationWrapV37{width:100%;overflow:auto}
+.quantWideCardV38 .correlationTableV37{width:100%;min-width:720px;table-layout:fixed}
+.quantWideCardV38 .correlationTableV37 th:first-child{width:190px}
+.quantMarketYieldGridV38{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch;width:100%;min-width:0}
+.quantMarketYieldGridV38>.quantCardV37{height:100%;min-width:0}
+#quantMarketCardV38 .quantMacroGridV37{grid-template-columns:repeat(2,minmax(0,1fr));height:calc(100% - 62px)}
+#quantMarketCardV38 .quantMacroV37{min-height:124px}
+#quantYieldCardV38{display:flex;flex-direction:column}
+#quantYieldCardV38 #quantCurveV37{display:flex;flex:1;flex-direction:column}
+#quantYieldCardV38 .quantCurveHeadV37{margin-top:0!important;padding-top:0;border-top:0}
+#quantYieldCardV38 .curveChartV37{display:flex;align-items:center;flex:1;min-height:270px;margin-top:12px}
+#quantYieldCardV38 .curveChartV37 svg{width:100%;max-height:285px}
+@media(max-width:1180px){.quantMarketYieldGridV38{grid-template-columns:1fr}.quantVolMetricV37{flex-basis:230px}#quantMarketCardV38 .quantMacroGridV37{height:auto}}
 @media(max-width:820px){.quantModeToggleV37{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.quantModeToggleV37 button{width:100%}.quantEntitySelectV37{width:100%;justify-content:space-between}.quantEntitySelectV37 select{flex:1;min-width:0}.quantInlineMetricsV37{grid-template-columns:1fr}.quantInlineMetricV37{min-height:72px}.quantVolHeadV37{flex-direction:column}.quantVolMetricV37{width:100%;flex:0 0 auto}}
 @media(max-width:700px){.quantPrimaryChartV37{padding:16px}.quantBreakdownV37{padding:6px;margin-bottom:12px}.quantModeToggleV37 button{padding:8px 7px;font-size:11px}.quantInlineMetricV37{padding:12px 13px}.quantInlineMetricV37 strong{font-size:20px}.quantPrimaryChartV37 .quantChartV37,.quantVolChartV37{min-height:220px;overflow-x:auto}.quantPrimaryChartV37 .quantChartV37 svg{min-width:620px}.quantLegendV37{font-size:11px;gap:12px}}
