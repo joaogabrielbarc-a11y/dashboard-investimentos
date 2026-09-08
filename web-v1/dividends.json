@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04T23:39:24.199907-03:00",
+  "updatedAt": "2026-09-07T23:41:47.834293-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -199,6 +199,17 @@
       "exDate": "2026-04-29",
       "paymentDate": "2026-12-31",
       "amount": 2.256167,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "CPFE3",
+      "className": "Ações",
+      "type": "Dividendos",
+      "exDate": "2026-04-29",
+      "paymentDate": "2026-12-31",
+      "amount": 1.648662,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
@@ -421,6 +432,17 @@
       "amount": 1.48,
       "currency": "USD",
       "source": "Nasdaq",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "CPFE3",
+      "className": "Ações",
+      "type": "Dividendos",
+      "exDate": "2026-04-29",
+      "paymentDate": "2026-09-24",
+      "amount": 0.607504,
+      "currency": "BRL",
+      "source": "Investidor10",
       "paymentDateEstimated": false
     },
     {
