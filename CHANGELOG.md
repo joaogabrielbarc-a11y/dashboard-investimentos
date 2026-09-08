@@ -10,6 +10,20 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.20.1 — 2026-09-07
+
+**Área:** Análise Quantitativa
+**Tipo:** Patch
+
+### Correções e melhorias
+- A matriz de correlação foi movida para imediatamente depois do gráfico de volatilidade e passou a ocupar toda a largura dos gráficos principais.
+- Indicadores de mercado e curva de juros foram separados em dois cards equilibrados no mesmo grid horizontal.
+- Larguras, padding, espaçamento e comportamento responsivo foram alinhados à área dos gráficos de retorno e volatilidade.
+- A versão do motor quantitativo e a chave de cache foram preservadas, evitando qualquer recálculo adicional causado por esta alteração visual.
+
+### Impacto nos dados
+- Nenhum lançamento, cálculo, posição, meta, banda ou série histórica foi alterado.
+
 ## V2.20.0 — 2026-09-07
 
 **Área:** Análise Quantitativa
