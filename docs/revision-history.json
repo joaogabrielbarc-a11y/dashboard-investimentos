@@ -1,15 +1,38 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.20.0",
+  "currentVersion": "2.20.1",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.20.1",
+      "date": "2026-09-07",
+      "type": "patch",
+      "area": "Análise Quantitativa",
+      "status": "deployed",
+      "request": "Reposicionar a correlação e equilibrar indicadores de mercado e curva de juros no grid principal.",
+      "motivation": "Dar aos blocos inferiores a mesma largura, ritmo e hierarquia visual dos gráficos de retorno e volatilidade.",
+      "changes": [
+        "Move a matriz de correlação para logo abaixo da volatilidade.",
+        "Expande a correlação para a largura integral dos gráficos principais.",
+        "Separa indicadores de mercado e curva de juros em duas colunas equilibradas.",
+        "Mantém o mesmo padding, espaçamento e resposta proporcional dos demais cards.",
+        "Preserva a versão do motor e a chave de cache para impedir recálculos por mudança de layout."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": false,
+        "migrationRequired": false,
+        "calculationPipelineChanged": false,
+        "initialBatchProcessing": true
+      }
+    },
     {
       "version": "2.20.0",
       "date": "2026-09-07",
       "type": "minor",
       "area": "Análise Quantitativa",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Reorganizar métricas, adicionar YTM/TIR, criar volatilidade histórica e permitir decomposição dos gráficos por carteira, classe, segmento e ativo.",
       "motivation": "Concentrar as métricas principais, aprofundar a leitura de retorno e risco e eliminar reconstruções do histórico durante a navegação.",
       "changes": [
