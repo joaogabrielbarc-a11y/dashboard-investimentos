@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07T23:41:47.834293-03:00",
+  "updatedAt": "2026-09-08T23:41:27.454967-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -598,6 +598,39 @@
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "AVUV",
+      "className": "ETFs Internacionais",
+      "type": "Dividendos",
+      "exDate": "2026-09-08",
+      "paymentDate": "2026-09-08",
+      "amount": 0.414,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
+    },
+    {
+      "ticker": "AVES",
+      "className": "ETFs Internacionais",
+      "type": "Dividendos",
+      "exDate": "2026-09-08",
+      "paymentDate": "2026-09-08",
+      "amount": 0.617,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
+    },
+    {
+      "ticker": "AVDV",
+      "className": "ETFs Internacionais",
+      "type": "Dividendos",
+      "exDate": "2026-09-08",
+      "paymentDate": "2026-09-08",
+      "amount": 0.536,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "BBSE3",
