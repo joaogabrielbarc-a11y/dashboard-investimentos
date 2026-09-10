@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-08T23:41:27.454967-03:00",
+  "updatedAt": "2026-09-09T23:41:37.698767-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -551,6 +551,17 @@
       "exDate": "2026-09-01",
       "paymentDate": "2026-09-11",
       "amount": 0.002434,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "BBAS3",
+      "className": "Ações",
+      "type": "Rend. Trib.",
+      "exDate": "2026-09-01",
+      "paymentDate": "2026-09-11",
+      "amount": 0.002814,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
