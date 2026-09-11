@@ -10,6 +10,27 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.21.0 — 2026-09-11
+
+**Área:** Alocação Estruturada, Planejador, Histórico, Proventos e Análise Quantitativa
+**Tipo:** Minor
+
+### Correções e melhorias
+- A tabela de microalocação ganhou espaçamento próprio para Quantidade e Preço médio, com alinhamento central e larguras que evitam sobreposição.
+- O preço médio passou a ser reconstruído pelo Histórico de Lançamentos; ativos internacionais exibem o custo médio na moeda do ativo e a conversão em reais quando o câmbio da operação existe.
+- A busca foi removida da microalocação e o campo de percentual ideal do segmento foi retirado do editor do ativo.
+- Alterações de nome, classe e segmento no editor da microalocação são propagadas para todos os lançamentos do mesmo ticker.
+- A antiga aba Aportes & Lançamentos foi separada em Planejador de Aportes e Histórico de Lançamentos.
+- O Histórico ganhou gráfico mensal/anual de volume de compras e vendas, paginação e formulário manual para compras, vendas, proventos e ajustes.
+- O gráfico de proventos passou a alternar entre classes, segmentos e ativos individuais, preservando recebidos e valores a receber.
+- O card de volatilidade histórica agora mostra, lado a lado, a volatilidade atual de 21 pregões e a volatilidade anualizada da carteira.
+- O motor quantitativo e o cache de 24 horas permanecem na versão analítica V2.20.0; mudanças de layout não criam processamento adicional.
+
+### Impacto nos dados
+- Nenhum lançamento ou posição existente é alterado automaticamente.
+- O novo formulário grava operações manuais no mesmo Histórico de Lançamentos usado por toda a carteira.
+- Foi adicionada somente uma chave local para preferências de visualização e paginação da nova área.
+
 ## V2.20.1 — 2026-09-07
 
 **Área:** Análise Quantitativa
