@@ -1,15 +1,45 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.20.1",
+  "currentVersion": "2.21.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.21.0",
+      "date": "2026-09-11",
+      "type": "minor",
+      "area": "Alocação Estruturada, Planejador, Histórico, Proventos e Análise Quantitativa",
+      "status": "deployed",
+      "request": "Corrigir a microalocação, separar planejamento e histórico, adicionar lançamentos manuais e detalhar proventos e volatilidade.",
+      "motivation": "Eliminar inconsistências de custo médio e classificação, dar ao histórico uma área própria e ampliar a leitura operacional da carteira sem duplicar fontes de dados.",
+      "changes": [
+        "Alinha Quantidade e Preço médio na tabela de microalocação.",
+        "Reconstrói o custo médio de ativos nacionais e internacionais pelo Histórico de Lançamentos.",
+        "Remove a busca da microalocação e o percentual ideal do editor do ativo.",
+        "Propaga nome, classe e segmento editados para todos os lançamentos do ticker.",
+        "Separa Planejador de Aportes e Histórico de Lançamentos na navegação principal.",
+        "Adiciona gráfico mensal e anual de compras e vendas ao Histórico.",
+        "Adiciona formulário manual para compra, venda, provento e ajuste.",
+        "Adiciona filtros por classes, segmentos e ativos ao gráfico de proventos.",
+        "Mostra volatilidade atual e anualizada lado a lado.",
+        "Preserva o motor quantitativo V2.20.0 e o cache diário."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": true,
+        "migrationRequired": false,
+        "singleSource": "transaction-history",
+        "manualEntriesCanChangePortfolio": true,
+        "quantitativeEngineVersion": "2.20.0",
+        "cacheHours": 24
+      }
+    },
     {
       "version": "2.20.1",
       "date": "2026-09-07",
       "type": "patch",
       "area": "Análise Quantitativa",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Reposicionar a correlação e equilibrar indicadores de mercado e curva de juros no grid principal.",
       "motivation": "Dar aos blocos inferiores a mesma largura, ritmo e hierarquia visual dos gráficos de retorno e volatilidade.",
       "changes": [
