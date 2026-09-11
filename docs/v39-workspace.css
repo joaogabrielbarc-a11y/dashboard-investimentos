@@ -1,0 +1,34 @@
+/* Pondera V2.21.0 — microalocação, histórico independente e filtros de proventos */
+.portfolioTabsV23{gap:2px!important}.portfolioTabsV23 button{padding-inline:12px!important}
+#tabHistoricoV39{width:100%;flex-direction:column;gap:18px;min-width:0}
+#tabHistoricoV39>.tabIntroV22{margin-bottom:0!important}
+.historyFlowCardV39,.historyWorkspaceV39{width:100%;padding:22px;min-width:0;box-sizing:border-box}
+.historyCardHeadV39{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}.historyCardHeadV39>div>span{font-size:10px;letter-spacing:.09em;color:#69a7ff;font-weight:850}.historyCardHeadV39 h2{margin:4px 0;font-size:21px}.historyCardHeadV39 p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+.historyModeV39{display:flex;padding:4px;border:1px solid var(--line);border-radius:10px;background:#091827}.historyModeV39 button{min-height:34px;padding:7px 12px;border:0;border-radius:7px;background:transparent;color:#8198af;font-size:11px;font-weight:800;cursor:pointer}.historyModeV39 button.active{background:#17314a;color:#edf7ff}
+.historyChartV39{min-height:280px;border-top:1px solid rgba(32,52,77,.55);padding-top:10px;overflow-x:auto}.historyChartV39 svg{width:100%;min-width:760px;height:auto}.historyEmptyV39{min-height:230px;display:grid;place-items:center;color:var(--muted);font-size:12px}
+.historyLegendV39{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:10px;color:#8fa5bb;font-size:11px}.historyLegendV39 span{display:flex;align-items:center;gap:7px}.historyLegendV39 i{width:18px;height:4px;border-radius:99px}.historyLegendV39 i.buy{background:#43d39e}.historyLegendV39 i.sell{background:#ff8f9b}.historyLegendV39 strong{color:var(--text)}
+.historyTableWrapV39{max-width:100%;overflow:auto}.historyTableV39{min-width:1180px!important;width:100%}.historyTableV39 th,.historyTableV39 td{padding:10px 8px!important;vertical-align:middle}.historyTableV39 .txSide.neutral{color:#c7b3f5;background:rgba(183,134,244,.1);border:1px solid rgba(183,134,244,.24)}
+.historyPaginationV39{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:15px;padding-top:14px;border-top:1px solid rgba(32,52,77,.58)}.historyPaginationV39>span{color:var(--muted);font-size:11px}.historyPaginationV39>div{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.historyPaginationV39 button{min-width:32px;height:32px;padding:0 9px;border:1px solid var(--line);border-radius:8px;background:#091827;color:#9fb5ca;font-size:10px;font-weight:800;cursor:pointer}.historyPaginationV39 button.active{border-color:rgba(67,211,158,.55);background:rgba(67,211,158,.12);color:#86e8c2}.historyPaginationV39 button:disabled{opacity:.38;cursor:not-allowed}
+.historyPreviewV39{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}.historyPreviewV39 span{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid rgba(32,52,77,.75);border-radius:10px;background:#091827;color:var(--muted);font-size:11px}.historyPreviewV39 strong{color:var(--text)}.hiddenV39{display:none!important}
+
+/* Microalocação: cabeçalhos respiram e preço médio deriva do histórico. */
+#tabMacroV22 .assetsTableV18.microTableV39 th{letter-spacing:.035em!important;vertical-align:middle!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(3),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(3),#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(4),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(4){text-align:center!important;padding-left:9px!important;padding-right:9px!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(1),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(1){width:14%!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(2),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(2){width:13%!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(3),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(3){width:9%!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(4),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(4){width:13%!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(5),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(5){width:11%!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(6),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(6){width:10%!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(7),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(7){width:10%!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(8),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(8){width:8%!important}
+#tabMacroV22 .assetsTableV18.microTableV39 th:nth-child(9),#tabMacroV22 .assetsTableV18.microTableV39 td:nth-child(9){width:12%!important}
+.priceHistoryV39{align-items:center!important;text-align:center}.priceHistoryV39 small{white-space:normal!important;line-height:1.25!important}
+#holdingMetadataV17{grid-template-columns:1fr!important}
+
+/* Proventos: alternância de classe, segmento e ativo no próprio gráfico. */
+.dividendBreakdownV39{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:-4px 0 14px;padding:7px 8px 7px 12px;border:1px solid rgba(32,52,77,.7);border-radius:11px;background:#091827}.dividendBreakdownV39>span{color:#7890aa;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.07em}.dividendBreakdownV39>div{display:flex;gap:4px;flex-wrap:wrap}.dividendBreakdownV39 button{min-height:34px;padding:7px 11px;border:0;border-radius:8px;background:transparent;color:#879db4;font-size:11px;font-weight:800;cursor:pointer}.dividendBreakdownV39 button.active{background:#17314a;color:#eff8ff;box-shadow:inset 0 0 0 1px rgba(105,167,255,.28)}
+#tabProventosV22 .dividendLegendV22{flex-wrap:wrap;gap:12px!important}.dividendStatusKeyV39{margin-left:auto;color:#7890aa!important;font-size:10px!important}
+
+@media(max-width:1100px){.portfolioTabsV23{overflow-x:auto!important;justify-content:flex-start!important}.portfolioTabsV23 button{flex:0 0 auto}.historyCardHeadV39{flex-direction:column}.historyModeV39{align-self:flex-start}}
+@media(max-width:700px){.historyFlowCardV39,.historyWorkspaceV39{padding:16px}.historyPaginationV39{align-items:flex-start;flex-direction:column}.historyPreviewV39{grid-template-columns:1fr}.dividendBreakdownV39{align-items:flex-start;flex-direction:column}.dividendBreakdownV39>div{width:100%;display:grid;grid-template-columns:1fr}.dividendStatusKeyV39{margin-left:0}}
