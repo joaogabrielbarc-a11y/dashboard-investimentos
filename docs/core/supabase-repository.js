@@ -6,7 +6,7 @@ const required=value=>{if(!value)throw new Error('Configuração do Supabase aus
 const unwrap=({data,error})=>{if(error)throw error;return data;};
 
 function create(config){
-  const factory=required(window.supabase?.createClient),url=required(config.supabaseUrl),key=required(config.supabaseAnonKey);
+  const factory=required(window.supabase?.createClient),url=required(config.supabaseUrl),key=required(config.supabasePublishableKey||config.supabaseAnonKey);
   const client=factory(url,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 
   async function session(){return unwrap(await client.auth.getSession())?.session||null;}
