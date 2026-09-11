@@ -1,16 +1,32 @@
-# Dashboard online — Consolidação e Balanceamento
+# Pondera — Portfolio Dashboard
 
-Aplicação Streamlit focada exclusivamente em:
+Dashboard financeiro publicado em `docs/`, com patrimônio, alocação estruturada,
+planejamento de aportes, histórico, proventos e análise quantitativa.
 
-- consolidação da carteira;
-- pesos atuais x pesos-alvo;
-- bandas de rebalanceamento;
-- simulação e dimensionamento do próximo aporte;
-- balanceamento interno de Ações BR e FIIs;
-- pesos internos dos ETFs internacionais;
-- concentração por ativo.
+A arquitetura multiusuário está documentada em `docs/ARCHITECTURE.md`. Ela usa
+Supabase Auth, PostgreSQL com RLS, carteiras independentes e uma visão consolidada
+controlada por `includeInConsolidated`.
 
-Não há valuation, Sharpe, beta, volatilidade ou análise de performance.
+O Histórico de Lançamentos é a fonte única dos saldos. Posições, custo médio,
+lucro, renda, alocações e métricas são calculados por serviços derivados, sem
+duplicar estado entre as abas.
+
+## Front-end estático
+
+```bash
+python -m http.server 8000 --directory docs
+```
+
+Abra `http://localhost:8000`. Sem `supabaseUrl` e `supabaseAnonKey` em
+`docs/config.js`, a aplicação mantém o modo local compatível com a versão anterior.
+
+## Banco, autenticação e seed
+
+Consulte `docs/ARCHITECTURE.md` para aplicar a migration em `supabase/migrations/`,
+configurar as URLs de autenticação e criar o administrador inicial com variáveis
+de ambiente. Senhas e a chave `service_role` nunca devem ser publicadas.
+
+## Aplicação Streamlit legada
 
 ## Execução local
 
