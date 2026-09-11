@@ -10,6 +10,29 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V3.0.0 — 2026-09-11
+
+**Área:** Arquitetura, Autenticação e Multiportfólio
+**Tipo:** Major
+
+### Correções e melhorias
+- Foi criada uma arquitetura Supabase/PostgreSQL compatível com login por e-mail e senha e preparada para identidades OAuth.
+- O RBAC separa usuários e administradores sem permitir que o papel administrativo contorne o isolamento de dados no navegador.
+- Todas as entidades financeiras possuem isolamento por usuário e carteira, protegido simultaneamente por chaves compostas e Row Level Security.
+- Cada carteira possui o atributo `includeInConsolidated`, histórico, metas, segmentos, ativos e agenda de proventos independentes.
+- O cabeçalho recebeu um seletor global para alternar entre a visão consolidada e uma carteira específica.
+- A visão consolidada agrega somente carteiras habilitadas e permanece somente leitura; alterações exigem selecionar uma carteira.
+- Custo médio, patrimônio, lucro, renda e alocação passaram a ter um serviço financeiro central reutilizável.
+- Uma ponte de compatibilidade mantém as abas atuais funcionando enquanto a persistência deixa de depender do `localStorage`.
+- A importação dos dados antigos é explícita e nunca altera automaticamente uma carteira remota.
+- A conta administrativa é criada por script seguro e exige senha e chave de serviço somente em variáveis de ambiente.
+
+### Impacto nos dados
+- Nenhuma carteira local é enviada automaticamente ao banco.
+- A ativação da persistência exige um projeto Supabase e a aplicação da migration incluída no repositório.
+- Senhas e `service_role` não são gravadas no código, no navegador ou no repositório.
+- O Histórico de Lançamentos continua sendo a fonte única das posições e métricas derivadas.
+
 ## V2.22.0 — 2026-09-11
 
 **Área:** Proventos
