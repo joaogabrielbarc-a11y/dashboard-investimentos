@@ -1,4 +1,4 @@
-/* Pondera V2.21.0 — microalocação, histórico independente e filtros de proventos */
+/* Pondera V2.22.0 — microalocação, histórico independente e filtros de proventos */
 .portfolioTabsV23{gap:2px!important}.portfolioTabsV23 button{padding-inline:12px!important}
 #tabHistoricoV39{width:100%;flex-direction:column;gap:18px;min-width:0}
 #tabHistoricoV39>.tabIntroV22{margin-bottom:0!important}
@@ -26,9 +26,17 @@
 .priceHistoryV39{align-items:center!important;text-align:center}.priceHistoryV39 small{white-space:normal!important;line-height:1.25!important}
 #holdingMetadataV17{grid-template-columns:1fr!important}
 
-/* Proventos: alternância de classe, segmento e ativo no próprio gráfico. */
+/* Proventos: pizza categórica independente e evolução com filtro de status. */
 .dividendBreakdownV39{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:-4px 0 14px;padding:7px 8px 7px 12px;border:1px solid rgba(32,52,77,.7);border-radius:11px;background:#091827}.dividendBreakdownV39>span{color:#7890aa;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.07em}.dividendBreakdownV39>div{display:flex;gap:4px;flex-wrap:wrap}.dividendBreakdownV39 button{min-height:34px;padding:7px 11px;border:0;border-radius:8px;background:transparent;color:#879db4;font-size:11px;font-weight:800;cursor:pointer}.dividendBreakdownV39 button.active{background:#17314a;color:#eff8ff;box-shadow:inset 0 0 0 1px rgba(105,167,255,.28)}
 #tabProventosV22 .dividendLegendV22{flex-wrap:wrap;gap:12px!important}.dividendStatusKeyV39{margin-left:auto;color:#7890aa!important;font-size:10px!important}
+#tabProventosV22 #divChartStatusV36{min-width:170px}
+#tabProventosV22 .dividendPieHeadV39{display:flex;flex-direction:column;gap:12px}
+#tabProventosV22 .dividendPieHeadV39 .dividendBreakdownV39{width:100%;box-sizing:border-box;margin:0;padding:5px;align-items:stretch;flex-direction:column;gap:5px}
+#tabProventosV22 .dividendPieHeadV39 .dividendBreakdownV39>span{padding:4px 6px 0}
+#tabProventosV22 .dividendPieHeadV39 .dividendBreakdownV39>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}
+#tabProventosV22 .dividendPieHeadV39 .dividendBreakdownV39 button{min-width:0;min-height:32px;padding:6px 5px;font-size:9px;line-height:1.2}
+#tabProventosV22 .dividendClassPieV36 .divPieLegendV30{max-height:238px;overflow:auto;padding-right:3px}
+#tabProventosV22 .dividendClassPieV36 .divPieV30>span small{max-width:66px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 @media(max-width:1100px){.portfolioTabsV23{overflow-x:auto!important;justify-content:flex-start!important}.portfolioTabsV23 button{flex:0 0 auto}.historyCardHeadV39{flex-direction:column}.historyModeV39{align-self:flex-start}}
-@media(max-width:700px){.historyFlowCardV39,.historyWorkspaceV39{padding:16px}.historyPaginationV39{align-items:flex-start;flex-direction:column}.historyPreviewV39{grid-template-columns:1fr}.dividendBreakdownV39{align-items:flex-start;flex-direction:column}.dividendBreakdownV39>div{width:100%;display:grid;grid-template-columns:1fr}.dividendStatusKeyV39{margin-left:0}}
+@media(max-width:700px){.historyFlowCardV39,.historyWorkspaceV39{padding:16px}.historyPaginationV39{align-items:flex-start;flex-direction:column}.historyPreviewV39{grid-template-columns:1fr}.dividendBreakdownV39{align-items:flex-start;flex-direction:column}.dividendBreakdownV39>div{width:100%;display:grid;grid-template-columns:1fr}.dividendStatusKeyV39{margin-left:0}#tabProventosV22 #divChartStatusV36{width:100%;min-width:0}#tabProventosV22 .dividendPieHeadV39 .dividendBreakdownV39>div{grid-template-columns:1fr}}
