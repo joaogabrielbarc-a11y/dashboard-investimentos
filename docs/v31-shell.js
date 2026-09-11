@@ -3,11 +3,11 @@
 if(window.__PONDERA_SHELL_V31__)return;
 const VERSION='2.11.2';
 const TAB_KEY='carteira-v23-tab';
-const TABS={patrimonio:'tabPatrimonioV22',alocacao:'tabMacroV22',aportes:'tabMicroV22',proventos:'tabProventosV22',quantitativa:'tabQuantitativaV37'};
+const TABS={patrimonio:'tabPatrimonioV22',alocacao:'tabMacroV22',aportes:'tabMicroV22',historico:'tabHistoricoV39',proventos:'tabProventosV22',quantitativa:'tabQuantitativaV37'};
 let currentTab='patrimonio',syncTimer=null,holdingsObserver=null;
 function normalizeTab(raw){const v=String(raw||'').replace(/^#/,'');if(v==='macro')return'alocacao';if(v==='micro')return'aportes';return Object.prototype.hasOwnProperty.call(TABS,v)?v:null;}
 function preferredTab(){return normalizeTab(location.hash)||normalizeTab(localStorage.getItem(TAB_KEY))||'patrimonio';}
-function ensureCss(){let l=document.querySelector('link[href^="v31-shell.css"]');if(!l){l=document.createElement('link');l.rel='stylesheet';document.head.appendChild(l);}l.href='v31-shell.css?v=31.1';}
+function ensureCss(){let l=document.querySelector('link[href^="v31-shell.css"]');if(!l){l=document.createElement('link');l.rel='stylesheet';document.head.appendChild(l);}l.href='v31-shell.css?v=31.3';}
 function setPanelState(panel,active){if(!panel)return;panel.classList.toggle('hiddenV22',!active);panel.style.setProperty('display',active?'flex':'none','important');panel.setAttribute('aria-hidden',active?'false':'true');if(active)panel.removeAttribute('inert');else panel.setAttribute('inert','');}
 function syncLegacyTabState(tab){try{if(typeof v23ActiveTab!=='undefined')v23ActiveTab=tab;}catch(e){}try{if(typeof v22ActiveTab!=='undefined')v22ActiveTab=tab==='alocacao'?'macro':tab==='aportes'?'micro':tab;}catch(e){}try{localStorage.setItem('carteira-v22-tab',tab==='alocacao'?'macro':tab==='aportes'?'micro':tab);}catch(e){}}
 function syncNav(){document.querySelectorAll('[data-tab-v23]').forEach(b=>{const active=b.dataset.tabV23===currentTab;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false');b.tabIndex=active?0:-1;});}
