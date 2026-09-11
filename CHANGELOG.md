@@ -10,6 +10,23 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V2.22.0 — 2026-09-11
+
+**Área:** Proventos
+**Tipo:** Minor
+
+### Correções e melhorias
+- O gráfico de distribuição de proventos voltou ao formato de pizza usado no resumo patrimonial.
+- A pizza permite alternar entre Classes de ativos, Segmentos e Ativos individuais sem substituir o gráfico temporal.
+- A evolução de proventos preserva os modos Mensal e Anual e ganhou um filtro independente para Recebidos, A receber ou ambos.
+- O Top 3 considera exclusivamente pagamentos com status Recebido; eventos futuros e valores apenas declarados ficam fora do ranking.
+- Proventos manuais registrados no Histórico de Lançamentos entram na consolidação e respeitam a data efetiva do pagamento.
+
+### Impacto nos dados
+- Nenhum lançamento, posição, meta ou banda existente foi alterado.
+- Foi acrescentada apenas uma preferência local de visualização para o filtro de status do gráfico.
+- O Histórico de Lançamentos permanece como fonte única das posições e dos registros manuais.
+
 ## V2.21.0 — 2026-09-11
 
 **Área:** Alocação Estruturada, Planejador, Histórico, Proventos e Análise Quantitativa
