@@ -1,15 +1,37 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.21.0",
+  "currentVersion": "2.22.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "2.22.0",
+      "date": "2026-09-11",
+      "type": "minor",
+      "area": "Proventos",
+      "status": "deployed",
+      "request": "Separar a distribuição categórica da evolução temporal, adicionar filtros de status e restringir o Top 3 a proventos efetivamente recebidos.",
+      "motivation": "Recuperar a leitura temporal da versão anterior e permitir análises independentes por origem e por situação do pagamento.",
+      "changes": [
+        "Transforma a distribuição por classe em pizza com alternância entre classes, segmentos e ativos.",
+        "Preserva os modos mensal e anual da evolução de proventos.",
+        "Adiciona filtros para recebidos, a receber ou ambos no gráfico de evolução.",
+        "Restringe o Top 3 a pagamentos efetivamente recebidos.",
+        "Inclui proventos manuais do Histórico de Lançamentos na consolidação."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "localStorageKeysChanged": true,
+        "migrationRequired": false,
+        "singleSource": "transaction-history"
+      }
+    },
     {
       "version": "2.21.0",
       "date": "2026-09-11",
       "type": "minor",
       "area": "Alocação Estruturada, Planejador, Histórico, Proventos e Análise Quantitativa",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Corrigir a microalocação, separar planejamento e histórico, adicionar lançamentos manuais e detalhar proventos e volatilidade.",
       "motivation": "Eliminar inconsistências de custo médio e classificação, dar ao histórico uma área própria e ampliar a leitura operacional da carteira sem duplicar fontes de dados.",
       "changes": [
