@@ -1,15 +1,40 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "2.22.0",
+  "currentVersion": "3.0.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "3.0.0",
+      "date": "2026-09-11",
+      "type": "major",
+      "area": "Arquitetura, Autenticação e Multiportfólio",
+      "status": "deployed",
+      "request": "Adicionar autenticação, RBAC, isolamento multiusuário, múltiplas carteiras, patrimônio consolidado e estado financeiro centralizado.",
+      "motivation": "Substituir a persistência exclusivamente local por uma base extensível e segura sem perder a compatibilidade funcional das abas atuais.",
+      "changes": [
+        "Adiciona schema Supabase/PostgreSQL com RLS e chaves compostas por usuário e carteira.",
+        "Adiciona RBAC com papéis user e admin sem bypass de dados no cliente.",
+        "Adiciona carteiras independentes e includeInConsolidated.",
+        "Adiciona seletor global de contexto e visão consolidada somente leitura.",
+        "Centraliza custo médio, posições, lucro, renda e alocação no PonderaFinance.",
+        "Adiciona repositório Supabase, store global e ponte compatível com o dashboard legado.",
+        "Adiciona importação explícita do histórico local e seed administrativo por variáveis de ambiente."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "automaticMigration": false,
+        "databaseActivationRequired": true,
+        "singleSource": "transaction-history",
+        "credentialsCommitted": false
+      }
+    },
     {
       "version": "2.22.0",
       "date": "2026-09-11",
       "type": "minor",
       "area": "Proventos",
-      "status": "deployed",
+      "status": "superseded",
       "request": "Separar a distribuição categórica da evolução temporal, adicionar filtros de status e restringir o Top 3 a proventos efetivamente recebidos.",
       "motivation": "Recuperar a leitura temporal da versão anterior e permitir análises independentes por origem e por situação do pagamento.",
       "changes": [
