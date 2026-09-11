@@ -2,7 +2,7 @@
 'use strict';
 if(window.__PONDERA_RELIABILITY_V34__)return;
 
-const VERSION='2.14.0';
+const VERSION='2.21.0';
 let auditTimer=null,profitTimer=null,profitObserver=null;
 const ticker=value=>{const key=String(value||'').trim().toUpperCase();return key==='BTC'?'BTCUSD':key;};
 const finite=value=>value!==null&&value!==undefined&&value!==''&&Number.isFinite(Number(value));
@@ -22,7 +22,7 @@ function ensureEditorFields(){
     metadata=document.createElement('div');
     metadata.id='holdingMetadataV17';
     metadata.className='modalGrid';
-    metadata.innerHTML='<label>Segmento<input id="holdingSegmentV17" type="text" maxlength="60" placeholder="Ex.: Bancos, Logística, Small Cap Value"></label><label>Micro alocação ideal (%)<input id="holdingMicroTargetV17" type="number" min="0" max="100" step="1" placeholder="Opcional"></label>';
+    metadata.innerHTML='<label>Segmento<input id="holdingSegmentV17" type="text" maxlength="60" placeholder="Ex.: Bancos, Logística, Small Cap Value"></label>';
     classLabel.insertAdjacentElement('afterend',metadata);
   }
   const segment=document.getElementById('holdingSegmentV17');
@@ -31,6 +31,7 @@ function ensureEditorFields(){
     if(!list){list=document.createElement('datalist');list.id='holdingSegmentsListV18';document.body.appendChild(list);}
     segment.setAttribute('list',list.id);
   }
+  document.getElementById('holdingMicroTargetV17')?.closest('label')?.remove();
   const help=form.querySelector('.modalHelp');
   if(help){
     help.classList.add('metadataSyncNoteV34');
@@ -80,7 +81,6 @@ function openAssetEditor(id){
   document.getElementById('holdingName').value=holding.name||'';
   fillClassOptions(select,holding.className);
   document.getElementById('holdingSegmentV17').value=holding.segment||'Sem segmento';
-  const micro=document.getElementById('holdingMicroTargetV17');micro.value=finite(holding.microTarget)?Number(holding.microTarget):'';syncMicroStepper(micro);
   const numericGrid=document.getElementById('holdingQty')?.closest('.modalGrid');if(numericGrid)numericGrid.classList.add('hiddenV17');
   refreshEditorSuggestions();
   if(dialog&&!dialog.open)dialog.showModal();
@@ -97,7 +97,6 @@ function synchronizeAssetMetadata(holding,metadata){
       transaction.name=metadata.name;
       transaction.className=metadata.className;
       transaction.segment=metadata.segment;
-      transaction.microTarget=metadata.microTarget;
       transaction.metadataUpdatedAt=new Date().toISOString();
     }
   }
@@ -110,12 +109,10 @@ function saveAssetEditor(event){
   event.preventDefault();event.stopImmediatePropagation();
   const id=document.getElementById('holdingEditId')?.value,holding=(state.holdings||[]).find(item=>String(item.id)===String(id));
   if(!holding)return;
-  const rawTarget=document.getElementById('holdingMicroTargetV17')?.value??'';
   const metadata={
     name:document.getElementById('holdingName')?.value.trim()||holding.ticker,
     className:document.getElementById('holdingClass')?.value||holding.className||'Sem classe',
-    segment:document.getElementById('holdingSegmentV17')?.value.trim()||'Sem segmento',
-    microTarget:rawTarget===''?null:Math.min(100,Math.max(0,Number(rawTarget)||0))
+    segment:document.getElementById('holdingSegmentV17')?.value.trim()||'Sem segmento'
   };
   synchronizeAssetMetadata(holding,metadata);
   document.getElementById('holdingDialog')?.close();
@@ -246,14 +243,14 @@ function audit(){
     visiblePanels,
     macro:{classes:(state.assets||[]).length,rows:macroRows.length,targetInputs:macroTargets.length,targetSteppers:document.querySelectorAll('#allocationMacroSnapshotV23 input[data-target-v25] + .ppPercentV32').length,bandControl:!!document.getElementById('macroBandInputV26')},
     micro:{classCards:classes.length,activeHoldings:activeHoldings.length,editButtons:editButtons.length,segmentTargets:segmentTargets.length,bandControls:document.querySelectorAll('#tabMacroV22 input[data-band-class-v18]').length,addSegmentButtons:document.querySelectorAll('#tabMacroV22 [data-add-segment-v18]').length,collapseButtons:document.querySelectorAll('#tabMacroV22 [data-collapse-v19]').length},
-    editor:{form:!!document.getElementById('holdingForm'),segment:!!document.getElementById('holdingSegmentV17'),microTarget:!!document.getElementById('holdingMicroTargetV17')},
+    editor:{form:!!document.getElementById('holdingForm'),segment:!!document.getElementById('holdingSegmentV17'),microTargetRemoved:!document.getElementById('holdingMicroTargetV17')},
     data:{targetTotal:(state.assets||[]).reduce((sum,item)=>sum+Math.max(0,Number(item.target)||0),0),zeroPositionClasses:(state.assets||[]).filter(item=>!(Number(item.current)>0)).map(item=>item.name),duplicateDomIds:duplicates,containsInvalidText:/\b(?:NaN|undefined)\b/.test(text)},
     checks:{
       macroCoverage:macroRows.length===(state.assets||[]).length&&macroTargets.length===(state.assets||[]).length,
       classCoverage:classes.length===(state.assets||[]).length,
       assetEditCoverage:editButtons.length===activeHoldings.length,
       classCommandCoverage:document.querySelectorAll('#tabMacroV22 input[data-band-class-v18]').length===classes.length&&document.querySelectorAll('#tabMacroV22 [data-add-segment-v18]').length===classes.length&&document.querySelectorAll('#tabMacroV22 [data-collapse-v19]').length===classes.length,
-      editorReady:!!document.getElementById('holdingSegmentV17')&&!!document.getElementById('holdingMicroTargetV17'),
+      editorReady:!!document.getElementById('holdingSegmentV17')&&!document.getElementById('holdingMicroTargetV17'),
       uniqueDomIds:duplicates.length===0,
       finiteRendering:!/\b(?:NaN|undefined)\b/.test(text)
     }
