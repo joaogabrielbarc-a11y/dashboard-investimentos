@@ -2,7 +2,7 @@
 'use strict';
 if(window.__PONDERA_PLATFORM_V40__)return;
 
-const VERSION='3.0.0',config=window.PONDERA_CONFIG||{},configured=Boolean(config.supabaseUrl&&config.supabaseAnonKey);
+const VERSION='3.1.0',config=window.PONDERA_CONFIG||{},configured=Boolean(config.supabaseUrl&&config.supabaseAnonKey);
 const legacyBackup=(()=>{try{return{ledger:JSON.parse(localStorage.getItem('carteira-v14-transactions')||'null'),portfolio:JSON.parse(localStorage.getItem('carteira-v1')||'null'),segments:JSON.parse(localStorage.getItem('carteira-v18-segment-plan')||'null')};}catch(e){return{};}})();
 let store=null,repository=null,applying=false,syncTimer=null,lastTransactionFingerprint='',lastAllocationFingerprint='',authMode='signin';
 
@@ -48,8 +48,64 @@ function applyLegacyPayload(){const payload=store.legacyPayload();if(!payload||a
 
 async function importLegacy(){if(!store.canWrite()||!Array.isArray(legacyBackup.ledger?.executed))return;if(!confirm('Importar os lançamentos e metas deste navegador para a carteira selecionada? Nenhum dado será removido de outras carteiras.'))return;try{setSync('Importando…');await store.replaceTransactions(legacyBackup.ledger.executed);if(Array.isArray(legacyBackup.portfolio?.assets))await store.replaceAllocations(legacyBackup.portfolio.assets,legacyBackup.segments?.segments||legacyBackup.segments||{});setSync('Importação concluída');}catch(error){setSync(message(error),'error');}}
 
+const localMoney=value=>Number(value||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const localPercent=value=>`${Number(value||0).toFixed(1).replace('.',',')}%`;
+
+function installLocalPersistenceBridge(){
+  if(window.__PONDERA_LOCAL_SAVE_BRIDGE__)return;window.__PONDERA_LOCAL_SAVE_BRIDGE__=true;
+  const bindings={save:'carteira-v1',saveV14:'carteira-v14-transactions',savePatrimonyV15:'carteira-v15-patrimony',saveV16Plan:'carteira-v16-planning',saveV18Plan:'carteira-v18-segment-plan'};
+  for(const [functionName,storageKey] of Object.entries(bindings)){
+    const original=window[functionName];if(typeof original!=='function')continue;
+    window[functionName]=function(...args){const result=original.apply(this,args);repository.persistLegacyKey(storageKey);return result;};
+  }
+  repository.persistActiveLegacy();
+  window.addEventListener('beforeunload',()=>repository.persistActiveLegacy());
+}
+
+function ensureLocalHeader(){
+  const topbar=document.querySelector('.topbar');if(!topbar)return null;let host=document.getElementById('platformHeaderV40');
+  if(!host){host=document.createElement('div');host.id='platformHeaderV40';host.className='platformHeaderV40 localPlatformHeaderV40';host.innerHTML='<label class="platformContextV40"><span class="platformContextMetaV40">Carteira ativa</span><select id="portfolioContextV40" aria-label="Selecionar carteira ativa"></select></label><div class="platformHeaderActionsV40"><button type="button" class="primaryV40" data-platform-v40 id="newPortfolioV40">+ Carteira</button><button type="button" data-platform-v40 id="editPortfolioV40">Editar carteira</button><button type="button" class="globalV40" data-platform-v40 id="globalPatrimonyV40">Patrimônio global</button></div>';topbar.appendChild(host);}
+  const rows=repository.portfolios(),active=repository.activePortfolio();const select=document.getElementById('portfolioContextV40');
+  select.innerHTML=rows.map(row=>`<option value="${esc(row.id)}">${esc(row.name)}${row.includeInConsolidated?'':' • fora do global'}</option>`).join('');select.value=active.id;
+  select.onchange=()=>{try{repository.setActivePortfolio(select.value);location.reload();}catch(error){setSync(message(error),'error');}};
+  document.getElementById('newPortfolioV40').onclick=()=>openLocalPortfolioDialog();document.getElementById('editPortfolioV40').onclick=()=>openLocalPortfolioDialog(repository.activePortfolio());document.getElementById('globalPatrimonyV40').onclick=openGlobalPatrimony;
+  const banner=ensureScopeBanner();banner.innerHTML=`<span><strong>${esc(active.name)}</strong> — histórico, posições, metas e simulações usam um armazenamento exclusivo desta carteira.</span><span id="platformSyncV40" class="platformSyncV40">Salvo neste navegador</span>`;
+  return host;
+}
+
+function openLocalPortfolioDialog(portfolio=null){
+  const dialog=portfolioDialog();document.getElementById('platformPortfolioTitleV40').textContent=portfolio?'Editar carteira':'Nova carteira';document.getElementById('platformPortfolioIdV40').value=portfolio?.id||'';document.getElementById('platformPortfolioNameV40').value=portfolio?.name||'';document.getElementById('platformPortfolioDescriptionV40').value=portfolio?.description||'';document.getElementById('platformPortfolioConsolidatedV40').checked=portfolio?.includeInConsolidated!==false;document.getElementById('platformPortfolioErrorV40').textContent='';dialog.querySelector('form').onsubmit=saveLocalPortfolio;dialog.showModal();
+}
+
+function saveLocalPortfolio(event){
+  event.preventDefault();const id=document.getElementById('platformPortfolioIdV40').value,input={name:document.getElementById('platformPortfolioNameV40').value.trim(),description:document.getElementById('platformPortfolioDescriptionV40').value.trim(),includeInConsolidated:document.getElementById('platformPortfolioConsolidatedV40').checked,baseCurrency:'BRL'},errorHost=document.getElementById('platformPortfolioErrorV40');
+  try{if(!input.name)throw new Error('Informe um nome para a carteira.');if(id){repository.updatePortfolio(id,input);portfolioDialog().close();ensureLocalHeader();}else{const created=repository.createPortfolio(input);repository.setActivePortfolio(created.id);location.reload();}}catch(error){errorHost.textContent=message(error);}
+}
+
+function globalDialog(){
+  let dialog=document.getElementById('platformGlobalDialogV40');if(dialog)return dialog;dialog=document.createElement('dialog');dialog.id='platformGlobalDialogV40';dialog.className='platformDialogV40 platformGlobalDialogV40';dialog.innerHTML='<div class="platformDialogCardV40 platformGlobalCardV40"><div class="platformDialogHeadV40"><div><span class="platformContextMetaV40">PATRIMÔNIO GLOBAL</span><h2>Visão consolidada</h2><p>Somente leitura. Nenhum lançamento é movido ou combinado entre carteiras.</p></div><button type="button" data-close-global-v40 aria-label="Fechar">×</button></div><div id="platformGlobalBodyV40"></div><div class="platformDialogActionsV40"><button type="button" data-close-global-v40>Fechar</button></div></div>';document.body.appendChild(dialog);dialog.querySelectorAll('[data-close-global-v40]').forEach(button=>button.onclick=()=>dialog.close());return dialog;
+}
+
+function consolidatedSnapshot(){repository.persistActiveLegacy();return window.PonderaLocalConsolidation.build(repository.snapshots());}
+
+function renderGlobalBody(){
+  const body=document.getElementById('platformGlobalBodyV40');if(!body)return;const rows=repository.portfolios(),summary=consolidatedSnapshot();
+  const portfolioList=rows.map(row=>{const item=summary.portfolios.find(value=>value.id===row.id);return`<label class="globalPortfolioOptionV40"><input type="checkbox" data-global-portfolio-v40="${esc(row.id)}" ${row.includeInConsolidated?'checked':''}><span><strong>${esc(row.name)}</strong><small>${row.includeInConsolidated?`${localMoney(item?.netWorth||0)} no consolidado`:'Fora do patrimônio global'}</small></span></label>`;}).join('');
+  const portfolioCards=summary.portfolios.map(row=>`<div class="globalPortfolioCardV40"><span>${esc(row.name)}</span><strong>${localMoney(row.netWorth)}</strong><small>${localPercent(row.weight)} do total • ${row.positions} posições</small></div>`).join('')||'<div class="globalEmptyV40">Selecione ao menos uma carteira para compor o patrimônio global.</div>';
+  const classes=summary.classAllocation.map(row=>`<div class="globalAllocationRowV40"><span>${esc(row.name)}</span><div><i style="width:${Math.max(0,Math.min(100,row.weight))}%"></i></div><strong>${localPercent(row.weight)}</strong><small>${localMoney(row.value)}</small></div>`).join('')||'<div class="globalEmptyV40">Ainda não há posições nas carteiras selecionadas.</div>';
+  const positions=summary.positions.slice(0,12).map(row=>`<tr><td><strong>${esc(row.ticker)}</strong><small>${esc(row.name)}</small></td><td>${esc(row.className)}</td><td>${Number(row.quantity).toLocaleString('pt-BR',{maximumFractionDigits:6})}</td><td>${localMoney(row.currentValue)}</td><td>${row.portfolioIds.length}</td></tr>`).join('');
+  body.innerHTML=`<section class="globalSelectionV40"><div><h3>Carteiras incluídas</h3><p>Marque somente as carteiras que devem entrar no total global.</p></div><div class="globalPortfolioOptionsV40">${portfolioList}</div><button type="button" id="saveGlobalSelectionV40">Salvar seleção</button></section><div class="globalStatsV40"><div><span>Patrimônio global</span><strong>${localMoney(summary.netWorth)}</strong></div><div><span>Carteiras incluídas</span><strong>${summary.portfolioCount}</strong></div><div><span>Posições consolidadas</span><strong>${summary.positions.length}</strong></div><div><span>Proventos registrados</span><strong>${localMoney(summary.receivedIncome)}</strong></div></div><section class="globalSectionV40"><h3>Participação por carteira</h3><div class="globalPortfolioGridV40">${portfolioCards}</div></section><section class="globalSectionV40"><h3>Alocação consolidada por classe</h3><div class="globalAllocationV40">${classes}</div></section><section class="globalSectionV40"><h3>Maiores posições consolidadas</h3><div class="tableWrap"><table class="globalPositionsTableV40"><thead><tr><th>Ativo</th><th>Classe</th><th>Quantidade</th><th>Valor</th><th>Carteiras</th></tr></thead><tbody>${positions||'<tr><td colspan="5"><div class="globalEmptyV40">Nenhuma posição para exibir.</div></td></tr>'}</tbody></table></div></section>`;
+  document.getElementById('saveGlobalSelectionV40').onclick=()=>{const selected=[...body.querySelectorAll('[data-global-portfolio-v40]:checked')].map(input=>input.dataset.globalPortfolioV40);repository.updateConsolidation(selected);ensureLocalHeader();renderGlobalBody();setSync('Seleção global atualizada');};
+}
+
+function openGlobalPatrimony(){const dialog=globalDialog();renderGlobalBody();dialog.showModal();}
+
+function initializeLocal(){
+  repository=window.PonderaLocalPortfolioRepository;if(!repository)throw new Error('Armazenamento local de carteiras indisponível.');window.PonderaPlatform={version:VERSION,configured:false,mode:'local',repository};document.documentElement.dataset.ponderaPlatform='local';installLocalPersistenceBridge();ensureLocalHeader();
+}
+
 async function initialize(){
-  window.__PONDERA_PLATFORM_V40__=true;window.PonderaPlatform={version:VERSION,configured};document.documentElement.dataset.ponderaPlatform=configured?'configured':'local';if(!configured)return;
+  window.__PONDERA_PLATFORM_V40__=true;window.PonderaPlatform={version:VERSION,configured};document.documentElement.dataset.ponderaPlatform=configured?'configured':'local';if(!configured){initializeLocal();return;}
   document.body.classList.add('ponderaAuthLocked');renderAuth();
   await loadScript(config.supabaseClientUrl||'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js','ponderaSupabaseClientV40');
   await waitFor(()=>window.PonderaFinance&&window.PonderaSupabaseRepository&&window.PonderaPortfolioStoreFactory);

@@ -10,6 +10,25 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V3.1.0 — 2026-09-12
+
+**Área:** Multiportfólio local e patrimônio consolidado
+**Tipo:** Minor
+
+### Correções e melhorias
+- O modo local passou a permitir criar e alternar entre múltiplas carteiras sem login ou Supabase.
+- Cada carteira grava estado, lançamentos, histórico patrimonial, planejamento e segmentos em chaves prefixadas pelo seu ID.
+- A base local anterior é migrada uma única vez para a Carteira principal.
+- Carteiras novas iniciam sem posições e sem lançamentos.
+- A janela Patrimônio global soma somente carteiras marcadas para consolidação.
+- Posições iguais são agregadas apenas na visualização global, preservando seus históricos de origem.
+- A visão consolidada permanece somente leitura.
+
+### Impacto nos dados
+- Nenhum lançamento existente é distribuído ou copiado para carteiras novas.
+- As chaves legadas são mantidas como camada de compatibilidade da carteira ativa.
+- A publicação externa não foi alterada nesta etapa; o fluxo permanece local.
+
 ## V3.0.0 — 2026-09-11
 
 **Área:** Arquitetura, Autenticação e Multiportfólio

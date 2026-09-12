@@ -1,9 +1,34 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "3.0.0",
+  "currentVersion": "3.1.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "3.1.0",
+      "date": "2026-09-12",
+      "type": "minor",
+      "area": "Multiportfólio local e patrimônio consolidado",
+      "status": "internal",
+      "request": "Implementar múltiplas carteiras independentes e patrimônio global a partir da V3.0.0, mantendo execução local.",
+      "motivation": "Validar isolamento e consolidação no ambiente interno antes de qualquer nova publicação externa.",
+      "changes": [
+        "Adiciona catálogo local de carteiras e contexto ativo.",
+        "Prefixa estado, lançamentos, patrimônio, planejamento e segmentos pelo ID da carteira.",
+        "Migra a base local anterior para uma Carteira principal sem duplicação.",
+        "Adiciona criação, edição e troca de carteiras no cabeçalho.",
+        "Adiciona seleção das carteiras incluídas no patrimônio global.",
+        "Adiciona consolidação somente leitura de valores, posições, classes e proventos."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "automaticMigration": "legacy-to-main-portfolio-once",
+        "databaseActivationRequired": false,
+        "storage": "localStorage-namespaced-by-portfolio-id",
+        "singleSource": "transaction-history",
+        "externalDeploymentChanged": false
+      }
+    },
     {
       "version": "3.0.0",
       "date": "2026-09-11",

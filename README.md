@@ -3,9 +3,14 @@
 Dashboard financeiro publicado em `docs/`, com patrimônio, alocação estruturada,
 planejamento de aportes, histórico, proventos e análise quantitativa.
 
-A arquitetura multiusuário está documentada em `docs/ARCHITECTURE.md`. Ela usa
-Supabase Auth, PostgreSQL com RLS, carteiras independentes e uma visão consolidada
-controlada por `includeInConsolidated`.
+A versão local agora oferece carteiras independentes no próprio navegador e uma
+janela de patrimônio global controlada por **includeInConsolidated**. O modelo de
+chaves e o fluxo de uso estão documentados em
+[docs/LOCAL_MULTI_PORTFOLIO.md](docs/LOCAL_MULTI_PORTFOLIO.md).
+
+A arquitetura multiusuário opcional está documentada em **docs/ARCHITECTURE.md**.
+Ela usa Supabase Auth, PostgreSQL com RLS e o mesmo conceito de carteiras
+independentes.
 
 O Histórico de Lançamentos é a fonte única dos saldos. Posições, custo médio,
 lucro, renda, alocações e métricas são calculados por serviços derivados, sem
@@ -17,8 +22,10 @@ duplicar estado entre as abas.
 python -m http.server 8000 --directory docs
 ```
 
-Abra `http://localhost:8000`. Sem `supabaseUrl` e `supabaseAnonKey` em
-`docs/config.js`, a aplicação mantém o modo local compatível com a versão anterior.
+Abra **http://localhost:8000**. Sem **supabaseUrl** e **supabaseAnonKey** em
+**docs/config.js**, a aplicação inicia no modo local multi-carteira, sem tela de
+login. Os dados anteriores são associados à **Carteira principal** na primeira
+execução.
 
 ## Banco, autenticação e seed
 
