@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const RUNTIME_VERSION='3.4.0';
+const RUNTIME_VERSION='3.5.0';
 if(window.__PONDERA_STABLE_BOOTSTRAP__)return;
 window.__PONDERA_STABLE_BOOTSTRAP__={state:'booting',version:RUNTIME_VERSION};
 if(!window.__PONDERA_DIVIDENDS_DATA_PROMISE__){window.__PONDERA_DIVIDENDS_DATA_PROMISE__=fetch(`dividends.json?v=${RUNTIME_VERSION}`,{cache:'no-store'}).then(response=>{if(!response.ok)throw new Error(`Falha ao carregar proventos: HTTP ${response.status}`);return response.json();});}

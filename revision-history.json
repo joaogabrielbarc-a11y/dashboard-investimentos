@@ -1,9 +1,33 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "3.4.0",
+  "currentVersion": "3.5.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "3.5.0",
+      "date": "2026-09-12",
+      "type": "minor",
+      "area": "Dados de mercado e análise quantitativa",
+      "status": "deployed",
+      "request": "Implementar arquitetura multi-provider, cinco anos de histórico e métricas quantitativas com benchmarks.",
+      "motivation": "Desacoplar a aplicação de uma única fonte gratuita e preparar migração segura para provedores comerciais.",
+      "changes": [
+        "Cria contrato comum e roteador com fallback por classe de ativo.",
+        "Integra Tesouro Transparente, Banco Central SGS, CVM, Yahoo Finance e brapi.",
+        "Reserva adaptador configurável para UP2DATA.",
+        "Amplia históricos ajustados para cinco anos ou desde o início do ativo.",
+        "Adiciona IBOV, IFIX, S&P 500 em BRL e CDI como benchmarks.",
+        "Exibe Beta da carteira e valida volatilidade, Sharpe, Sortino e Beta."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "storageSchemaChanged": false,
+        "marketHistorySchema": 2,
+        "historyWindow": "5y-or-since-inception",
+        "paidProviderKeysExposed": false
+      }
+    },
     {
       "version": "3.4.0",
       "date": "2026-09-12",

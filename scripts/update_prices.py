@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import math
+import os
+import re
 import unicodedata
 import zipfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -13,6 +15,12 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import requests
+
+from market_data import MarketDataRouter
+from market_data.providers import (
+    BcbSgsProvider, BrapiProvider, CvmFundProvider,
+    TesouroTransparenteProvider, Up2DataProvider, YahooFinanceProvider,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 PRICE_OUTS = [ROOT / 'docs' / 'prices.json', ROOT / 'web-v1' / 'prices.json']
@@ -43,6 +51,30 @@ US = [
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (compatible; dashboard-investimentos/2.1; +https://github.com/joaogabrielbarc-a11y/dashboard-investimentos)'
 }
+
+BENCHMARKS = {
+    'IBOV': {'ticker': 'IBOV', 'symbol': '^BVSP', 'currency': 'BRL', 'timezone': 'America/Sao_Paulo'},
+    'IFIX': {'ticker': 'IFIX', 'symbol': 'XFIX11.SA', 'currency': 'BRL', 'timezone': 'America/Sao_Paulo', 'proxy': 'XFIX11'},
+    'SP500': {'ticker': 'SP500', 'symbol': '^GSPC', 'currency': 'USD', 'timezone': 'America/New_York'},
+}
+
+
+def provider_router():
+    yahoo = YahooFinanceProvider()
+    listed = [yahoo]
+    if os.getenv('BRAPI_TOKEN'):
+        listed.insert(0, BrapiProvider())
+    if os.getenv('UP2DATA_ENDPOINT') and os.getenv('UP2DATA_TOKEN'):
+        listed.insert(0, Up2DataProvider())
+    return MarketDataRouter({
+        'b3': listed,
+        'international': [yahoo],
+        'crypto': [yahoo],
+        'treasury': [TesouroTransparenteProvider()],
+        'fund': [CvmFundProvider()],
+        'indicator': [BcbSgsProvider()],
+        'default': [yahoo],
+    })
 
 
 def clean(v):
@@ -125,7 +157,8 @@ def norm(s):
 
 def write_json(path: Path, payload):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
+    compact = path.name == 'quant-market-history.json'
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=None if compact else 2, separators=(',', ':') if compact else None), encoding='utf-8')
     print('wrote', path)
 
 
@@ -374,41 +407,113 @@ def yahoo_history(symbol: str, market_tz: str):
     return []
 
 
-def quantitative_history():
-    """BRL total-price histories consumed by the browser-side TWR engine."""
+def quantitative_history(router):
+    """Five-year BRL total-price histories plus benchmark series."""
     specs = {'BRL=X': ('BRL=X', 'America/Sao_Paulo')}
     specs.update({ticker: (ticker + '.SA', 'America/Sao_Paulo') for ticker in BR})
     specs.update({ticker: (ticker, 'America/New_York') for ticker in US})
     specs['BTCUSD'] = ('BTC-USD', 'America/Sao_Paulo')
-    raw = {}
+    raw, metadata = {}, {}
+
+    def history_job(key, symbol, timezone, asset_class, currency):
+        series = router.history(asset_class, {
+            'ticker': key, 'symbol': symbol, 'timezone': timezone, 'currency': currency,
+        }, '5y')
+        return key, series
+
     with ThreadPoolExecutor(max_workers=8) as pool:
-        futures = {pool.submit(yahoo_history, symbol, timezone): ticker for ticker, (symbol, timezone) in specs.items()}
+        futures = {}
+        for ticker, (symbol, timezone) in specs.items():
+            asset_class = 'b3' if ticker in BR else 'crypto' if ticker == 'BTCUSD' else 'international'
+            currency = 'BRL' if ticker in BR or ticker == 'BRL=X' else 'USD'
+            futures[pool.submit(history_job, ticker, symbol, timezone, asset_class, currency)] = ticker
+        for name, spec in BENCHMARKS.items():
+            futures[pool.submit(history_job, name, spec['symbol'], spec['timezone'], 'b3' if name != 'SP500' else 'international', spec['currency'])] = name
         for future in as_completed(futures):
-            ticker = futures[future]
             try:
-                raw[ticker] = future.result()
+                ticker, series = future.result()
+                raw[ticker] = series.prices
+                metadata[ticker] = {
+                    'provider': series.source, 'currency': series.currency,
+                    'adjusted': series.adjusted, 'points': len(series.prices),
+                    'dividends': len(series.dividends), 'splits': len(series.splits),
+                }
             except Exception as exc:
-                print('Quant history warning', ticker, exc)
-                raw[ticker] = []
+                print('Quant history warning', futures[future], exc)
+                raw[futures[future]] = []
     fx_rows = raw.pop('BRL=X', [])
+    metadata.pop('BRL=X', None)
+    for name, spec in BENCHMARKS.items():
+        if name in metadata and spec.get('proxy'):
+            metadata[name]['proxy'] = spec['proxy']
     fx_series = pd.Series({date: value for date, value in fx_rows}, dtype='float64').sort_index()
-    output = {}
+    output, benchmarks = {}, {}
     for ticker, rows in raw.items():
         if not rows:
             continue
         series = pd.Series({date: value for date, value in rows}, dtype='float64').sort_index()
-        if ticker in US or ticker == 'BTCUSD':
+        if ticker in US or ticker in ('BTCUSD', 'SP500'):
             if fx_series.empty:
                 continue
             aligned_fx = fx_series.reindex(series.index).ffill().bfill()
             series = series * aligned_fx
-        output[ticker] = [[date, round(float(value), 8)] for date, value in series.items() if clean(value) is not None]
+            metadata[ticker]['convertedToBRL'] = True
+        rows_out = [[date, round(float(value), 8)] for date, value in series.items() if clean(value) is not None]
+        if ticker in BENCHMARKS:
+            benchmarks[ticker] = rows_out
+        else:
+            output[ticker] = rows_out
+
+    # CDI is a return index: daily percentages are compounded into a normalized curve.
+    try:
+        cdi = router.history('indicator', 'CDI', '5y')
+        factor, cdi_curve = 100.0, []
+        for date, daily_pct in cdi.prices:
+            factor *= 1 + float(daily_pct) / 100
+            cdi_curve.append([date, round(factor, 8)])
+        benchmarks['CDI'] = cdi_curve
+        metadata['CDI'] = {'provider': cdi.source, 'currency': 'BRL', 'adjusted': True, 'points': len(cdi_curve)}
+    except Exception as exc:
+        print('CDI history warning:', exc)
+
+    try:
+        selic = router.history('indicator', 'SELIC', '5y')
+        factor, reserve_curve = 100.0, []
+        for date, daily_pct in selic.prices:
+            if date < '2026-05-11':
+                continue
+            factor *= 1 + float(daily_pct) / 100
+            reserve_curve.append([date, round(factor, 8)])
+        if reserve_curve:
+            output['TESOURO RESERVA'] = reserve_curve
+            metadata['TESOURO RESERVA'] = {'provider': selic.source, 'currency': 'BRL', 'adjusted': True, 'points': len(reserve_curve), 'method': '100% Selic Over'}
+    except Exception as exc:
+        print('Tesouro Reserva history warning:', exc)
+
+    # Official sovereign histories are added when a Tesouro ticker already exists in the snapshot.
+    try:
+        treasury_provider = router.providers_for('treasury')[0]
+        treasury_tickers = sorted(treasury_provider.get_latest_prices([]))
+        for ticker in treasury_tickers:
+            try:
+                series = router.history('treasury', ticker, '5y')
+                output[ticker] = [[date, round(float(value), 8)] for date, value in series.prices]
+                metadata[ticker] = {'provider': series.source, 'currency': 'BRL', 'adjusted': True, 'points': len(series.prices)}
+            except Exception as exc:
+                print('Treasury history warning', ticker, exc)
+    except Exception as exc:
+        print('Treasury snapshot warning:', exc)
+
     return {
+        'schemaVersion': 2,
         'updatedAt': datetime.now(ZoneInfo('America/Sao_Paulo')).isoformat(),
-        'source': 'Yahoo Finance adjusted close; USD assets converted by daily USD/BRL',
+        'source': 'Multi-provider: preços ajustados; ativos USD convertidos pelo USD/BRL diário',
         'currency': 'BRL',
-        'period': '2y',
+        'period': '5y',
         'prices': output,
+        'benchmarks': benchmarks,
+        'seriesMetadata': metadata,
+        'providerDiagnostics': router.diagnostics,
     }
 
 
@@ -471,28 +576,22 @@ def cvm_fund_prices():
     return {'updatedAt': now.isoformat(), 'source': 'CVM Informe Diário', 'month': ym, 'funds': funds}
 
 
-def market_quotes():
-    specs = {'BRL=X': ('BRL=X', 'America/Sao_Paulo')}
-    specs.update({t: (t + '.SA', 'America/Sao_Paulo') for t in BR})
-    specs.update({t: (t, 'America/New_York') for t in US})
-    specs['BTCUSD'] = ('BTC-USD', 'America/Sao_Paulo')
-
+def market_quotes(router):
+    groups = {
+        'b3': [{'ticker': t, 'symbol': t + '.SA', 'currency': 'BRL', 'timezone': 'America/Sao_Paulo'} for t in BR],
+        'international': [
+            {'ticker': 'BRL=X', 'symbol': 'BRL=X', 'currency': 'BRL', 'timezone': 'America/Sao_Paulo'},
+            *[{'ticker': t, 'symbol': t, 'currency': 'USD', 'timezone': 'America/New_York'} for t in US],
+        ],
+        'crypto': [{'ticker': 'BTCUSD', 'symbol': 'BTC-USD', 'currency': 'USD', 'timezone': 'America/Sao_Paulo'}],
+    }
     out, failures = {}, {}
-    with ThreadPoolExecutor(max_workers=8) as pool:
-        futures = {pool.submit(yahoo_market_quote, sym, tz): key for key, (sym, tz) in specs.items()}
-        for future in as_completed(futures):
-            key = futures[future]
-            try:
-                result = future.result()
-                if result:
-                    out[key] = result
-                else:
-                    failures[key] = 'Nenhuma cotacao valida retornada pelos endpoints redundantes.'
-            except Exception as exc:
-                failures[key] = str(exc)
-                print('[quotes] warning', key, exc)
+    for asset_class, specs in groups.items():
+        rows, missing = router.latest(asset_class, specs)
+        out.update({key: (row.date, row.price_native, row.source) for key, row in rows.items()})
+        for item in missing:
+            failures[item['ticker']] = 'Todos os provedores configurados falharam; usando último preço válido quando existente.'
     return out, failures
-
 
 def quote_category(ticker):
     if ticker in BR_ETFS:
@@ -548,8 +647,8 @@ def build_quote_diagnostics(quotes, failures, previous_prices, merged_prices, up
         'schemaVersion': 1,
         'updatedAt': updated_at,
         'provider': {
-            'primary': 'Yahoo Finance chart',
-            'fallback': 'Yahoo Finance search em host redundante',
+            'primary': 'Configurável por classe (fontes oficiais / brapi / UP2DATA)',
+            'fallback': 'Yahoo Finance em hosts redundantes',
             'cache': 'Ultimo preco valido publicado',
         },
         'summary': {
@@ -566,6 +665,7 @@ def build_quote_diagnostics(quotes, failures, previous_prices, merged_prices, up
 
 
 def main():
+    router = provider_router()
     previous_payload = {}
     if PRICE_OUTS[0].exists():
         try:
@@ -574,7 +674,7 @@ def main():
             print('[quotes] previous cache warning:', exc)
     previous_prices = dict(previous_payload.get('prices') or {})
 
-    quotes, quote_failures = market_quotes()
+    quotes, quote_failures = market_quotes(router)
     fx_rec = quotes.get('BRL=X')
     fx = fx_rec[1] if fx_rec else clean(previous_payload.get('fxUsdBrl'))
     prices = {}
@@ -582,19 +682,26 @@ def main():
     for ticker in BR:
         rec = quotes.get(ticker)
         if rec:
-            prices[ticker] = {'priceNative': rec[1], 'priceBRL': rec[1], 'currency': 'BRL', 'date': rec[0], 'source': 'Yahoo Finance'}
+            prices[ticker] = {'priceNative': rec[1], 'priceBRL': rec[1], 'currency': 'BRL', 'date': rec[0], 'source': rec[2]}
     for ticker in US:
         rec = quotes.get(ticker)
         if rec:
             old_brl = (previous_prices.get(ticker) or {}).get('priceBRL')
-            prices[ticker] = {'priceNative': rec[1], 'priceBRL': rec[1] * fx if fx else old_brl, 'currency': 'USD', 'date': rec[0], 'source': 'Yahoo Finance'}
+            prices[ticker] = {'priceNative': rec[1], 'priceBRL': rec[1] * fx if fx else old_brl, 'currency': 'USD', 'date': rec[0], 'source': rec[2]}
     btc = quotes.get('BTCUSD')
     if btc:
         old_brl = (previous_prices.get('BTCUSD') or {}).get('priceBRL')
-        prices['BTCUSD'] = {'priceNative': btc[1], 'priceBRL': btc[1] * fx if fx else old_brl, 'currency': 'USD', 'date': btc[0], 'source': 'Yahoo Finance'}
+        prices['BTCUSD'] = {'priceNative': btc[1], 'priceBRL': btc[1] * fx if fx else old_brl, 'currency': 'USD', 'date': btc[0], 'source': btc[2]}
 
     try:
-        prices.update(treasury_prices())
+        treasury_provider = router.providers_for('treasury')[0]
+        treasury_rows = treasury_provider.get_latest_prices([])
+        router.diagnostics.append({'operation': 'latest', 'assetClass': 'treasury', 'provider': treasury_provider.name, 'status': 'ok', 'found': len(treasury_rows)})
+        prices.update({key: {
+            'priceNative': row.price_native, 'priceBRL': row.price_native,
+            'currency': row.currency, 'date': row.date, 'source': row.source,
+            **row.metadata,
+        } for key, row in treasury_rows.items()})
     except Exception as exc:
         print('Treasury warning:', exc)
 
@@ -630,7 +737,7 @@ def main():
             'indexes': merged_indexes,
         })
 
-    quant = quantitative_history()
+    quant = quantitative_history(router)
     for out_path in QUANT_OUTS:
         old = {}
         if out_path.exists():
@@ -646,10 +753,31 @@ def main():
             write_json(out_path, quant)
 
     try:
-        funds = cvm_fund_prices()
+        previous_funds = {}
+        if FUND_OUTS[0].exists():
+            raw_funds = FUND_OUTS[0].read_text(encoding='utf-8')
+            try:
+                previous_funds = json.loads(raw_funds).get('funds') or {}
+            except json.JSONDecodeError:
+                # During a concurrent Git reconciliation, recover identifiers without trusting conflicted values.
+                previous_funds = {key: {} for key in re.findall(r'"(\d{14})"\s*:', raw_funds)}
+        configured = [digits(value) for value in os.getenv('PONDERA_FUND_CNPJS', '').split(',') if digits(value)]
+        tracked_funds = sorted(set(configured) | set(previous_funds))
+        rows, missing = router.latest('fund', tracked_funds) if tracked_funds else ({}, [])
+        current_funds = dict(previous_funds)
+        current_funds.update({key: {
+            'priceNative': row.price_native, 'priceBRL': row.price_native,
+            'currency': row.currency, 'date': row.date, 'source': row.source,
+        } for key, row in rows.items()})
+        funds = {
+            'schemaVersion': 2,
+            'updatedAt': datetime.now(ZoneInfo('America/Sao_Paulo')).isoformat(),
+            'source': 'CVM Informe Diário', 'tracked': tracked_funds,
+            'missing': [digits(item) for item in missing], 'funds': current_funds,
+        }
     except Exception as exc:
         print('CVM warning:', exc)
-        funds = {'updatedAt': datetime.now(ZoneInfo('America/Sao_Paulo')).isoformat(), 'source': 'CVM Informe Diário', 'month': None, 'funds': {}}
+        funds = {'updatedAt': datetime.now(ZoneInfo('America/Sao_Paulo')).isoformat(), 'source': 'CVM Informe Diário', 'funds': {}}
     for out_path in FUND_OUTS:
         if funds.get('funds'):
             write_json(out_path, funds)

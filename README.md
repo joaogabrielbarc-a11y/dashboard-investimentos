@@ -3,6 +3,11 @@
 Dashboard financeiro publicado em `docs/`, com patrimônio, alocação estruturada,
 planejamento de aportes, histórico, proventos e análise quantitativa.
 
+O coletor de preços usa uma arquitetura multi-provider documentada em
+[docs/MARKET_DATA_ARCHITECTURE.md](docs/MARKET_DATA_ARCHITECTURE.md), com fontes
+oficiais para Tesouro, Selic e fundos, fallback de renda variável e adaptadores
+prontos para brapi e UP2DATA.
+
 A versão local agora oferece carteiras independentes no próprio navegador e uma
 janela de patrimônio global controlada por **includeInConsolidated**. O modelo de
 chaves e o fluxo de uso estão documentados em

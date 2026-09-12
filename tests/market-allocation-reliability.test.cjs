@@ -23,6 +23,6 @@ assert.match(reliability, /const classOrder=.*state\?\.assets/, 'a ordem persist
 assert.match(reliability, /lockTopLevelOrder/, 'a ordem dos blocos superiores deve ser estabilizada');
 assert.match(reliability, /lockClassOrder/, 'macro, atalhos e microalocação devem ser sincronizados');
 assert.match(reliability, /PonderaAllocationMarketV43/, 'a auditoria deve ser exposta para diagnóstico');
-assert.match(index, /CARTEIRA • V3\.4\.0/, 'a versão publicada deve ser 3.4.0');
+assert.match(index, /CARTEIRA • V3\.5\.0/, 'a versão publicada deve ser 3.5.0');
 
 console.log('market-allocation-reliability: ok');

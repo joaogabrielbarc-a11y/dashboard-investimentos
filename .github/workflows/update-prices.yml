@@ -8,6 +8,8 @@ on:
   push:
     paths:
       - 'scripts/update_prices.py'
+      - 'scripts/validate_quantitative_data.py'
+      - 'scripts/market_data/**'
       - '.github/workflows/update-prices.yml'
 
 permissions:
@@ -30,13 +32,17 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: pip install --disable-pip-version-check pandas requests
+      - name: Validate provider contracts
+        run: python -m unittest tests.market_data_provider_test -v
       - name: Sync latest main
         run: |
           git fetch origin main
           git checkout main
           git reset --hard origin/main
       - name: Update latest market prices
-        run: python scripts/update_prices.py
+        run: |
+          python scripts/update_prices.py
+          python scripts/validate_quantitative_data.py
       - name: Commit price files with retry
         run: |
           git config user.name "github-actions[bot]"
@@ -47,6 +53,7 @@ jobs:
               docs/quote-diagnostics.json web-v1/quote-diagnostics.json \
               docs/market-indexes.json web-v1/market-indexes.json \
               docs/quant-market-history.json web-v1/quant-market-history.json \
+              docs/quant-validation.json web-v1/quant-validation.json \
               docs/fund-prices.json web-v1/fund-prices.json
             if git diff --cached --quiet; then
               echo "No price changes"
@@ -64,4 +71,5 @@ jobs:
           git fetch origin main
           git reset --hard origin/main
           python scripts/update_prices.py
+          python scripts/validate_quantitative_data.py
           publish_prices

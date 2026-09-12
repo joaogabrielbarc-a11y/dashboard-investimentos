@@ -10,6 +10,26 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V3.5.0 — 2026-09-12
+
+**Área:** Dados de mercado e análise quantitativa
+**Tipo:** Minor
+
+### Correções e melhorias
+- Cria o contrato `BaseMarketDataProvider` e roteamento primário/fallback por classe de ativo.
+- Integra adaptadores de Tesouro Transparente, Banco Central SGS, CVM, Yahoo Finance e brapi, além do encaixe contratual do UP2DATA.
+- Amplia o fechamento ajustado de renda variável de dois para cinco anos ou desde o início do ativo.
+- Adiciona históricos de Ibovespa, IFIX, S&P 500 convertido para BRL e CDI acumulado.
+- Acrescenta Beta por benchmark à Análise Quantitativa.
+- Publica metadados de origem, cobertura, ajuste e diagnóstico de fallback em cada atualização.
+- Adiciona validação automatizada de volatilidade, Sharpe, Sortino e Beta com séries coletadas.
+
+### Impacto nos dados
+- Posições, lançamentos, metas e carteiras não são alterados.
+- `quant-market-history.json` evolui para o schema 2 preservando a chave legada `prices`.
+- Tokens de provedores pagos permanecem exclusivamente no coletor do GitHub Actions.
+- Falhas mantêm o último snapshot válido e registram a fonte/data apresentada.
+
 ## V3.4.0 — 2026-09-12
 
 **Área:** Alocação estruturada e cotações automáticas
