@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-12T17:49:05.730214-03:00",
+  "updatedAt": "2026-09-12T20:17:52.378911-03:00",
   "provider": {
-    "primary": "Yahoo Finance chart",
-    "fallback": "Yahoo Finance search em host redundante",
+    "primary": "Configurável por classe (fontes oficiais / brapi / UP2DATA)",
+    "fallback": "Yahoo Finance em hosts redundantes",
     "cache": "Ultimo preco valido publicado"
   },
   "summary": {
