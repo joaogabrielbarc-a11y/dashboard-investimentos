@@ -1,5 +1,5 @@
 const V15_PATRIMONY_KEY='carteira-v15-patrimony';
-const classMigrationV15={'Ações BR':'Ações','FIIs':'Fundos Imobiliários','Cripto':'Criptomoedas','Renda fixa':'Tesouro Direto','Renda Fixa':'Tesouro Direto'};
+const classMigrationV15={'Ações BR':'Ações','FIIs':'Fundos Imobiliários','Cripto':'Criptomoedas','Renda fixa':'Tesouro Direto','Renda Fixa':'Tesouro Direto','Tesouro Reserva':'Tesouro Direto'};
 const patrimonySeedV15=[
   {date:'2025-08-31',value:1400,estimated:true},
   {date:'2025-09-30',value:1400,estimated:true},

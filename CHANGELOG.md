@@ -10,6 +10,24 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V3.2.0 — 2026-09-12
+
+**Área:** Gestão de carteiras, taxonomia e ciclo de renderização
+**Tipo:** Minor
+
+### Correções e melhorias
+- O cabeçalho passa a exibir, ao lado da marca, o gerenciador de carteiras e o valor do Patrimônio Global.
+- A criação, troca e edição de carteiras foram centralizadas em uma única janela; os botões individuais foram removidos.
+- A troca de carteira aplica um snapshot completo no estado em memória, sem recarregar a página.
+- A inicialização bloqueia renders intermediários das camadas de compatibilidade e apresenta somente o estado final.
+- “Tesouro Reserva” é normalizado como “Tesouro Direto” em lançamentos, posições e consolidação.
+- O botão “Restaurar base” e sua ação foram removidos permanentemente.
+
+### Impacto nos dados
+- Nenhum lançamento ou posição existente é excluído ou transferido.
+- O formato das chaves locais permanece compatível com a V3.1.0.
+- A mudança permanece somente no ambiente local/interno.
+
 ## V3.1.0 — 2026-09-12
 
 **Área:** Multiportfólio local e patrimônio consolidado

@@ -6,6 +6,7 @@ const EPS=1e-10;
 const finite=value=>value!==null&&value!==undefined&&value!==''&&Number.isFinite(Number(value));
 const number=value=>finite(value)?Number(value):null;
 const ticker=value=>{const normalized=String(value||'').trim().toUpperCase();return normalized==='BTC'?'BTCUSD':normalized;};
+const assetClass=value=>String(value||'').trim().toLowerCase()==='tesouro reserva'?'Tesouro Direto':String(value||'Sem classe').trim();
 const iso=value=>/^\d{4}-\d{2}-\d{2}$/.test(String(value||'').slice(0,10))?String(value).slice(0,10):null;
 const kind=value=>{const normalized=String(value||'').trim().toLowerCase();if(['compra','buy'].includes(normalized))return'buy';if(['venda','sell'].includes(normalized))return'sell';if(['provento','dividend'].includes(normalized))return'dividend';return'adjustment';};
 const accountKey=transaction=>`${transaction.portfolioId||'legacy'}::${transaction.ticker}`;
@@ -26,7 +27,7 @@ function normalizeTransaction(raw,index=0){
     kind:normalizedKind,
     ticker:ticker(raw.ticker),
     name:String(raw.asset_name||raw.name||raw.ticker||'').trim(),
-    className:String(raw.class_name||raw.className||'Sem classe').trim(),
+    className:assetClass(raw.class_name||raw.className),
     segment:String(raw.segment_name||raw.segment||'Sem segmento').trim(),
     date:iso(raw.trade_date||raw.date),
     quantity,
@@ -118,5 +119,5 @@ function weightedTargets(snapshots,classes){
   return[...targets.entries()].map(([name,target])=>({name,target}));
 }
 
-window.PonderaFinance=Object.freeze({version:'3.0.0',normalizeTransaction,buildLedger,aggregateHoldings,allocationBy,portfolioSnapshots,consolidate,weightedTargets});
+window.PonderaFinance=Object.freeze({version:'3.2.0',normalizeTransaction,buildLedger,aggregateHoldings,allocationBy,portfolioSnapshots,consolidate,weightedTargets});
 })();

@@ -18,9 +18,11 @@ vm.createContext(context);
 const root=path.resolve(__dirname,'..');
 vm.runInContext(fs.readFileSync(path.join(root,'docs/core/local-portfolio-repository.js'),'utf8'),context);
 vm.runInContext(fs.readFileSync(path.join(root,'docs/core/local-consolidation.js'),'utf8'),context);
+vm.runInContext(fs.readFileSync(path.join(root,'docs/core/finance-service.js'),'utf8'),context);
 
 const repository=context.PonderaLocalPortfolioRepository;
 const consolidation=context.PonderaLocalConsolidation;
+const finance=context.PonderaFinance;
 const main=repository.activePortfolio();
 
 context.localStorage.setItem('carteira-v14-transactions',JSON.stringify({pending:[],executed:[{id:'a-1',ticker:'AAA3'}]}));
@@ -34,6 +36,11 @@ repository.persistLegacyKey('carteira-v14-transactions');
 repository.setActivePortfolio(main.id);
 assert.equal(JSON.parse(context.localStorage.getItem('carteira-v14-transactions')).executed[0].id,'a-1','troca de carteira não pode sobrepor o histórico anterior');
 assert.equal(repository.readPortfolioData(second.id).transactions.executed[0].id,'b-1','segunda carteira mantém histórico próprio');
+
+const atomicSnapshot=repository.runtimeSnapshot(main.id);
+assert.equal(atomicSnapshot.transactions.executed[0].id,'a-1','snapshot atômico deve carregar o histórico completo da carteira alvo');
+atomicSnapshot.transactions.executed[0].id='mutado-fora-do-repositorio';
+assert.equal(repository.runtimeSnapshot(main.id).transactions.executed[0].id,'a-1','snapshot atômico deve ser uma cópia isolada');
 
 const mainState={assets:[],holdings:[{ticker:'AAA3',name:'Ativo A',className:'Ações',segment:'Teste',qty:1,value:100}],contribution:0,band:25,aportes:{}};
 const secondState={assets:[],holdings:[{ticker:'AAA3',name:'Ativo A',className:'Ações',segment:'Teste',qty:2,value:250}],contribution:0,band:25,aportes:{}};
@@ -55,5 +62,11 @@ repository.updateConsolidation([second.id]);
 context.localStorage.setItem(repository.storageKey(second.id,'state'),JSON.stringify({assets:[{name:'Caixa',current:80}],holdings:[]}));
 summary=consolidation.build(repository.snapshots());
 assert.equal(summary.netWorth,80,'saldo por classe deve ser consolidado quando a carteira ainda não possui posições detalhadas');
+
+repository.updateConsolidation([main.id]);
+context.localStorage.setItem(repository.storageKey(main.id,'state'),JSON.stringify({assets:[],holdings:[{ticker:'TESOURO RESERVA',name:'Tesouro Reserva',className:'Tesouro Reserva',qty:1,value:500}]}));
+summary=consolidation.build(repository.snapshots());
+assert.equal(summary.classAllocation[0].name,'Tesouro Direto','Tesouro Reserva deve ser consolidado na classe Tesouro Direto');
+assert.equal(finance.normalizeTransaction({ticker:'TESOURO RESERVA',className:'Tesouro Reserva'}).className,'Tesouro Direto','serviço financeiro deve aplicar a taxonomia canônica');
 
 console.log('local-multi-portfolio: ok');

@@ -1,5 +1,5 @@
 const V14_KEY='carteira-v14-transactions';
-const canonicalClassMap={'Ações BR':'Ações','FIIs':'Fundos Imobiliários','Cripto':'Criptomoedas','Renda fixa':'Renda Fixa'};
+const canonicalClassMap={'Ações BR':'Ações','FIIs':'Fundos Imobiliários','Cripto':'Criptomoedas','Renda fixa':'Renda Fixa','Tesouro Reserva':'Tesouro Direto'};
 const internationalClasses=new Set(['ETFs Internacionais','Stocks','REITs']);
 const historySeed=[
 {id:'hist-20260831-ipca-s',ticker:'TESOURO IPCA+ 2032',className:'Tesouro Direto',side:'Venda',qty:.20,unitPrice:2981.38,currency:'BRL',totalNative:596.276,brlTotal:596.276,date:'2026-08-31',source:'histórico'},

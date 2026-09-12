@@ -2,7 +2,7 @@
 'use strict';
 if(window.__PONDERA_PLATFORM_V40__)return;
 
-const VERSION='3.1.0',config=window.PONDERA_CONFIG||{},configured=Boolean(config.supabaseUrl&&config.supabaseAnonKey);
+const VERSION='3.2.0',config=window.PONDERA_CONFIG||{},configured=Boolean(config.supabaseUrl&&config.supabaseAnonKey);
 const legacyBackup=(()=>{try{return{ledger:JSON.parse(localStorage.getItem('carteira-v14-transactions')||'null'),portfolio:JSON.parse(localStorage.getItem('carteira-v1')||'null'),segments:JSON.parse(localStorage.getItem('carteira-v18-segment-plan')||'null')};}catch(e){return{};}})();
 let store=null,repository=null,applying=false,syncTimer=null,lastTransactionFingerprint='',lastAllocationFingerprint='',authMode='signin';
 
@@ -50,13 +50,14 @@ async function importLegacy(){if(!store.canWrite()||!Array.isArray(legacyBackup.
 
 const localMoney=value=>Number(value||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const localPercent=value=>`${Number(value||0).toFixed(1).replace('.',',')}%`;
+function refreshLocalGlobalValue(){const button=document.getElementById('globalPatrimonyV40');if(!button||!repository)return;const value=button.querySelector('strong');if(value)value.textContent=localMoney(window.PonderaLocalConsolidation.build(repository.snapshots()).netWorth);}
 
 function installLocalPersistenceBridge(){
   if(window.__PONDERA_LOCAL_SAVE_BRIDGE__)return;window.__PONDERA_LOCAL_SAVE_BRIDGE__=true;
   const bindings={save:'carteira-v1',saveV14:'carteira-v14-transactions',savePatrimonyV15:'carteira-v15-patrimony',saveV16Plan:'carteira-v16-planning',saveV18Plan:'carteira-v18-segment-plan'};
   for(const [functionName,storageKey] of Object.entries(bindings)){
     const original=window[functionName];if(typeof original!=='function')continue;
-    window[functionName]=function(...args){const result=original.apply(this,args);repository.persistLegacyKey(storageKey);return result;};
+    window[functionName]=function(...args){const result=original.apply(this,args);repository.persistLegacyKey(storageKey);queueMicrotask(refreshLocalGlobalValue);return result;};
   }
   repository.persistActiveLegacy();
   window.addEventListener('beforeunload',()=>repository.persistActiveLegacy());
@@ -64,13 +65,40 @@ function installLocalPersistenceBridge(){
 
 function ensureLocalHeader(){
   const topbar=document.querySelector('.topbar');if(!topbar)return null;let host=document.getElementById('platformHeaderV40');
-  if(!host){host=document.createElement('div');host.id='platformHeaderV40';host.className='platformHeaderV40 localPlatformHeaderV40';host.innerHTML='<label class="platformContextV40"><span class="platformContextMetaV40">Carteira ativa</span><select id="portfolioContextV40" aria-label="Selecionar carteira ativa"></select></label><div class="platformHeaderActionsV40"><button type="button" class="primaryV40" data-platform-v40 id="newPortfolioV40">+ Carteira</button><button type="button" data-platform-v40 id="editPortfolioV40">Editar carteira</button><button type="button" class="globalV40" data-platform-v40 id="globalPatrimonyV40">Patrimônio global</button></div>';topbar.appendChild(host);}
-  const rows=repository.portfolios(),active=repository.activePortfolio();const select=document.getElementById('portfolioContextV40');
-  select.innerHTML=rows.map(row=>`<option value="${esc(row.id)}">${esc(row.name)}${row.includeInConsolidated?'':' • fora do global'}</option>`).join('');select.value=active.id;
-  select.onchange=()=>{try{repository.setActivePortfolio(select.value);location.reload();}catch(error){setSync(message(error),'error');}};
-  document.getElementById('newPortfolioV40').onclick=()=>openLocalPortfolioDialog();document.getElementById('editPortfolioV40').onclick=()=>openLocalPortfolioDialog(repository.activePortfolio());document.getElementById('globalPatrimonyV40').onclick=openGlobalPatrimony;
+  if(!host){host=document.createElement('div');host.id='platformHeaderV40';host.className='platformHeaderV40 localPlatformHeaderV40';const brand=topbar.querySelector('.topbarBrandV40');if(brand)brand.insertAdjacentElement('afterend',host);else topbar.prepend(host);}
+  const active=repository.activePortfolio(),summary=consolidatedSnapshot(),initial=String(active.name||'C').trim().charAt(0).toUpperCase();
+  host.innerHTML=`<button type="button" class="portfolioSwitcherV40" data-platform-v40 id="portfolioManagerTriggerV40" aria-haspopup="dialog"><span class="portfolioAvatarV40" aria-hidden="true">${esc(initial)}</span><span class="portfolioSwitcherCopyV40"><small>Carteira ativa</small><strong>${esc(active.name)}</strong></span><span class="portfolioChevronV40" aria-hidden="true">⌄</span></button><button type="button" class="globalPatrimonyTriggerV40" data-platform-v40 id="globalPatrimonyV40"><span>Patrimônio Global</span><strong>${localMoney(summary.netWorth)}</strong></button>`;
+  document.getElementById('portfolioManagerTriggerV40').onclick=openPortfolioManager;document.getElementById('globalPatrimonyV40').onclick=openGlobalPatrimony;
   const banner=ensureScopeBanner();banner.innerHTML=`<span><strong>${esc(active.name)}</strong> — histórico, posições, metas e simulações usam um armazenamento exclusivo desta carteira.</span><span id="platformSyncV40" class="platformSyncV40">Salvo neste navegador</span>`;
   return host;
+}
+
+function portfolioManagerDialog(){
+  let dialog=document.getElementById('platformPortfolioManagerV40');if(dialog)return dialog;dialog=document.createElement('dialog');dialog.id='platformPortfolioManagerV40';dialog.className='platformDialogV40 platformPortfolioManagerV40';dialog.innerHTML='<div class="platformDialogCardV40 portfolioManagerCardV40"><div class="platformDialogHeadV40 portfolioManagerHeadV40"><div><span class="platformContextMetaV40">CARTEIRAS</span><h2>Gerenciar carteiras</h2><p>Troque de contexto ou ajuste as carteiras deste navegador.</p></div><button type="button" data-close-manager-v40 aria-label="Fechar">×</button></div><div id="portfolioManagerBodyV40"></div></div>';document.body.appendChild(dialog);dialog.querySelector('[data-close-manager-v40]').onclick=()=>dialog.close();return dialog;
+}
+
+function localPortfolioSummary(portfolio){
+  const snapshot=repository.readPortfolioData(portfolio.id);if(!snapshot)return{netWorth:0,positions:0};snapshot.portfolio={...snapshot.portfolio,includeInConsolidated:true};const summary=window.PonderaLocalConsolidation.build([snapshot]);return{netWorth:summary.netWorth,positions:summary.positions.length};
+}
+
+function renderPortfolioManager(){
+  const body=document.getElementById('portfolioManagerBodyV40');if(!body)return;repository.persistActiveLegacy();const active=repository.activePortfolio(),rows=repository.portfolios(),current=rows.find(row=>row.id===active.id),others=rows.filter(row=>row.id!==active.id);
+  const card=(row,isCurrent=false)=>{const summary=localPortfolioSummary(row),initial=String(row.name||'C').trim().charAt(0).toUpperCase();return`<div class="portfolioManagerRowV40 ${isCurrent?'current':''}"><button type="button" class="portfolioManagerSelectV40" data-switch-portfolio-v40="${esc(row.id)}" ${isCurrent?'aria-current="true"':''}><span class="portfolioAvatarV40" aria-hidden="true">${esc(initial)}</span><span class="portfolioManagerRowCopyV40"><strong>${esc(row.name)}</strong><small>${summary.positions} ${summary.positions===1?'posição':'posições'} • ${localMoney(summary.netWorth)}${row.includeInConsolidated?'':' • fora do global'}</small></span>${isCurrent?'<span class="currentPortfolioBadgeV40">Atual</span>':''}</button><button type="button" class="portfolioManagerEditV40" data-edit-portfolio-v40="${esc(row.id)}" aria-label="Editar ${esc(row.name)}" title="Editar carteira">⚙</button></div>`;};
+  body.innerHTML=`<section class="portfolioManagerSectionV40"><h3>Carteira atual</h3>${card(current,true)}</section><section class="portfolioManagerSectionV40"><h3>Trocar carteira</h3><div class="portfolioManagerListV40">${others.map(row=>card(row)).join('')||'<p class="portfolioManagerEmptyV40">Você ainda não criou outra carteira.</p>'}</div></section><button type="button" id="createPortfolioFromManagerV40" class="createPortfolioV40"><span aria-hidden="true">＋</span>Criar nova carteira</button>`;
+  body.querySelectorAll('[data-switch-portfolio-v40]').forEach(button=>button.onclick=()=>{if(button.dataset.switchPortfolioV40!==active.id)switchLocalPortfolio(button.dataset.switchPortfolioV40);});body.querySelectorAll('[data-edit-portfolio-v40]').forEach(button=>button.onclick=()=>{const row=rows.find(item=>item.id===button.dataset.editPortfolioV40);portfolioManagerDialog().close();openLocalPortfolioDialog(row);});document.getElementById('createPortfolioFromManagerV40').onclick=()=>{portfolioManagerDialog().close();openLocalPortfolioDialog();};
+}
+
+function openPortfolioManager(){const dialog=portfolioManagerDialog();renderPortfolioManager();dialog.showModal();}
+
+function applyRuntimeSnapshot(snapshot){
+  state=JSON.parse(JSON.stringify(snapshot.state));v14=JSON.parse(JSON.stringify(snapshot.transactions));patrimonySnapshotsV15=JSON.parse(JSON.stringify(snapshot.patrimony));v16Plan=JSON.parse(JSON.stringify(snapshot.planning));v18Plan=JSON.parse(JSON.stringify(snapshot.segments));
+  try{selectedPieId=null;activeHoldingFilter='Todos';holdingSearchText='';}catch(error){}try{v18Search='';}catch(error){}const search=document.getElementById('holdingSearch');if(search)search.value='';
+}
+
+function switchLocalPortfolio(portfolioId){
+  const target=String(portfolioId||'');if(!target||target===repository.activePortfolioId()){portfolioManagerDialog().close();return;}document.documentElement.classList.add('ponderaPortfolioSwitching');
+  try{repository.setActivePortfolio(target);const snapshot=repository.runtimeSnapshot(target);applyRuntimeSnapshot(snapshot);if(window.PonderaLedgerV29?.rebuild)window.PonderaLedgerV29.rebuild();if(typeof render==='function')render();ensureLocalHeader();portfolioManagerDialog().close();window.dispatchEvent(new CustomEvent('pondera:contextchange',{detail:{context:{type:'portfolio',portfolioId:target},readOnly:false,atomic:true}}));requestAnimationFrame(()=>requestAnimationFrame(()=>document.documentElement.classList.remove('ponderaPortfolioSwitching')));}
+  catch(error){document.documentElement.classList.remove('ponderaPortfolioSwitching');setSync(message(error),'error');}
 }
 
 function openLocalPortfolioDialog(portfolio=null){
@@ -79,7 +107,7 @@ function openLocalPortfolioDialog(portfolio=null){
 
 function saveLocalPortfolio(event){
   event.preventDefault();const id=document.getElementById('platformPortfolioIdV40').value,input={name:document.getElementById('platformPortfolioNameV40').value.trim(),description:document.getElementById('platformPortfolioDescriptionV40').value.trim(),includeInConsolidated:document.getElementById('platformPortfolioConsolidatedV40').checked,baseCurrency:'BRL'},errorHost=document.getElementById('platformPortfolioErrorV40');
-  try{if(!input.name)throw new Error('Informe um nome para a carteira.');if(id){repository.updatePortfolio(id,input);portfolioDialog().close();ensureLocalHeader();}else{const created=repository.createPortfolio(input);repository.setActivePortfolio(created.id);location.reload();}}catch(error){errorHost.textContent=message(error);}
+  try{if(!input.name)throw new Error('Informe um nome para a carteira.');if(id){repository.updatePortfolio(id,input);portfolioDialog().close();ensureLocalHeader();}else{const created=repository.createPortfolio(input);portfolioDialog().close();switchLocalPortfolio(created.id);}}catch(error){errorHost.textContent=message(error);}
 }
 
 function globalDialog(){
@@ -101,7 +129,7 @@ function renderGlobalBody(){
 function openGlobalPatrimony(){const dialog=globalDialog();renderGlobalBody();dialog.showModal();}
 
 function initializeLocal(){
-  repository=window.PonderaLocalPortfolioRepository;if(!repository)throw new Error('Armazenamento local de carteiras indisponível.');window.PonderaPlatform={version:VERSION,configured:false,mode:'local',repository};document.documentElement.dataset.ponderaPlatform='local';installLocalPersistenceBridge();ensureLocalHeader();
+  repository=window.PonderaLocalPortfolioRepository;if(!repository)throw new Error('Armazenamento local de carteiras indisponível.');window.PonderaPlatform={version:VERSION,configured:false,mode:'local',repository,switchPortfolio:switchLocalPortfolio,openPortfolioManager,openGlobalPatrimony};document.documentElement.dataset.ponderaPlatform='local';installLocalPersistenceBridge();ensureLocalHeader();
 }
 
 async function initialize(){

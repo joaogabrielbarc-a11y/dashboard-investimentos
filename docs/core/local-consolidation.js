@@ -2,12 +2,13 @@
 'use strict';
 if(window.PonderaLocalConsolidation)return;
 
-const VERSION='3.1.0';
+const VERSION='3.2.0';
 const EPS=1e-10;
 const finite=value=>value!==null&&value!==undefined&&value!==''&&Number.isFinite(Number(value));
 const number=value=>finite(value)?Number(value):0;
 const ticker=value=>String(value||'').trim().toUpperCase()==='BTC'?'BTCUSD':String(value||'').trim().toUpperCase();
 const operation=value=>{const text=String(value||'').trim().toLowerCase();if(['provento','dividend'].includes(text))return'dividend';if(['compra','buy'].includes(text))return'buy';if(['venda','sell'].includes(text))return'sell';return'adjustment';};
+const canonicalClass=value=>String(value||'').trim().toLowerCase()==='tesouro reserva'?'Tesouro Direto':String(value||'Sem classe');
 
 function holdingValue(holding){
   if(finite(holding.value))return Math.max(0,number(holding.value));
@@ -25,14 +26,14 @@ function build(rawSnapshots){
     let portfolioValue=0,portfolioIncome=0;
     for(const holding of holdings){
       const quantity=Math.max(0,number(holding.qty??holding.quantity));if(quantity<=EPS)continue;
-      const currentValue=holdingValue(holding),symbol=ticker(holding.ticker),className=String(holding.className||'Sem classe'),segment=String(holding.segment||'Sem segmento'),key=[symbol,className,segment].join('::');
+      const currentValue=holdingValue(holding),symbol=ticker(holding.ticker),className=canonicalClass(holding.className),segment=String(holding.segment||'Sem segmento'),key=[symbol,className,segment].join('::');
       const row=positions.get(key)||{ticker:symbol,name:String(holding.name||symbol),className,segment,quantity:0,currentValue:0,costBase:0,portfolioIds:new Set()};
       row.quantity+=quantity;row.currentValue+=currentValue;row.portfolioIds.add(portfolioId);
       const average=number(holding.avgPriceBRL??holding.averagePriceBase??holding.avgPriceNative);if(average>0)row.costBase+=average*quantity;
       positions.set(key,row);classes.set(className,(classes.get(className)||0)+currentValue);portfolioValue+=currentValue;
     }
     if(portfolioValue<=EPS){
-      for(const asset of assets){const currentValue=Math.max(0,number(asset.current));if(currentValue<=EPS)continue;const className=String(asset.name||'Sem classe');classes.set(className,(classes.get(className)||0)+currentValue);portfolioValue+=currentValue;}
+      for(const asset of assets){const currentValue=Math.max(0,number(asset.current));if(currentValue<=EPS)continue;const className=canonicalClass(asset.name);classes.set(className,(classes.get(className)||0)+currentValue);portfolioValue+=currentValue;}
     }
     for(const transaction of transactions){
       transactionCount+=1;
@@ -50,5 +51,5 @@ function build(rawSnapshots){
   return{scope:'consolidated',portfolioIds:included.map(item=>String(item.portfolio.id)),portfolioCount:included.length,netWorth,receivedIncome,transactionCount,positions:consolidatedPositions,classAllocation,portfolios:portfolioRows,readOnly:true};
 }
 
-window.PonderaLocalConsolidation=Object.freeze({version:VERSION,build,holdingValue});
+window.PonderaLocalConsolidation=Object.freeze({version:VERSION,build,holdingValue,canonicalClass});
 })();

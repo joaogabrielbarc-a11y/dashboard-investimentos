@@ -2,7 +2,7 @@
 'use strict';
 if(window.PonderaLocalPortfolioRepository)return;
 
-const VERSION='3.1.0';
+const VERSION='3.2.0';
 const SCHEMA_VERSION=1;
 const REGISTRY_KEY='pondera:v3:portfolios';
 const ACTIVE_KEY='pondera:v3:active-portfolio';
@@ -157,8 +157,21 @@ function readPortfolioData(id){
   return clone(data);
 }
 
+function runtimeSnapshot(id=activePortfolioId()){
+  const data=readPortfolioData(id),defaults=emptyData();
+  if(!data)throw new Error('Carteira não encontrada.');
+  return clone({
+    portfolio:data.portfolio,
+    state:data.state&&typeof data.state==='object'?data.state:defaults.state,
+    transactions:data.transactions&&typeof data.transactions==='object'?data.transactions:defaults.transactions,
+    patrimony:Array.isArray(data.patrimony)?data.patrimony:defaults.patrimony,
+    planning:data.planning&&typeof data.planning==='object'?data.planning:defaults.planning,
+    segments:data.segments&&typeof data.segments==='object'?data.segments:defaults.segments
+  });
+}
+
 function snapshots(){return portfolios().map(row=>readPortfolioData(row.id)).filter(Boolean);}
 
-window.PonderaLocalPortfolioRepository=Object.freeze({version:VERSION,schemaVersion:SCHEMA_VERSION,keys:Object.freeze({registry:REGISTRY_KEY,active:ACTIVE_KEY,prefix:DATA_PREFIX,datasets:DATASETS}),storageKey,bootstrap,portfolios,activePortfolioId,activePortfolio,persistLegacyKey,persistActiveLegacy,hydrate,createPortfolio,updatePortfolio,updateConsolidation,setActivePortfolio,readPortfolioData,snapshots,emptyData});
+window.PonderaLocalPortfolioRepository=Object.freeze({version:VERSION,schemaVersion:SCHEMA_VERSION,keys:Object.freeze({registry:REGISTRY_KEY,active:ACTIVE_KEY,prefix:DATA_PREFIX,datasets:DATASETS}),storageKey,bootstrap,portfolios,activePortfolioId,activePortfolio,persistLegacyKey,persistActiveLegacy,hydrate,createPortfolio,updatePortfolio,updateConsolidation,setActivePortfolio,readPortfolioData,runtimeSnapshot,snapshots,emptyData});
 if(!(window.PONDERA_CONFIG?.supabaseUrl&&window.PONDERA_CONFIG?.supabaseAnonKey))bootstrap();
 })();

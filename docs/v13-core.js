@@ -1,5 +1,5 @@
 const assetClassCatalog=['Ações','Fundos Imobiliários','Fiagros','BDRs','Tesouro Direto','Índices','ETFs Nacionais','Fundos de Investimentos','Renda Fixa','Stocks','REITs','Moedas','Commodities','ETFs Internacionais','Criptomoedas','Outros'];
-const classAliases={'Ações':['Ações','Ações BR'],'Fundos Imobiliários':['Fundos Imobiliários','FIIs'],'Renda Fixa':['Renda Fixa','Renda fixa'],'Criptomoedas':['Criptomoedas','Cripto'],'Stocks':['Stocks'],'ETFs Internacionais':['ETFs Internacionais']};
+const classAliases={'Ações':['Ações','Ações BR'],'Fundos Imobiliários':['Fundos Imobiliários','FIIs'],'Tesouro Direto':['Tesouro Direto','Tesouro Reserva'],'Renda Fixa':['Renda Fixa','Renda fixa'],'Criptomoedas':['Criptomoedas','Cripto'],'Stocks':['Stocks'],'ETFs Internacionais':['ETFs Internacionais']};
 const normClass=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
 const legacyClassMap={
   'acoes br':'Ações',

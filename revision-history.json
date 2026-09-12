@@ -1,9 +1,32 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "3.1.0",
+  "currentVersion": "3.2.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "3.2.0",
+      "date": "2026-09-12",
+      "type": "minor",
+      "area": "Gestão de carteiras, taxonomia e ciclo de renderização",
+      "status": "internal",
+      "request": "Centralizar a gestão de carteiras, incluir Tesouro Reserva em Tesouro Direto e eliminar a reprodução visual de versões ao trocar o contexto.",
+      "motivation": "Simplificar a navegação entre carteiras e aplicar o estado local de forma direta e previsível.",
+      "changes": [
+        "Centraliza criação, edição e troca em um modal de carteiras.",
+        "Exibe o Patrimônio Global diretamente no cabeçalho.",
+        "Substitui a recarga por aplicação atômica do snapshot da carteira.",
+        "Bloqueia renders intermediários durante a inicialização.",
+        "Normaliza Tesouro Reserva como Tesouro Direto.",
+        "Remove permanentemente Restaurar base."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "storageSchemaChanged": false,
+        "runtimeHydration": "atomic-snapshot",
+        "externalDeploymentChanged": false
+      }
+    },
     {
       "version": "3.1.0",
       "date": "2026-09-12",

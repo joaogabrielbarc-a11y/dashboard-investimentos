@@ -295,6 +295,5 @@ $('#holdingForm').onsubmit=e=>{
   $('#holdingDialog').close();save();renderHoldings();
 };
 
-$('#reset').onclick=()=>{if(!confirm('Restaurar os dados-base do dashboard? Suas alterações locais de classes, aportes e lista de ativos serão substituídas.'))return;state={assets:clone(initialAssets),contribution:1500,band:25,aportes:{},autoAportes:true,showIdeal:false,holdings:clone(initialHoldings),showAllHoldings:false};selectedPieId=null;activeHoldingFilter='Todos';holdingSearchText='';$('#holdingSearch').value='';save();render();};
 
 render();
