@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-12T13:49:31.693572-03:00",
+  "updatedAt": "2026-09-12T17:49:05.730214-03:00",
   "provider": {
     "primary": "Yahoo Finance chart",
     "fallback": "Yahoo Finance search em host redundante",
     "cache": "Ultimo preco valido publicado"
   },
   "summary": {
-    "requested": 62,
+    "requested": 61,
     "fresh": 61,
     "cached": 0,
-    "missing": 1,
+    "missing": 0,
     "usable": 61,
-    "coveragePct": 98.39
+    "coveragePct": 100.0
   },
   "categories": {
     "Ativos B3": {
@@ -34,10 +34,10 @@
       "missing": 0
     },
     "ETFs Nacionais": {
-      "total": 22,
+      "total": 21,
       "fresh": 21,
       "cached": 0,
-      "missing": 1
+      "missing": 0
     }
   },
   "assets": {
@@ -288,14 +288,6 @@
       "date": "2026-09-11",
       "source": "Yahoo Finance",
       "error": null
-    },
-    "EURP11": {
-      "symbol": "EURP11.SA",
-      "category": "ETFs Nacionais",
-      "status": "missing",
-      "date": null,
-      "source": null,
-      "error": "Nenhuma cotacao valida retornada pelos endpoints redundantes."
     },
     "XINA11": {
       "symbol": "XINA11.SA",
