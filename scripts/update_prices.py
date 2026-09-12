@@ -196,6 +196,20 @@ def bcb_last(series, n=1):
     return out
 
 
+def bcb_range(series, start_date, end_date):
+    url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.{series}/dados'
+    r = requests.get(url, params={
+        'formato': 'json', 'dataInicial': start_date, 'dataFinal': end_date,
+    }, headers=HEADERS, timeout=20)
+    r.raise_for_status()
+    out = []
+    for x in r.json():
+        value = clean(str(x.get('valor', '')).replace(',', '.'))
+        if value is not None:
+            out.append({'date': x.get('data'), 'value': value})
+    return out
+
+
 def fred_last(series='DFF'):
     """Latest observation from the Federal Reserve Bank of St. Louis."""
     url = f'https://fred.stlouisfed.org/graph/fredgraph.csv?id={quote(series, safe="")}'
@@ -280,7 +294,11 @@ def market_indexes():
     except Exception as exc:
         print('CDI warning:', exc)
     try:
-        sel_history = bcb_last(11, 400)
+        sel_history = bcb_range(
+            11, '11/05/2026', datetime.now(ZoneInfo('America/Sao_Paulo')).strftime('%d/%m/%Y')
+        )
+        if not sel_history:
+            raise ValueError('Série Selic sem observações desde o lançamento do Tesouro Reserva')
         sel = sel_history[-1]
         annual = ((1 + sel['value'] / 100) ** 252 - 1) * 100
         daily_rates = []
