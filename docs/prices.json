@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-11T20:39:22.318896-03:00",
+  "updatedAt": "2026-09-12T12:31:44.152956-03:00",
   "fxUsdBrl": 5.1262,
   "prices": {
     "CPFE3": {
@@ -178,10 +178,10 @@
       "source": "Yahoo Finance"
     },
     "BTCUSD": {
-      "priceNative": 77188.97,
-      "priceBRL": 395686.098014,
+      "priceNative": 77433.87,
+      "priceBRL": 396941.504394,
       "currency": "USD",
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "source": "Yahoo Finance"
     },
     "TESOURO RENDA+ 2060": {
