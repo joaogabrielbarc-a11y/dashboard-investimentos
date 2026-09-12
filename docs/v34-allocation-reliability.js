@@ -182,7 +182,7 @@ function prepareRemovalCommands(){
   });
   document.querySelectorAll('[data-remove-class-v25]').forEach(button=>{
     const className=classNameFromButton(button),linked=(state.holdings||[]).filter(holding=>holding.className===className).length;
-    if(linked)button.title=`${linked} posição(ões) vinculada(s). Realocar ou encerrar antes de excluir a classe.`;
+    if(linked)button.title=`Excluir somente da macro alocação; ${linked} posição(ões) e o histórico serão preservados.`;
   });
 }
 
@@ -192,11 +192,6 @@ function removalCapture(event){
     event.preventDefault();event.stopImmediatePropagation();
     const holding=(state.holdings||[]).find(item=>String(item.id)===String(assetButton.dataset.removeAssetV18));openClosePosition(holding);return;
   }
-  const classButton=event.target.closest?.('[data-remove-class-v25]');
-  if(!classButton)return;
-  const className=classNameFromButton(classButton),linked=(state.holdings||[]).filter(holding=>holding.className===className);
-  if(!linked.length)return;
-  event.preventDefault();event.stopImmediatePropagation();alert(`A classe “${className}” possui ${linked.length} posição(ões) ativa(s). Realocar os ativos pelo editor ou encerrar as posições antes de excluir a classe.`);
 }
 
 function editCapture(event){

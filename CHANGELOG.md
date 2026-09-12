@@ -10,6 +10,23 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V3.3.0 — 2026-09-12
+
+**Área:** Tesouro Reserva e macroalocação
+**Tipo:** Minor
+
+### Correções e melhorias
+- “Tesouro Reserva” passa a constar como ativo de Tesouro Direto, no segmento “Pós-fixado / Selic”.
+- O saldo do Tesouro Reserva varia automaticamente a 100% da Selic Over, sem marcação a mercado.
+- A atualização diária passa a armazenar o histórico da Selic Over do Banco Central desde o lançamento do produto; enquanto o histórico completo ainda não estiver disponível, o cálculo usa a taxa anual vigente como estimativa.
+- A classe “Tesouro Direto” pode ter meta 0% ou ser excluída da macroalocação mesmo com posições vinculadas.
+- Excluir a classe da macro preserva posições e histórico, sem recriá-la automaticamente no render seguinte.
+
+### Impacto nos dados
+- Nenhuma posição ou lançamento existente é apagado.
+- A atualização automática é aplicada somente ao ticker padronizado `TESOURO RESERVA`.
+- A exclusão de uma classe altera apenas a estrutura de metas da carteira ativa.
+
 ## V3.2.0 — 2026-09-12
 
 **Área:** Gestão de carteiras, taxonomia e ciclo de renderização

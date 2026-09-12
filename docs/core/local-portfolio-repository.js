@@ -2,7 +2,7 @@
 'use strict';
 if(window.PonderaLocalPortfolioRepository)return;
 
-const VERSION='3.2.0';
+const VERSION='3.3.0';
 const SCHEMA_VERSION=1;
 const REGISTRY_KEY='pondera:v3:portfolios';
 const ACTIVE_KEY='pondera:v3:active-portfolio';

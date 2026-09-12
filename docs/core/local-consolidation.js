@@ -2,7 +2,7 @@
 'use strict';
 if(window.PonderaLocalConsolidation)return;
 
-const VERSION='3.2.0';
+const VERSION='3.3.0';
 const EPS=1e-10;
 const finite=value=>value!==null&&value!==undefined&&value!==''&&Number.isFinite(Number(value));
 const number=value=>finite(value)?Number(value):0;

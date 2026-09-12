@@ -1,9 +1,32 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "3.2.0",
+  "currentVersion": "3.3.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "3.3.0",
+      "date": "2026-09-12",
+      "type": "minor",
+      "area": "Tesouro Reserva e macroalocação",
+      "status": "deployed",
+      "request": "Adicionar Tesouro Reserva com variação automática e permitir zerar ou excluir Tesouro Direto da macroalocação.",
+      "motivation": "Representar o novo título de liquidez do Tesouro Nacional e remover a recriação indevida de classes excluídas.",
+      "changes": [
+        "Adiciona Tesouro Reserva ao catálogo de títulos da classe Tesouro Direto.",
+        "Calcula o saldo automaticamente a 100% da Selic Over sem marcação a mercado.",
+        "Armazena a série diária Selic do Banco Central para cálculo acumulado.",
+        "Permite meta de 0% e exclusão da classe Tesouro Direto mesmo com posições.",
+        "Preserva posições e histórico ao retirar uma classe da macroalocação.",
+        "Impede que classes excluídas sejam recriadas pelo ciclo de renderização."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "storageSchemaChanged": false,
+        "automaticPricing": "100-percent-selic-over",
+        "classRemoval": "allocation-only"
+      }
+    },
     {
       "version": "3.2.0",
       "date": "2026-09-12",

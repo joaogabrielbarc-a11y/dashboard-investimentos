@@ -10,7 +10,7 @@ const v17AvgSeeds={
 const v17SegmentSeeds={
   CPFE3:'Energia elétrica',BBSE3:'Seguros',BBAS3:'Bancos',PETR4:'Petróleo e gás',SAPR4:'Saneamento',ISAE4:'Transmissão de energia',VALE3:'Mineração',ITSA4:'Holding financeira',WIZC3:'Corretagem de seguros',TAEE11:'Transmissão de energia',CMIG4:'Energia elétrica',ITUB4:'Bancos',BBDC3:'Bancos',FIQE3:'Telecomunicações',BRBI11:'Mercado de capitais',
   GGRC11:'Logística',XPML11:'Shoppings',GARE11:'Renda urbana / híbrido',HGCR11:'Recebíveis',LVBI11:'Logística',TRXF11:'Renda urbana',
-  VOO:'EUA • Large Caps',AVUV:'EUA • Small Cap Value',VEA:'Desenvolvidos ex-EUA',TFLO:'Renda fixa em dólar',BTCUSD:'Criptomoedas','TESOURO RENDA+ 2060':'Renda futura / inflação'
+  VOO:'EUA • Large Caps',AVUV:'EUA • Small Cap Value',VEA:'Desenvolvidos ex-EUA',TFLO:'Renda fixa em dólar',BTCUSD:'Criptomoedas','TESOURO RENDA+ 2060':'Renda futura / inflação','TESOURO RESERVA':'Pós-fixado / Selic'
 };
 const v17MicroTargetSeeds={VOO:20,AVUV:10,VEA:30,TFLO:5,BTCUSD:100,'TESOURO RENDA+ 2060':100};
 const v17InternationalClasses=new Set(['ETFs Internacionais','Stocks','REITs']);

@@ -26,7 +26,8 @@ function segmentsForClassV20(className){
 }
 function treasuryTitlesV20(){
   const keys=Object.keys(typeof v17PriceCache!=='undefined'?v17PriceCache:{}).filter(k=>k.startsWith('TESOURO '));
-  return keys.sort((a,b)=>a.localeCompare(b,'pt-BR'));
+  keys.push(window.PonderaTreasuryReserve?.ticker||'TESOURO RESERVA');
+  return [...new Set(keys)].sort((a,b)=>a.localeCompare(b,'pt-BR'));
 }
 function tickerKeyV20(t){return String(t||'').trim().toUpperCase();}
 function yahooSymbolV20(ticker,className){
@@ -82,7 +83,7 @@ function pricingCoverageV20(className){
   if(isBrazilExchangeV20(className))return 'Fechamento automático B3/Yahoo';
   if(isInternationalV20(className))return 'Fechamento automático pelo ticker internacional';
   if(className==='Criptomoedas')return 'Cotação automática em USD e conversão BRL';
-  if(className==='Tesouro Direto')return 'Preço oficial diário do Tesouro Transparente';
+  if(className==='Tesouro Direto')return 'Preço oficial diário; Tesouro Reserva rende automaticamente 100% da Selic Over';
   if(className==='Renda Fixa')return 'Valor atualizado estimado pelo indexador BCB';
   if(className==='Fundos de Investimentos')return 'Cota diária CVM por CNPJ';
   if(['Moedas','Índices','Commodities'].includes(className))return 'Cotação automática quando houver símbolo Yahoo compatível';
@@ -111,4 +112,9 @@ function applyFixedIncomeV20(h){
 function applyFundPriceV20(h){
   if(h.className!=='Fundos de Investimentos')return;const rec=v20FundCache[digitsV20(h.ticker)];if(!rec)return;h.currentPriceNative=+rec.priceNative;h.currentPriceBRL=+rec.priceBRL;h.currentCurrency='BRL';h.priceDate=rec.date;h.priceSource=rec.source;h.value=Math.max(0,+h.qty||0)*(+rec.priceBRL||0);h.price=+rec.priceBRL;
 }
-function applySpecialPricesV20(){state.holdings.forEach(h=>{if(h.className==='Renda Fixa')applyFixedIncomeV20(h);if(h.className==='Fundos de Investimentos')applyFundPriceV20(h);});}
+function applyTreasuryReserveV20(h){
+  const engine=window.PonderaTreasuryReserve,index=v20IndexCache.SELIC;
+  if(!engine||!index)return false;
+  return engine.applyHolding(h,typeof v14!=='undefined'?v14.executed:[],index);
+}
+function applySpecialPricesV20(){state.holdings.forEach(h=>{if(h.className==='Renda Fixa')applyFixedIncomeV20(h);if(h.className==='Fundos de Investimentos')applyFundPriceV20(h);if(h.className==='Tesouro Direto')applyTreasuryReserveV20(h);});}

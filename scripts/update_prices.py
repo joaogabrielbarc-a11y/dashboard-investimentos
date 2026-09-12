@@ -280,9 +280,21 @@ def market_indexes():
     except Exception as exc:
         print('CDI warning:', exc)
     try:
-        sel = bcb_last(11, 1)[-1]
+        sel_history = bcb_last(11, 400)
+        sel = sel_history[-1]
         annual = ((1 + sel['value'] / 100) ** 252 - 1) * 100
-        out['indexes']['SELIC'] = {'annualPct': annual, 'dailyPct': sel['value'], 'date': sel['date'], 'series': 11}
+        daily_rates = []
+        for row in sel_history:
+            try:
+                date = datetime.strptime(str(row['date']), '%d/%m/%Y').date().isoformat()
+            except (TypeError, ValueError):
+                continue
+            if date >= '2026-05-11':
+                daily_rates.append({'date': date, 'value': row['value']})
+        out['indexes']['SELIC'] = {
+            'annualPct': annual, 'dailyPct': sel['value'], 'date': sel['date'],
+            'series': 11, 'dailyRates': daily_rates,
+        }
     except Exception as exc:
         print('Selic warning:', exc)
     try:

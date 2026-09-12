@@ -42,7 +42,6 @@ function migratePortfolioV15(){
       if((+h.qty||0)<=1.000001){h.qty=1.9;h.price=(+h.value||0)/1.9;}
     }
   });
-  if(!state.assets.some(a=>a.name==='Tesouro Direto'))state.assets.push({id:'tesouro-direto',name:'Tesouro Direto',current:0,target:0});
 }
 function syncMacroFromHoldingsV15(){
   const sums={};state.holdings.forEach(h=>{const cls=canonicalClassV15(h.className);h.className=cls;sums[cls]=(sums[cls]||0)+Math.max(0,+h.value||0);});
