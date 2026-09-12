@@ -1,9 +1,32 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "3.3.0",
+  "currentVersion": "3.4.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "3.4.0",
+      "date": "2026-09-12",
+      "type": "minor",
+      "area": "Alocação estruturada e cotações automáticas",
+      "status": "deployed",
+      "request": "Preservar a ordem das seções, reforçar o layout responsivo e automatizar a precificação de ETFs nacionais com diagnóstico.",
+      "motivation": "Eliminar reordenações causadas por camadas tardias de renderização e tornar o pipeline de preços observável e resiliente.",
+      "changes": [
+        "Restaura tabela macro, atalhos e painéis de classe conforme a ordem persistida.",
+        "Adiciona contenção responsiva e rolagem interna para tabelas largas.",
+        "Inclui catálogo de ETFs B3 na rotina diária Yahoo Finance com sufixo .SA.",
+        "Atualiza cotações vencidas no navegador e preserva o último preço válido em falhas.",
+        "Publica e exibe diagnóstico de cobertura, cache e ativos sem preço."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "storageSchemaChanged": false,
+        "allocationOrderSource": "state.assets",
+        "automaticPricing": "daily-D1-with-cache",
+        "diagnostics": "quote-diagnostics.json"
+      }
+    },
     {
       "version": "3.3.0",
       "date": "2026-09-12",

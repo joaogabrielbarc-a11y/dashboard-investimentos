@@ -10,6 +10,24 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V3.4.0 — 2026-09-12
+
+**Área:** Alocação estruturada e cotações automáticas
+**Tipo:** Minor
+
+### Correções e melhorias
+- A ordem original das classes passa a ser restabelecida após cada renderização usando a sequência persistida em `state.assets`.
+- Tabela macro, atalhos e painéis de microalocação permanecem sincronizados ao criar, editar ou remover classes.
+- O layout passa a empilhar painéis e preservar rolagem interna das tabelas em larguras menores, sem sobreposição dos controles.
+- ETFs nacionais passam a integrar a rotina diária de preços com ticker B3 no formato `.SA`, incluindo BOVA11, IVVB11 e HASH11.
+- Cotações ausentes ou vencidas são verificadas novamente no navegador; falhas preservam o último preço válido.
+- A rotina diária gera um diagnóstico estruturado de cobertura, cache e tickers sem cotação, exibido em Análise Quantitativa.
+
+### Impacto nos dados
+- Nenhuma posição, lançamento, meta ou ordem salva foi alterada.
+- O arquivo de preços continua sendo cache estático e passa a incluir ETFs nacionais e relatório de saúde das cotações.
+- A ordem persistida pelo usuário permanece sendo a fonte de verdade da Alocação Estruturada.
+
 ## V3.3.0 — 2026-09-12
 
 **Área:** Tesouro Reserva e macroalocação

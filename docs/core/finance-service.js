@@ -119,5 +119,5 @@ function weightedTargets(snapshots,classes){
   return[...targets.entries()].map(([name,target])=>({name,target}));
 }
 
-window.PonderaFinance=Object.freeze({version:'3.3.0',normalizeTransaction,buildLedger,aggregateHoldings,allocationBy,portfolioSnapshots,consolidate,weightedTargets});
+window.PonderaFinance=Object.freeze({version:'3.4.0',normalizeTransaction,buildLedger,aggregateHoldings,allocationBy,portfolioSnapshots,consolidate,weightedTargets});
 })();

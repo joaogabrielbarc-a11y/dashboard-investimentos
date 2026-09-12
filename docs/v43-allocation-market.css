@@ -1,0 +1,15 @@
+/* Pondera V3.4 — ordem determinística, resiliência responsiva e diagnóstico de mercado */
+#tabMacroV22{min-width:0}
+#tabMacroV22>.tabIntroV22{order:-4}
+#tabMacroV22>#allocationPulseV26{order:-3}
+#tabMacroV22>#macroStageV28{order:-2}
+#tabMacroV22>#patrimonyMicroSummaryV22{order:-1}
+#tabMacroV22>.allocationHoldingsV23,#tabMacroV22>.holdingsCard{order:0;min-width:0;max-width:100%}
+#tabMacroV22 .classDashboardV18,#tabMacroV22 .classGridV18,#tabMacroV22 .assetsPaneV18,#tabMacroV22 .segmentsPaneV18,#tabMacroV22 .tableWrap{min-width:0;max-width:100%;box-sizing:border-box}
+#tabMacroV22 .classHeaderV18,#tabMacroV22 .paneTitleV18,#tabMacroV22 .allocationMacroHeaderV25{min-width:0}
+.marketAuditV43{display:grid;gap:16px;margin-top:18px;padding:18px;min-width:0}
+.marketAuditHeadV43{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.marketAuditHeadV43 span{color:#67d5ad;font-size:9px;font-weight:900;letter-spacing:.1em}.marketAuditHeadV43 h2{margin:4px 0;font-size:17px}.marketAuditHeadV43 p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}.marketAuditHeadV43 button:disabled{opacity:.6;cursor:wait}
+.marketAuditStatsV43{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.marketAuditStatsV43 article{display:grid;gap:4px;padding:13px;border:1px solid var(--line);border-radius:11px;background:#081522}.marketAuditStatsV43 span,.marketAuditStatsV43 small{color:var(--muted);font-size:10px}.marketAuditStatsV43 strong{color:var(--text);font-size:15px}.marketAuditStatsV43 strong.good,.marketHealthyV43{color:#73e4b9}.marketAuditStatsV43 strong.warn{color:#f2b66d}
+.marketFailuresV43{border-top:1px solid var(--line);padding-top:12px;color:var(--muted);font-size:11px}.marketFailuresV43 summary{cursor:pointer;font-weight:800}.marketFailuresV43>div{display:grid;gap:5px;margin-top:10px}.marketFailuresV43 p{display:flex;justify-content:space-between;gap:12px;margin:0;padding:7px 9px;border-radius:8px;background:#081522}.marketFailuresV43 p strong{color:var(--text)}.marketFailuresV43 p span{text-align:right}.marketHealthyV43{margin:0;font-size:11px}
+@media(max-width:1180px){#tabMacroV22 .classGridV18{grid-template-columns:minmax(0,1fr)!important}#tabMacroV22 .segmentsPaneV18{border-left:0;border-top:1px solid rgba(32,52,77,.75)}#tabMacroV22 .assetsPaneV18>.tableWrap,#tabMacroV22 .segmentsPaneV18>.tableWrap{overflow-x:auto}}
+@media(max-width:720px){#tabMacroV22 .classHeaderV18,#tabMacroV22 .paneTitleV18,#tabMacroV22 .allocationMacroHeaderV25{align-items:stretch!important;flex-direction:column!important}#tabMacroV22 .classPillsV18,#tabMacroV22 .allocationMacroActionsV25{justify-content:flex-start!important}#tabMacroV22 .holdingsTitleV18{align-items:stretch!important;flex-direction:column!important}#tabMacroV22 .searchV18{width:100%;min-width:0}.marketAuditHeadV43{flex-direction:column}.marketAuditStatsV43{grid-template-columns:1fr}.marketFailuresV43 p{align-items:flex-start;flex-direction:column}.marketFailuresV43 p span{text-align:left}}

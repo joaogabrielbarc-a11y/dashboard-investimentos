@@ -44,6 +44,7 @@ jobs:
 
           publish_prices() {
             git add docs/prices.json web-v1/prices.json \
+              docs/quote-diagnostics.json web-v1/quote-diagnostics.json \
               docs/market-indexes.json web-v1/market-indexes.json \
               docs/quant-market-history.json web-v1/quant-market-history.json \
               docs/fund-prices.json web-v1/fund-prices.json

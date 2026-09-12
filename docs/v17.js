@@ -1,4 +1,5 @@
 const V17_PRICE_CACHE_KEY='carteira-v17-price-cache';
+const V17_QUOTE_DIAGNOSTIC_KEY='carteira-v17-quote-diagnostics';
 const V17_MODEL_VERSION='17.0';
 
 const v17AvgSeeds={
@@ -10,11 +11,13 @@ const v17AvgSeeds={
 const v17SegmentSeeds={
   CPFE3:'Energia elétrica',BBSE3:'Seguros',BBAS3:'Bancos',PETR4:'Petróleo e gás',SAPR4:'Saneamento',ISAE4:'Transmissão de energia',VALE3:'Mineração',ITSA4:'Holding financeira',WIZC3:'Corretagem de seguros',TAEE11:'Transmissão de energia',CMIG4:'Energia elétrica',ITUB4:'Bancos',BBDC3:'Bancos',FIQE3:'Telecomunicações',BRBI11:'Mercado de capitais',
   GGRC11:'Logística',XPML11:'Shoppings',GARE11:'Renda urbana / híbrido',HGCR11:'Recebíveis',LVBI11:'Logística',TRXF11:'Renda urbana',
+  BOVA11:'Ibovespa',BOVV11:'Ibovespa',PIBB11:'IBrX-50',SMAL11:'Small caps',DIVO11:'Dividendos',IVVB11:'S&P 500',SPXI11:'S&P 500',NASD11:'Nasdaq 100',WRLD11:'Ações globais',ACWI11:'Ações globais',EURP11:'Europa',XINA11:'China',HASH11:'Criptoativos',QETH11:'Ethereum',GOLD11:'Ouro',ECOO11:'Carbono',MATB11:'Materiais básicos',FIND11:'Financeiro',IMAB11:'Renda fixa',B5P211:'Renda fixa',IRFM11:'Renda fixa',LFTB11:'Renda fixa',
   VOO:'EUA • Large Caps',AVUV:'EUA • Small Cap Value',VEA:'Desenvolvidos ex-EUA',TFLO:'Renda fixa em dólar',BTCUSD:'Criptomoedas','TESOURO RENDA+ 2060':'Renda futura / inflação','TESOURO RESERVA':'Pós-fixado / Selic'
 };
 const v17MicroTargetSeeds={VOO:20,AVUV:10,VEA:30,TFLO:5,BTCUSD:100,'TESOURO RENDA+ 2060':100};
 const v17InternationalClasses=new Set(['ETFs Internacionais','Stocks','REITs']);
 let v17PriceCache=(()=>{try{return JSON.parse(localStorage.getItem(V17_PRICE_CACHE_KEY)||'{}')||{};}catch(e){return {};}})();
+let v17QuoteDiagnostics=(()=>{try{return JSON.parse(localStorage.getItem(V17_QUOTE_DIAGNOSTIC_KEY)||'{}')||{};}catch(e){return {};}})();
 let v17PriceLoadStarted=false;
 
 function tickerKeyV17(t){return String(t||'').trim().toUpperCase()==='BTC'?'BTCUSD':String(t||'').trim().toUpperCase();}
@@ -135,10 +138,18 @@ async function loadPricesV17(force=false){
 function yahooSymbolV17(h){const key=tickerKeyV17(h.ticker);if(key==='BTCUSD')return 'BTC-USD';if(v17InternationalClasses.has(h.className))return key;if(['Ações','Fundos Imobiliários','Fiagros','BDRs','ETFs Nacionais'].includes(h.className))return key+'.SA';return null;}
 async function fetchYahooOneV17(h,fx){
   const symbol=yahooSymbolV17(h);if(!symbol||h.className==='Tesouro Direto')return null;
-  try{const r=await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=7d&interval=1d`,{mode:'cors'});if(!r.ok)return null;const j=await r.json(),res=j?.chart?.result?.[0],ts=res?.timestamp||[],cl=res?.indicators?.quote?.[0]?.close||[];const today=new Date().toISOString().slice(0,10);let chosen=null;for(let i=0;i<ts.length;i++){const d=new Date(ts[i]*1000).toISOString().slice(0,10);if(d<today&&Number.isFinite(+cl[i]))chosen={date:d,priceNative:+cl[i]};}if(!chosen)return null;const currency=v17InternationalClasses.has(h.className)||tickerKeyV17(h.ticker)==='BTCUSD'?'USD':'BRL';chosen.currency=currency;chosen.priceBRL=currency==='USD'&&Number.isFinite(fx)?chosen.priceNative*fx:chosen.priceNative;chosen.source='Yahoo Finance';return chosen;}catch(e){return null;}
+  const r=await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=7d&interval=1d`,{mode:'cors'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const j=await r.json(),res=j?.chart?.result?.[0],ts=res?.timestamp||[],cl=res?.indicators?.quote?.[0]?.close||[];const today=new Date().toISOString().slice(0,10);let chosen=null;for(let i=0;i<ts.length;i++){const d=new Date(ts[i]*1000).toISOString().slice(0,10);if(d<today&&Number.isFinite(+cl[i]))chosen={date:d,priceNative:+cl[i]};}if(!chosen)throw new Error('Sem fechamento valido');const currency=v17InternationalClasses.has(h.className)||tickerKeyV17(h.ticker)==='BTCUSD'?'USD':'BRL';chosen.currency=currency;chosen.priceBRL=currency==='USD'&&Number.isFinite(fx)?chosen.priceNative*fx:chosen.priceNative;chosen.source='Yahoo Finance';return chosen;
 }
 async function fetchFxV17(){try{const r=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/BRL=X?range=7d&interval=1d',{mode:'cors'});if(!r.ok)return null;const j=await r.json(),res=j?.chart?.result?.[0],ts=res?.timestamp||[],cl=res?.indicators?.quote?.[0]?.close||[],today=new Date().toISOString().slice(0,10);let x=null;for(let i=0;i<ts.length;i++){const d=new Date(ts[i]*1000).toISOString().slice(0,10);if(d<today&&Number.isFinite(+cl[i]))x=+cl[i];}return x;}catch(e){return null;}}
-async function fetchMissingYahooV17(){const missing=state.holdings.filter(h=>!v17PriceCache[tickerKeyV17(h.ticker)]&&h.className!=='Tesouro Direto');if(!missing.length)return;const fx=await fetchFxV17();let changed=false;for(const h of missing){const rec=await fetchYahooOneV17(h,fx);if(rec){v17PriceCache[tickerKeyV17(h.ticker)]=rec;changed=true;}}if(changed){localStorage.setItem(V17_PRICE_CACHE_KEY,JSON.stringify(v17PriceCache));applyPriceCacheV17();save();render();}}
+function stalePriceV17(rec){if(!rec?.date)return true;const time=Date.parse(`${rec.date}T23:59:59Z`);return !Number.isFinite(time)||Date.now()-time>72*60*60*1000;}
+async function fetchMissingYahooV17(){
+  const targets=state.holdings.filter(h=>h.className!=='Tesouro Direto'&&yahooSymbolV17(h)&&stalePriceV17(v17PriceCache[tickerKeyV17(h.ticker)]));if(!targets.length)return;
+  const fx=await fetchFxV17(),results=[];let changed=false;
+  for(let i=0;i<targets.length;i+=4){const batch=targets.slice(i,i+4);const settled=await Promise.all(batch.map(async h=>{const key=tickerKeyV17(h.ticker),old=v17PriceCache[key];try{const rec=await fetchYahooOneV17(h,fx);if(rec){v17PriceCache[key]={...old,...rec,priceBRL:rec.priceBRL??old?.priceBRL};changed=true;return{ticker:key,status:'fresh',date:rec.date,source:rec.source};}}catch(error){return{ticker:key,status:old?'cached':'missing',date:old?.date||null,error:String(error?.message||error)};}return{ticker:key,status:old?'cached':'missing',date:old?.date||null,error:'Sem cotacao valida'};}));results.push(...settled);}
+  v17QuoteDiagnostics={updatedAt:new Date().toISOString(),provider:'Yahoo Finance chart',assets:results};localStorage.setItem(V17_QUOTE_DIAGNOSTIC_KEY,JSON.stringify(v17QuoteDiagnostics));
+  const failures=results.filter(item=>item.status!=='fresh');if(failures.length)console.warn('[Pondera cotações] fallback de cache aplicado',failures);
+  if(changed){localStorage.setItem(V17_PRICE_CACHE_KEY,JSON.stringify(v17PriceCache));applyPriceCacheV17();save();render();}
+}
 function postRenderV17(){normalizeHoldingModelV17();applyPriceCacheV17();renderHoldingsV17();renderPendingFlowHintV17();const execute=document.getElementById('executeTransactions');if(execute)execute.onclick=executePendingV17;updateVersionV17();}
 function updateVersionV17(){const e=document.querySelector('.eyebrow');if(e)e.textContent='CARTEIRA • V1.7';}
 

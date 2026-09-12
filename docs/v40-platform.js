@@ -2,7 +2,7 @@
 'use strict';
 if(window.__PONDERA_PLATFORM_V40__)return;
 
-const VERSION='3.3.0',config=window.PONDERA_CONFIG||{},configured=Boolean(config.supabaseUrl&&config.supabaseAnonKey);
+const VERSION='3.4.0',config=window.PONDERA_CONFIG||{},configured=Boolean(config.supabaseUrl&&config.supabaseAnonKey);
 const legacyBackup=(()=>{try{return{ledger:JSON.parse(localStorage.getItem('carteira-v14-transactions')||'null'),portfolio:JSON.parse(localStorage.getItem('carteira-v1')||'null'),segments:JSON.parse(localStorage.getItem('carteira-v18-segment-plan')||'null')};}catch(e){return{};}})();
 let store=null,repository=null,applying=false,syncTimer=null,lastTransactionFingerprint='',lastAllocationFingerprint='',authMode='signin';
 

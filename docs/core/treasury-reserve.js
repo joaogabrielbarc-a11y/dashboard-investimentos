@@ -2,7 +2,7 @@
 'use strict';
 if(window.PonderaTreasuryReserve)return;
 
-const VERSION='3.3.0';
+const VERSION='3.4.0';
 const TICKER='TESOURO RESERVA';
 const START_DATE='2026-05-11';
 const DAY=86400000;

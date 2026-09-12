@@ -19,13 +19,22 @@ PRICE_OUTS = [ROOT / 'docs' / 'prices.json', ROOT / 'web-v1' / 'prices.json']
 INDEX_OUTS = [ROOT / 'docs' / 'market-indexes.json', ROOT / 'web-v1' / 'market-indexes.json']
 FUND_OUTS = [ROOT / 'docs' / 'fund-prices.json', ROOT / 'web-v1' / 'fund-prices.json']
 QUANT_OUTS = [ROOT / 'docs' / 'quant-market-history.json', ROOT / 'web-v1' / 'quant-market-history.json']
+QUOTE_DIAGNOSTIC_OUTS = [ROOT / 'docs' / 'quote-diagnostics.json', ROOT / 'web-v1' / 'quote-diagnostics.json']
 
 # Ativos que precisam estar disponíveis no site estático mesmo quando o Yahoo bloqueia CORS no navegador.
-BR = [
+BR_EQUITIES = [
     'CPFE3','BBSE3','BBAS3','PETR4','SAPR4','ISAE4','VALE3','ITSA4','WIZC3',
     'TAEE11','CMIG4','ITUB4','BBDC3','FIQE3','BRBI11','GGRC11','XPML11','GARE11',
     'HGCR11','LVBI11','TRXF11'
 ]
+# Catálogo de ETFs nacionais pré-carregados no site estático. Qualquer outro ETF
+# lançado pelo usuário também é consultado no navegador com o sufixo .SA.
+BR_ETFS = [
+    'BOVA11','BOVV11','PIBB11','SMAL11','DIVO11','IVVB11','SPXI11','NASD11',
+    'WRLD11','ACWI11','EURP11','XINA11','HASH11','QETH11','GOLD11','ECOO11',
+    'MATB11','FIND11','IMAB11','B5P211','IRFM11','LFTB11',
+]
+BR = [*BR_EQUITIES, *BR_ETFS]
 US = [
     'VOO','VTV','AVUV','VEA','AVDV','VWO','AVES','TFLO',
     'NU','AAPL','MSFT','GOOGL','AMZN','NVDA','META','JPM','XOM','BRK-B',
@@ -468,22 +477,106 @@ def market_quotes():
     specs.update({t: (t, 'America/New_York') for t in US})
     specs['BTCUSD'] = ('BTC-USD', 'America/Sao_Paulo')
 
-    out = {}
+    out, failures = {}, {}
     with ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(yahoo_market_quote, sym, tz): key for key, (sym, tz) in specs.items()}
         for future in as_completed(futures):
             key = futures[future]
             try:
-                out[key] = future.result()
+                result = future.result()
+                if result:
+                    out[key] = result
+                else:
+                    failures[key] = 'Nenhuma cotacao valida retornada pelos endpoints redundantes.'
             except Exception as exc:
-                print('quote warning', key, exc)
-    return out
+                failures[key] = str(exc)
+                print('[quotes] warning', key, exc)
+    return out, failures
+
+
+def quote_category(ticker):
+    if ticker in BR_ETFS:
+        return 'ETFs Nacionais'
+    if ticker in BR_EQUITIES:
+        return 'Ativos B3'
+    if ticker in US:
+        return 'Ativos internacionais'
+    if ticker == 'BTCUSD':
+        return 'Criptoativos'
+    if ticker == 'BRL=X':
+        return 'Cambio'
+    return 'Outros'
+
+
+def build_quote_diagnostics(quotes, failures, previous_prices, merged_prices, updated_at):
+    expected = [*BR, *US, 'BTCUSD']
+    assets = {}
+    fresh = cached = missing = 0
+    for ticker in expected:
+        previous = previous_prices.get(ticker) or {}
+        current = merged_prices.get(ticker) or {}
+        if quotes.get(ticker):
+            status = 'fresh'
+            fresh += 1
+        elif previous and (previous.get('priceBRL') is not None or previous.get('priceNative') is not None):
+            status = 'cached'
+            cached += 1
+        else:
+            status = 'missing'
+            missing += 1
+        assets[ticker] = {
+            'symbol': f'{ticker}.SA' if ticker in BR else ('BTC-USD' if ticker == 'BTCUSD' else ticker),
+            'category': quote_category(ticker),
+            'status': status,
+            'date': current.get('date'),
+            'source': current.get('source'),
+            'error': failures.get(ticker),
+        }
+
+    total = len(expected)
+    usable = fresh + cached
+    categories = {}
+    for category in sorted({item['category'] for item in assets.values()}):
+        rows = [item for item in assets.values() if item['category'] == category]
+        categories[category] = {
+            'total': len(rows),
+            'fresh': sum(item['status'] == 'fresh' for item in rows),
+            'cached': sum(item['status'] == 'cached' for item in rows),
+            'missing': sum(item['status'] == 'missing' for item in rows),
+        }
+    return {
+        'schemaVersion': 1,
+        'updatedAt': updated_at,
+        'provider': {
+            'primary': 'Yahoo Finance chart',
+            'fallback': 'Yahoo Finance search em host redundante',
+            'cache': 'Ultimo preco valido publicado',
+        },
+        'summary': {
+            'requested': total,
+            'fresh': fresh,
+            'cached': cached,
+            'missing': missing,
+            'usable': usable,
+            'coveragePct': round((usable / total * 100) if total else 100, 2),
+        },
+        'categories': categories,
+        'assets': assets,
+    }
 
 
 def main():
-    quotes = market_quotes()
+    previous_payload = {}
+    if PRICE_OUTS[0].exists():
+        try:
+            previous_payload = json.loads(PRICE_OUTS[0].read_text(encoding='utf-8'))
+        except Exception as exc:
+            print('[quotes] previous cache warning:', exc)
+    previous_prices = dict(previous_payload.get('prices') or {})
+
+    quotes, quote_failures = market_quotes()
     fx_rec = quotes.get('BRL=X')
-    fx = fx_rec[1] if fx_rec else None
+    fx = fx_rec[1] if fx_rec else clean(previous_payload.get('fxUsdBrl'))
     prices = {}
 
     for ticker in BR:
@@ -493,30 +586,33 @@ def main():
     for ticker in US:
         rec = quotes.get(ticker)
         if rec:
-            prices[ticker] = {'priceNative': rec[1], 'priceBRL': rec[1] * fx if fx else None, 'currency': 'USD', 'date': rec[0], 'source': 'Yahoo Finance'}
+            old_brl = (previous_prices.get(ticker) or {}).get('priceBRL')
+            prices[ticker] = {'priceNative': rec[1], 'priceBRL': rec[1] * fx if fx else old_brl, 'currency': 'USD', 'date': rec[0], 'source': 'Yahoo Finance'}
     btc = quotes.get('BTCUSD')
     if btc:
-        prices['BTCUSD'] = {'priceNative': btc[1], 'priceBRL': btc[1] * fx if fx else None, 'currency': 'USD', 'date': btc[0], 'source': 'Yahoo Finance'}
+        old_brl = (previous_prices.get('BTCUSD') or {}).get('priceBRL')
+        prices['BTCUSD'] = {'priceNative': btc[1], 'priceBRL': btc[1] * fx if fx else old_brl, 'currency': 'USD', 'date': btc[0], 'source': 'Yahoo Finance'}
 
     try:
         prices.update(treasury_prices())
     except Exception as exc:
         print('Treasury warning:', exc)
 
+    merged = dict(previous_prices)
+    merged.update({k: v for k, v in prices.items() if v.get('priceBRL') is not None or v.get('priceNative') is not None})
+    updated_at = datetime.now(ZoneInfo('America/Sao_Paulo')).isoformat()
     for out_path in PRICE_OUTS:
-        old = {}
-        if out_path.exists():
-            try:
-                old = json.loads(out_path.read_text(encoding='utf-8'))
-            except Exception:
-                pass
-        merged = dict(old.get('prices') or {})
-        merged.update({k: v for k, v in prices.items() if v.get('priceBRL') is not None or v.get('priceNative') is not None})
         write_json(out_path, {
-            'updatedAt': datetime.now(ZoneInfo('America/Sao_Paulo')).isoformat(),
+            'updatedAt': updated_at,
             'fxUsdBrl': fx,
             'prices': merged,
         })
+
+    diagnostics = build_quote_diagnostics(quotes, quote_failures, previous_prices, merged, updated_at)
+    for out_path in QUOTE_DIAGNOSTIC_OUTS:
+        write_json(out_path, diagnostics)
+    summary = diagnostics['summary']
+    print(f"[quotes] coverage={summary['coveragePct']}% fresh={summary['fresh']} cached={summary['cached']} missing={summary['missing']}")
 
     indexes = market_indexes()
     for out_path in INDEX_OUTS:
