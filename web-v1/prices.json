@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T12:31:44.153901-03:00",
+  "updatedAt": "2026-09-12T12:34:43.126794-03:00",
   "fxUsdBrl": 5.1262,
   "prices": {
     "CPFE3": {
@@ -178,8 +178,8 @@
       "source": "Yahoo Finance"
     },
     "BTCUSD": {
-      "priceNative": 77433.87,
-      "priceBRL": 396941.504394,
+      "priceNative": 77388.17,
+      "priceBRL": 396707.23705399997,
       "currency": "USD",
       "date": "2026-09-12",
       "source": "Yahoo Finance"
