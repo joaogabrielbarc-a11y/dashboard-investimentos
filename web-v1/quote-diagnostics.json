@@ -1,0 +1,541 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-12T13:49:31.693572-03:00",
+  "provider": {
+    "primary": "Yahoo Finance chart",
+    "fallback": "Yahoo Finance search em host redundante",
+    "cache": "Ultimo preco valido publicado"
+  },
+  "summary": {
+    "requested": 62,
+    "fresh": 61,
+    "cached": 0,
+    "missing": 1,
+    "usable": 61,
+    "coveragePct": 98.39
+  },
+  "categories": {
+    "Ativos B3": {
+      "total": 21,
+      "fresh": 21,
+      "cached": 0,
+      "missing": 0
+    },
+    "Ativos internacionais": {
+      "total": 18,
+      "fresh": 18,
+      "cached": 0,
+      "missing": 0
+    },
+    "Criptoativos": {
+      "total": 1,
+      "fresh": 1,
+      "cached": 0,
+      "missing": 0
+    },
+    "ETFs Nacionais": {
+      "total": 22,
+      "fresh": 21,
+      "cached": 0,
+      "missing": 1
+    }
+  },
+  "assets": {
+    "CPFE3": {
+      "symbol": "CPFE3.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "BBSE3": {
+      "symbol": "BBSE3.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "BBAS3": {
+      "symbol": "BBAS3.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "PETR4": {
+      "symbol": "PETR4.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "SAPR4": {
+      "symbol": "SAPR4.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "ISAE4": {
+      "symbol": "ISAE4.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "VALE3": {
+      "symbol": "VALE3.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "ITSA4": {
+      "symbol": "ITSA4.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "WIZC3": {
+      "symbol": "WIZC3.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "TAEE11": {
+      "symbol": "TAEE11.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "CMIG4": {
+      "symbol": "CMIG4.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "ITUB4": {
+      "symbol": "ITUB4.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "BBDC3": {
+      "symbol": "BBDC3.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "FIQE3": {
+      "symbol": "FIQE3.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "BRBI11": {
+      "symbol": "BRBI11.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "GGRC11": {
+      "symbol": "GGRC11.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "XPML11": {
+      "symbol": "XPML11.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "GARE11": {
+      "symbol": "GARE11.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "HGCR11": {
+      "symbol": "HGCR11.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "LVBI11": {
+      "symbol": "LVBI11.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "TRXF11": {
+      "symbol": "TRXF11.SA",
+      "category": "Ativos B3",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "BOVA11": {
+      "symbol": "BOVA11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "BOVV11": {
+      "symbol": "BOVV11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "PIBB11": {
+      "symbol": "PIBB11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "SMAL11": {
+      "symbol": "SMAL11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "DIVO11": {
+      "symbol": "DIVO11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "IVVB11": {
+      "symbol": "IVVB11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "SPXI11": {
+      "symbol": "SPXI11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "NASD11": {
+      "symbol": "NASD11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "WRLD11": {
+      "symbol": "WRLD11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "ACWI11": {
+      "symbol": "ACWI11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "EURP11": {
+      "symbol": "EURP11.SA",
+      "category": "ETFs Nacionais",
+      "status": "missing",
+      "date": null,
+      "source": null,
+      "error": "Nenhuma cotacao valida retornada pelos endpoints redundantes."
+    },
+    "XINA11": {
+      "symbol": "XINA11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "HASH11": {
+      "symbol": "HASH11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "QETH11": {
+      "symbol": "QETH11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "GOLD11": {
+      "symbol": "GOLD11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "ECOO11": {
+      "symbol": "ECOO11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "MATB11": {
+      "symbol": "MATB11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "FIND11": {
+      "symbol": "FIND11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "IMAB11": {
+      "symbol": "IMAB11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "B5P211": {
+      "symbol": "B5P211.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "IRFM11": {
+      "symbol": "IRFM11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "LFTB11": {
+      "symbol": "LFTB11.SA",
+      "category": "ETFs Nacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "VOO": {
+      "symbol": "VOO",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "VTV": {
+      "symbol": "VTV",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "AVUV": {
+      "symbol": "AVUV",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "VEA": {
+      "symbol": "VEA",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "AVDV": {
+      "symbol": "AVDV",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "VWO": {
+      "symbol": "VWO",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "AVES": {
+      "symbol": "AVES",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "TFLO": {
+      "symbol": "TFLO",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "NU": {
+      "symbol": "NU",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "AAPL": {
+      "symbol": "AAPL",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "GOOGL": {
+      "symbol": "GOOGL",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "AMZN": {
+      "symbol": "AMZN",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "NVDA": {
+      "symbol": "NVDA",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "META": {
+      "symbol": "META",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "JPM": {
+      "symbol": "JPM",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "XOM": {
+      "symbol": "XOM",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "BRK-B": {
+      "symbol": "BRK-B",
+      "category": "Ativos internacionais",
+      "status": "fresh",
+      "date": "2026-09-11",
+      "source": "Yahoo Finance",
+      "error": null
+    },
+    "BTCUSD": {
+      "symbol": "BTC-USD",
+      "category": "Criptoativos",
+      "status": "fresh",
+      "date": "2026-09-12",
+      "source": "Yahoo Finance",
+      "error": null
+    }
+  }
+}
