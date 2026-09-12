@@ -11,7 +11,7 @@ const v17AvgSeeds={
 const v17SegmentSeeds={
   CPFE3:'Energia elétrica',BBSE3:'Seguros',BBAS3:'Bancos',PETR4:'Petróleo e gás',SAPR4:'Saneamento',ISAE4:'Transmissão de energia',VALE3:'Mineração',ITSA4:'Holding financeira',WIZC3:'Corretagem de seguros',TAEE11:'Transmissão de energia',CMIG4:'Energia elétrica',ITUB4:'Bancos',BBDC3:'Bancos',FIQE3:'Telecomunicações',BRBI11:'Mercado de capitais',
   GGRC11:'Logística',XPML11:'Shoppings',GARE11:'Renda urbana / híbrido',HGCR11:'Recebíveis',LVBI11:'Logística',TRXF11:'Renda urbana',
-  BOVA11:'Ibovespa',BOVV11:'Ibovespa',PIBB11:'IBrX-50',SMAL11:'Small caps',DIVO11:'Dividendos',IVVB11:'S&P 500',SPXI11:'S&P 500',NASD11:'Nasdaq 100',WRLD11:'Ações globais',ACWI11:'Ações globais',EURP11:'Europa',XINA11:'China',HASH11:'Criptoativos',QETH11:'Ethereum',GOLD11:'Ouro',ECOO11:'Carbono',MATB11:'Materiais básicos',FIND11:'Financeiro',IMAB11:'Renda fixa',B5P211:'Renda fixa',IRFM11:'Renda fixa',LFTB11:'Renda fixa',
+  BOVA11:'Ibovespa',BOVV11:'Ibovespa',PIBB11:'IBrX-50',SMAL11:'Small caps',DIVO11:'Dividendos',IVVB11:'S&P 500',SPXI11:'S&P 500',NASD11:'Nasdaq 100',WRLD11:'Ações globais',ACWI11:'Ações globais',XINA11:'China',HASH11:'Criptoativos',QETH11:'Ethereum',GOLD11:'Ouro',ECOO11:'Carbono',MATB11:'Materiais básicos',FIND11:'Financeiro',IMAB11:'Renda fixa',B5P211:'Renda fixa',IRFM11:'Renda fixa',LFTB11:'Renda fixa',
   VOO:'EUA • Large Caps',AVUV:'EUA • Small Cap Value',VEA:'Desenvolvidos ex-EUA',TFLO:'Renda fixa em dólar',BTCUSD:'Criptomoedas','TESOURO RENDA+ 2060':'Renda futura / inflação','TESOURO RESERVA':'Pós-fixado / Selic'
 };
 const v17MicroTargetSeeds={VOO:20,AVUV:10,VEA:30,TFLO:5,BTCUSD:100,'TESOURO RENDA+ 2060':100};

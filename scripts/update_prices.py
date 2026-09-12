@@ -31,7 +31,7 @@ BR_EQUITIES = [
 # lançado pelo usuário também é consultado no navegador com o sufixo .SA.
 BR_ETFS = [
     'BOVA11','BOVV11','PIBB11','SMAL11','DIVO11','IVVB11','SPXI11','NASD11',
-    'WRLD11','ACWI11','EURP11','XINA11','HASH11','QETH11','GOLD11','ECOO11',
+    'WRLD11','ACWI11','XINA11','HASH11','QETH11','GOLD11','ECOO11',
     'MATB11','FIND11','IMAB11','B5P211','IRFM11','LFTB11',
 ]
 BR = [*BR_EQUITIES, *BR_ETFS]
