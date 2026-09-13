@@ -69,4 +69,35 @@ summary=consolidation.build(repository.snapshots());
 assert.equal(summary.classAllocation[0].name,'Tesouro Direto','Tesouro Reserva deve ser consolidado na classe Tesouro Direto');
 assert.equal(finance.normalizeTransaction({ticker:'TESOURO RESERVA',className:'Tesouro Reserva'}).className,'Tesouro Direto','serviço financeiro deve aplicar a taxonomia canônica');
 
+let integrity=repository.auditIntegrity();
+assert.equal(integrity.ok,true,'namespaces válidos devem passar na auditoria de integridade');
+assert.equal(integrity.duplicateIds.length,0,'não deve haver IDs de carteira duplicados');
+assert.equal(integrity.invalidDatasets.length,0,'datasets válidos não devem ser reportados como corrompidos');
+
+const emptySummary=consolidation.build([]);
+assert.equal(emptySummary.netWorth,0,'consolidação vazia deve retornar patrimônio zero');
+assert.deepEqual(Array.from(emptySummary.classAllocation),[],'consolidação vazia não deve criar percentuais inválidos');
+assert.equal(Number.isFinite(emptySummary.netWorth),true,'consolidação vazia não pode produzir NaN ou Infinity');
+
+const ledger=finance.buildLedger([
+  {id:'buy-1',portfolioId:'p1',kind:'buy',ticker:'ABC3',className:'Ações',date:'2026-01-02',quantity:10,unitPrice:10,baseTotal:100},
+  {id:'buy-2',portfolioId:'p1',kind:'buy',ticker:'ABC3',className:'Ações',date:'2026-01-03',quantity:10,unitPrice:20,baseTotal:200},
+  {id:'sell-1',portfolioId:'p1',kind:'sell',ticker:'ABC3',className:'Ações',date:'2026-01-04',quantity:5,unitPrice:20,baseTotal:100},
+  {id:'income-1',portfolioId:'p1',kind:'dividend',ticker:'ABC3',className:'Ações',date:'2026-01-05',baseTotal:10}
+],{prices:{ABC3:{priceBRL:30}}});
+assert.equal(ledger.holdings[0].quantity,15,'venda deve reduzir a quantidade sem alterar o custo médio remanescente');
+assert.equal(ledger.holdings[0].averagePriceBase,15,'custo médio ponderado deve permanecer matematicamente correto');
+assert.equal(ledger.realizedGain,25,'ganho realizado deve descontar o custo proporcional vendido');
+assert.equal(ledger.unrealizedGain,225,'ganho não realizado deve usar o preço atual');
+assert.equal(ledger.totalProfit,260,'lucro total deve combinar valorização, vendas e proventos sem dupla contagem');
+assert.deepEqual(Array.from(finance.weightedTargets([],[])),[],'metas consolidadas sem patrimônio não devem dividir por zero');
+
+const corruptKey=repository.storageKey(main.id,'planning'),previousPlanning=context.localStorage.getItem(corruptKey);
+context.localStorage.setItem(corruptKey,'{json-incompleto');
+integrity=repository.auditIntegrity();
+assert.equal(integrity.ok,false,'dataset corrompido deve reprovar a auditoria');
+assert.equal(integrity.invalidDatasets[0].dataset,'planning','auditoria deve identificar o dataset corrompido');
+context.localStorage.setItem(corruptKey,previousPlanning);
+assert.equal(repository.auditIntegrity().ok,true,'integridade deve ser restabelecida após restaurar o dataset');
+
 console.log('local-multi-portfolio: ok');

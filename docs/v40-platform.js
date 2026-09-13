@@ -2,7 +2,7 @@
 'use strict';
 if(window.__PONDERA_PLATFORM_V40__)return;
 
-const VERSION='3.4.0',config=window.PONDERA_CONFIG||{},configured=Boolean(config.supabaseUrl&&config.supabaseAnonKey);
+const VERSION='3.6.0',config=window.PONDERA_CONFIG||{},configured=Boolean(config.supabaseUrl&&config.supabaseAnonKey);
 const legacyBackup=(()=>{try{return{ledger:JSON.parse(localStorage.getItem('carteira-v14-transactions')||'null'),portfolio:JSON.parse(localStorage.getItem('carteira-v1')||'null'),segments:JSON.parse(localStorage.getItem('carteira-v18-segment-plan')||'null')};}catch(e){return{};}})();
 let store=null,repository=null,applying=false,syncTimer=null,lastTransactionFingerprint='',lastAllocationFingerprint='',authMode='signin';
 
@@ -57,7 +57,7 @@ function installLocalPersistenceBridge(){
   const bindings={save:'carteira-v1',saveV14:'carteira-v14-transactions',savePatrimonyV15:'carteira-v15-patrimony',saveV16Plan:'carteira-v16-planning',saveV18Plan:'carteira-v18-segment-plan'};
   for(const [functionName,storageKey] of Object.entries(bindings)){
     const original=window[functionName];if(typeof original!=='function')continue;
-    window[functionName]=function(...args){const result=original.apply(this,args);repository.persistLegacyKey(storageKey);queueMicrotask(refreshLocalGlobalValue);return result;};
+    window[functionName]=function(...args){try{const result=original.apply(this,args);repository.persistLegacyKey(storageKey);queueMicrotask(refreshLocalGlobalValue);document.documentElement.dataset.ponderaStorageHealth='ok';return result;}catch(error){document.documentElement.dataset.ponderaStorageHealth='error';setSync('Não foi possível salvar os dados neste navegador. Verifique o espaço disponível.','error');window.dispatchEvent(new CustomEvent('pondera:storageerror',{detail:{operation:functionName,message:message(error)}}));console.error('[Pondera armazenamento]',error);return undefined;}};
   }
   repository.persistActiveLegacy();
   window.addEventListener('beforeunload',()=>repository.persistActiveLegacy());
@@ -97,8 +97,8 @@ function applyRuntimeSnapshot(snapshot){
 
 function switchLocalPortfolio(portfolioId){
   const target=String(portfolioId||'');if(!target||target===repository.activePortfolioId()){portfolioManagerDialog().close();return;}document.documentElement.classList.add('ponderaPortfolioSwitching');
-  try{repository.setActivePortfolio(target);const snapshot=repository.runtimeSnapshot(target);applyRuntimeSnapshot(snapshot);if(window.PonderaLedgerV29?.rebuild)window.PonderaLedgerV29.rebuild();if(typeof render==='function')render();ensureLocalHeader();portfolioManagerDialog().close();window.dispatchEvent(new CustomEvent('pondera:contextchange',{detail:{context:{type:'portfolio',portfolioId:target},readOnly:false,atomic:true}}));requestAnimationFrame(()=>requestAnimationFrame(()=>document.documentElement.classList.remove('ponderaPortfolioSwitching')));}
-  catch(error){document.documentElement.classList.remove('ponderaPortfolioSwitching');setSync(message(error),'error');}
+  try{document.documentElement.dataset.ponderaPortfolioTransition='applying';repository.setActivePortfolio(target);const snapshot=repository.runtimeSnapshot(target);applyRuntimeSnapshot(snapshot);if(window.PonderaLedgerV29?.rebuild)window.PonderaLedgerV29.rebuild();if(typeof render==='function')render();window.PonderaAllocationMarketV43?.syncOrder?.();ensureLocalHeader();portfolioManagerDialog().close();window.dispatchEvent(new CustomEvent('pondera:contextchange',{detail:{context:{type:'portfolio',portfolioId:target},readOnly:false,atomic:true}}));document.documentElement.dataset.ponderaPortfolioTransition='stable';queueMicrotask(()=>document.documentElement.classList.remove('ponderaPortfolioSwitching'));}
+  catch(error){document.documentElement.dataset.ponderaPortfolioTransition='error';document.documentElement.classList.remove('ponderaPortfolioSwitching');setSync(message(error),'error');}
 }
 
 function openLocalPortfolioDialog(portfolio=null){

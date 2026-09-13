@@ -1,9 +1,32 @@
 {
   "schemaVersion": 1,
   "project": "dashboard-investimentos",
-  "currentVersion": "3.5.0",
+  "currentVersion": "3.6.0",
   "versioningPolicy": "major.minor.patch",
   "revisions": [
+    {
+      "version": "3.6.0",
+      "date": "2026-09-13",
+      "type": "minor",
+      "area": "Estabilidade da interface, estado e cálculos",
+      "status": "deployed",
+      "request": "Congelar Macro acima de Micro e auditar interface, estado, cálculos e tratamento de falhas.",
+      "motivation": "Eliminar inversões tardias do DOM, oscilações entre carteiras e inconsistências silenciosas de dados e métricas.",
+      "changes": [
+        "Reparenta e ordena sincronamente as seções Macro e Micro em uma hierarquia global imutável.",
+        "Remove o apagamento visual durante a troca de carteira e aplica o snapshot de forma atômica.",
+        "Audita namespaces locais, IDs, JSON inválido, valores não finitos, overflow e erros de runtime.",
+        "Calcula Sharpe e Sortino com a série histórica diária do CDI alinhada às observações da carteira.",
+        "Aguarda o fallback completo de cotações e mantém o último preço válido com estado visível.",
+        "Trata falhas de armazenamento sem derrubar a aplicação."
+      ],
+      "dataImpact": {
+        "portfolioDataChanged": false,
+        "storageSchemaChanged": false,
+        "marketHistorySchema": 2,
+        "runtimeAuditAdded": true
+      }
+    },
     {
       "version": "3.5.0",
       "date": "2026-09-12",

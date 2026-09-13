@@ -20,6 +20,9 @@ let v17PriceCache=(()=>{try{return JSON.parse(localStorage.getItem(V17_PRICE_CAC
 let v17QuoteDiagnostics=(()=>{try{return JSON.parse(localStorage.getItem(V17_QUOTE_DIAGNOSTIC_KEY)||'{}')||{};}catch(e){return {};}})();
 let v17PriceLoadStarted=false;
 
+function publishQuoteStatusV17(status,message,detail={}){const payload={status,message,updatedAt:new Date().toISOString(),...detail};window.__PONDERA_QUOTE_STATUS__=payload;document.documentElement.dataset.ponderaQuoteStatus=status;window.dispatchEvent(new CustomEvent('pondera:quote-status',{detail:payload}));return payload;}
+function persistQuoteDataV17(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch(error){publishQuoteStatusV17('error','Não foi possível atualizar o cache de cotações neste navegador.',{error:String(error?.message||error)});return false;}}
+
 function tickerKeyV17(t){return String(t||'').trim().toUpperCase()==='BTC'?'BTCUSD':String(t||'').trim().toUpperCase();}
 function priceCurrencyV17(h){return h.avgCurrency||h.currentCurrency||(v17InternationalClasses.has(h.className)?'USD':'BRL');}
 function formatPriceV17(v,currency='BRL'){
@@ -131,9 +134,9 @@ function customizeTxOpenV17(){
 }
 function renderPendingFlowHintV17(){const section=document.getElementById('transactionsSection'),p=section?.querySelector('.sectionTitle p');if(p)p.textContent='1) teste compras ou vendas na simulação; 2) execute a lista; 3) as operações entram no histórico e atualizam automaticamente a lista de ativos.';}
 async function loadPricesV17(force=false){
-  if(v17PriceLoadStarted&&!force)return;v17PriceLoadStarted=true;
-  try{const r=await fetch(`prices.json?v=${Date.now()}`,{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&j.prices){v17PriceCache={...v17PriceCache,...j.prices};localStorage.setItem(V17_PRICE_CACHE_KEY,JSON.stringify(v17PriceCache));applyPriceCacheV17();save();render();}}}catch(e){console.warn('Falha ao carregar cotações publicadas',e);}finally{v17PriceLoadStarted=false;}
-  fetchMissingYahooV17();
+  if(v17PriceLoadStarted)return window.__PONDERA_QUOTE_STATUS__||null;v17PriceLoadStarted=true;let snapshotLoaded=false;
+  try{const r=await fetch(`prices.json?v=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const j=await r.json();if(!j||!j.prices)throw new Error('Snapshot de cotações inválido');v17PriceCache={...v17PriceCache,...j.prices};const persisted=persistQuoteDataV17(V17_PRICE_CACHE_KEY,v17PriceCache);applyPriceCacheV17();save();render();snapshotLoaded=true;if(persisted)publishQuoteStatusV17('fresh','Cotações atualizadas com o snapshot publicado.',{source:'published-snapshot'});}catch(e){publishQuoteStatusV17(Object.keys(v17PriceCache).length?'cached':'error',Object.keys(v17PriceCache).length?'Sem conexão com a fonte de cotações. O último preço válido foi mantido.':'Não foi possível carregar cotações e ainda não existe um preço salvo.',{source:'published-snapshot',error:String(e?.message||e)});console.warn('Falha ao carregar cotações publicadas',e);}
+  try{const fallback=await fetchMissingYahooV17(force);return{snapshotLoaded,fallback,status:window.__PONDERA_QUOTE_STATUS__};}finally{v17PriceLoadStarted=false;}
 }
 function yahooSymbolV17(h){const key=tickerKeyV17(h.ticker);if(key==='BTCUSD')return 'BTC-USD';if(v17InternationalClasses.has(h.className))return key;if(['Ações','Fundos Imobiliários','Fiagros','BDRs','ETFs Nacionais'].includes(h.className))return key+'.SA';return null;}
 async function fetchYahooOneV17(h,fx){
@@ -142,13 +145,13 @@ async function fetchYahooOneV17(h,fx){
 }
 async function fetchFxV17(){try{const r=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/BRL=X?range=7d&interval=1d',{mode:'cors'});if(!r.ok)return null;const j=await r.json(),res=j?.chart?.result?.[0],ts=res?.timestamp||[],cl=res?.indicators?.quote?.[0]?.close||[],today=new Date().toISOString().slice(0,10);let x=null;for(let i=0;i<ts.length;i++){const d=new Date(ts[i]*1000).toISOString().slice(0,10);if(d<today&&Number.isFinite(+cl[i]))x=+cl[i];}return x;}catch(e){return null;}}
 function stalePriceV17(rec){if(!rec?.date)return true;const time=Date.parse(`${rec.date}T23:59:59Z`);return !Number.isFinite(time)||Date.now()-time>72*60*60*1000;}
-async function fetchMissingYahooV17(){
-  const targets=state.holdings.filter(h=>h.className!=='Tesouro Direto'&&yahooSymbolV17(h)&&stalePriceV17(v17PriceCache[tickerKeyV17(h.ticker)]));if(!targets.length)return;
+async function fetchMissingYahooV17(force=false){
+  const targets=state.holdings.filter(h=>h.className!=='Tesouro Direto'&&yahooSymbolV17(h)&&(force||stalePriceV17(v17PriceCache[tickerKeyV17(h.ticker)])));if(!targets.length)return[];
   const fx=await fetchFxV17(),results=[];let changed=false;
   for(let i=0;i<targets.length;i+=4){const batch=targets.slice(i,i+4);const settled=await Promise.all(batch.map(async h=>{const key=tickerKeyV17(h.ticker),old=v17PriceCache[key];try{const rec=await fetchYahooOneV17(h,fx);if(rec){v17PriceCache[key]={...old,...rec,priceBRL:rec.priceBRL??old?.priceBRL};changed=true;return{ticker:key,status:'fresh',date:rec.date,source:rec.source};}}catch(error){return{ticker:key,status:old?'cached':'missing',date:old?.date||null,error:String(error?.message||error)};}return{ticker:key,status:old?'cached':'missing',date:old?.date||null,error:'Sem cotacao valida'};}));results.push(...settled);}
-  v17QuoteDiagnostics={updatedAt:new Date().toISOString(),provider:'Yahoo Finance chart',assets:results};localStorage.setItem(V17_QUOTE_DIAGNOSTIC_KEY,JSON.stringify(v17QuoteDiagnostics));
-  const failures=results.filter(item=>item.status!=='fresh');if(failures.length)console.warn('[Pondera cotações] fallback de cache aplicado',failures);
-  if(changed){localStorage.setItem(V17_PRICE_CACHE_KEY,JSON.stringify(v17PriceCache));applyPriceCacheV17();save();render();}
+  v17QuoteDiagnostics={updatedAt:new Date().toISOString(),provider:'Yahoo Finance chart',assets:results};const diagnosticsSaved=persistQuoteDataV17(V17_QUOTE_DIAGNOSTIC_KEY,v17QuoteDiagnostics);
+  const failures=results.filter(item=>item.status!=='fresh');if(diagnosticsSaved&&failures.length){publishQuoteStatusV17(failures.some(item=>item.status==='missing')?'error':'cached',failures.some(item=>item.status==='missing')?'Alguns ativos continuam sem cotação. Revise os tickers indicados.':'A fonte secundária falhou para alguns ativos; o último preço válido foi mantido.',{source:'browser-fallback',failures});console.warn('[Pondera cotações] fallback de cache aplicado',failures);}else if(diagnosticsSaved&&results.length)publishQuoteStatusV17('fresh','Cotações secundárias verificadas com sucesso.',{source:'browser-fallback'});
+  if(changed){const pricesSaved=persistQuoteDataV17(V17_PRICE_CACHE_KEY,v17PriceCache);applyPriceCacheV17();save();render();if(!pricesSaved)return results;}return results;
 }
 function postRenderV17(){normalizeHoldingModelV17();applyPriceCacheV17();renderHoldingsV17();renderPendingFlowHintV17();const execute=document.getElementById('executeTransactions');if(execute)execute.onclick=executePendingV17;updateVersionV17();}
 function updateVersionV17(){const e=document.querySelector('.eyebrow');if(e)e.textContent='CARTEIRA • V1.7';}

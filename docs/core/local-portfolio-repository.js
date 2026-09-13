@@ -2,7 +2,7 @@
 'use strict';
 if(window.PonderaLocalPortfolioRepository)return;
 
-const VERSION='3.4.0';
+const VERSION='3.6.0';
 const SCHEMA_VERSION=1;
 const REGISTRY_KEY='pondera:v3:portfolios';
 const ACTIVE_KEY='pondera:v3:active-portfolio';
@@ -172,6 +172,13 @@ function runtimeSnapshot(id=activePortfolioId()){
 
 function snapshots(){return portfolios().map(row=>readPortfolioData(row.id)).filter(Boolean);}
 
-window.PonderaLocalPortfolioRepository=Object.freeze({version:VERSION,schemaVersion:SCHEMA_VERSION,keys:Object.freeze({registry:REGISTRY_KEY,active:ACTIVE_KEY,prefix:DATA_PREFIX,datasets:DATASETS}),storageKey,bootstrap,portfolios,activePortfolioId,activePortfolio,persistLegacyKey,persistActiveLegacy,hydrate,createPortfolio,updatePortfolio,updateConsolidation,setActivePortfolio,readPortfolioData,runtimeSnapshot,snapshots,emptyData});
+function auditIntegrity(){
+  const registry=parse(localStorage.getItem(REGISTRY_KEY)),rows=Array.isArray(registry?.portfolios)?registry.portfolios:[],ids=rows.map(row=>String(row?.id||'')),duplicateIds=[...new Set(ids.filter((id,index)=>!id||ids.indexOf(id)!==index))],active=localStorage.getItem(ACTIVE_KEY),invalidDatasets=[];
+  for(const id of ids.filter(Boolean))for(const dataset of Object.keys(DATASETS)){const raw=localStorage.getItem(storageKey(id,dataset));if(raw==null)continue;try{JSON.parse(raw);}catch(error){invalidDatasets.push({portfolioId:id,dataset});}}
+  const activeExists=ids.includes(String(active||'')),ok=registry?.schemaVersion===SCHEMA_VERSION&&rows.length>0&&duplicateIds.length===0&&activeExists&&invalidDatasets.length===0;
+  return{ok,schemaVersion:registry?.schemaVersion??null,portfolioCount:rows.length,activePortfolioId:active,activeExists,duplicateIds,invalidDatasets};
+}
+
+window.PonderaLocalPortfolioRepository=Object.freeze({version:VERSION,schemaVersion:SCHEMA_VERSION,keys:Object.freeze({registry:REGISTRY_KEY,active:ACTIVE_KEY,prefix:DATA_PREFIX,datasets:DATASETS}),storageKey,bootstrap,portfolios,activePortfolioId,activePortfolio,persistLegacyKey,persistActiveLegacy,hydrate,createPortfolio,updatePortfolio,updateConsolidation,setActivePortfolio,readPortfolioData,runtimeSnapshot,snapshots,emptyData,auditIntegrity});
 if(!(window.PONDERA_CONFIG?.supabaseUrl&&window.PONDERA_CONFIG?.supabaseAnonKey))bootstrap();
 })();

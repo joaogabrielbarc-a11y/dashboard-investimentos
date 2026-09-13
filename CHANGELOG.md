@@ -10,6 +10,26 @@ A partir da V2.4.1, toda alteração solicitada para o dashboard deve ser regist
 
 O histórico estruturado e legível por máquina fica em `revision-history.json`. A cópia publicada pelo GitHub Pages fica em `docs/revision-history.json`.
 
+## V3.6.0 — 2026-09-13
+
+**Área:** Estabilidade da interface, estado e cálculos
+**Tipo:** Minor
+
+### Correções e melhorias
+
+- Fixa a hierarquia global da Alocação Estruturada em `Macro Alocação → Micro Alocação`, inclusive quando camadas legadas movem elementos no DOM.
+- Sincroniza a ordem antes de liberar a interface durante a troca atômica de carteira e remove o apagamento visual da página.
+- Adiciona auditoria de integridade dos namespaces de cada carteira e tratamento visível para falhas de gravação local.
+- Corrige Sharpe e Sortino para usar o histórico diário do CDI alinhado por data, com Selic corrente apenas como fallback.
+- Aguarda toda a cadeia de fallback de cotações e publica estados claros de dado atualizado, cache e indisponibilidade.
+- Adiciona uma auditoria automática de DOM, estado, cálculos, armazenamento, overflow e erros de execução.
+
+### Impacto nos dados
+
+- Nenhuma posição, lançamento, meta ou histórico é migrado ou alterado.
+- O esquema de armazenamento permanece compatível com a V3.5.0.
+- As correções atuam no ciclo de renderização, validação e cálculo.
+
 ## V3.5.0 — 2026-09-12
 
 **Área:** Dados de mercado e análise quantitativa

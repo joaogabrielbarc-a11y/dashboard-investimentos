@@ -8,7 +8,7 @@ let timer=null,patScope='all',selectedDivClass=null,applying=false;
 let divDb={loaded:false,failed:false,events:[],updatedAt:null};
 let macroIdeal=(()=>{try{const x=JSON.parse(localStorage.getItem(MACRO_UI_KEY)||'null');return x?.ideal!==false;}catch(e){return true;}})();
 const finite=v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));
-const esc=v=>typeof escapeHtml==='function'?escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[m]));
+const esc=v=>typeof escapeHtml==='function'?escapeHtml(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const attr=v=>typeof escapeAttr==='function'?escapeAttr(String(v??'')):esc(v);
 const money=v=>finite(v)&&typeof fmt!=='undefined'&&fmt?.format?fmt.format(Number(v)):'—';
 const pct=(v,d=2)=>finite(v)?`${Number(v).toFixed(d).replace('.',',')}%`:'—';

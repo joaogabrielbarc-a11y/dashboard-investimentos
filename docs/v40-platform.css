@@ -1,8 +1,8 @@
 /* Pondera V3.2 — carteira local, consolidação e troca atômica de contexto */
 html:not([data-pondera-runtime-state="ready"]) .shell>:not(.topbar){visibility:hidden}
 html[data-pondera-runtime-state="error"] #ponderaRuntimeError{visibility:visible}
-html.ponderaPortfolioSwitching .shell>:not(.topbar){opacity:0;pointer-events:none}
-.shell>:not(.topbar){transition:opacity .12s ease}
+html.ponderaPortfolioSwitching .shell>:not(.topbar){opacity:1;pointer-events:none}
+.shell>:not(.topbar){transition:none}
 .ponderaAuthLocked>main.shell{visibility:hidden}
 .platformAuthV40{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 20% 15%,rgba(67,211,158,.12),transparent 35%),#071422;color:var(--text,#ecf6ff)}
 .platformAuthCardV40{width:min(440px,100%);padding:28px;border:1px solid #20344d;border-radius:18px;background:#0d2033;box-shadow:0 28px 80px rgba(0,0,0,.35)}
