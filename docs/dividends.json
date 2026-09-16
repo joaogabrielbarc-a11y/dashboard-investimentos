@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T23:42:23.946142-03:00",
+  "updatedAt": "2026-09-15T23:41:01.030687-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -477,6 +477,17 @@
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "KO",
+      "className": "Stocks",
+      "type": "Dividendos",
+      "exDate": "2026-09-15",
+      "paymentDate": "2026-09-15",
+      "amount": 0.53,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "HGCR11",
