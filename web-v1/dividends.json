@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-15T23:41:01.030687-03:00",
+  "updatedAt": "2026-09-16T23:41:21.134887-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -6533,6 +6533,17 @@
       "className": "Ações",
       "type": "JSCP",
       "exDate": "2024-08-31",
+      "paymentDate": "2024-10-01",
+      "amount": 0.01765,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "ITUB4",
+      "className": "Ações",
+      "type": "JSCP",
+      "exDate": "2024-08-30",
       "paymentDate": "2024-10-01",
       "amount": 0.01765,
       "currency": "BRL",
@@ -18600,6 +18611,17 @@
       "className": "Ações",
       "type": "Dividendos",
       "exDate": "2020-01-30",
+      "paymentDate": "2020-03-02",
+      "amount": 0.015,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "ITUB4",
+      "className": "Ações",
+      "type": "Dividendos",
+      "exDate": "2020-01-31",
       "paymentDate": "2020-03-02",
       "amount": 0.015,
       "currency": "BRL",
