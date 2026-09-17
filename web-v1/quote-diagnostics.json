@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-16T20:40:44.511698-03:00",
+  "updatedAt": "2026-09-17T20:39:03.603131-03:00",
   "provider": {
     "primary": "Configurável por classe (fontes oficiais / brapi / UP2DATA)",
     "fallback": "Yahoo Finance em hosts redundantes",
@@ -45,7 +45,7 @@
       "symbol": "CPFE3.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -53,7 +53,7 @@
       "symbol": "BBSE3.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -61,7 +61,7 @@
       "symbol": "BBAS3.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -69,7 +69,7 @@
       "symbol": "PETR4.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -77,7 +77,7 @@
       "symbol": "SAPR4.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -85,7 +85,7 @@
       "symbol": "ISAE4.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -93,7 +93,7 @@
       "symbol": "VALE3.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -101,7 +101,7 @@
       "symbol": "ITSA4.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -109,7 +109,7 @@
       "symbol": "WIZC3.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -117,7 +117,7 @@
       "symbol": "TAEE11.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -125,7 +125,7 @@
       "symbol": "CMIG4.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -133,7 +133,7 @@
       "symbol": "ITUB4.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -141,7 +141,7 @@
       "symbol": "BBDC3.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -149,7 +149,7 @@
       "symbol": "FIQE3.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -157,7 +157,7 @@
       "symbol": "BRBI11.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -165,7 +165,7 @@
       "symbol": "GGRC11.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -173,7 +173,7 @@
       "symbol": "XPML11.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -181,7 +181,7 @@
       "symbol": "GARE11.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -189,7 +189,7 @@
       "symbol": "HGCR11.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -197,7 +197,7 @@
       "symbol": "LVBI11.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -205,7 +205,7 @@
       "symbol": "TRXF11.SA",
       "category": "Ativos B3",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -213,7 +213,7 @@
       "symbol": "BOVA11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -221,7 +221,7 @@
       "symbol": "BOVV11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -229,7 +229,7 @@
       "symbol": "PIBB11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -237,7 +237,7 @@
       "symbol": "SMAL11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -245,7 +245,7 @@
       "symbol": "DIVO11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -253,7 +253,7 @@
       "symbol": "IVVB11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -261,7 +261,7 @@
       "symbol": "SPXI11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -269,7 +269,7 @@
       "symbol": "NASD11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -277,7 +277,7 @@
       "symbol": "WRLD11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -285,7 +285,7 @@
       "symbol": "ACWI11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -293,7 +293,7 @@
       "symbol": "XINA11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -301,7 +301,7 @@
       "symbol": "HASH11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -309,7 +309,7 @@
       "symbol": "QETH11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -317,7 +317,7 @@
       "symbol": "GOLD11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -325,7 +325,7 @@
       "symbol": "ECOO11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -333,7 +333,7 @@
       "symbol": "MATB11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -341,7 +341,7 @@
       "symbol": "FIND11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -349,7 +349,7 @@
       "symbol": "IMAB11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -357,7 +357,7 @@
       "symbol": "B5P211.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -365,7 +365,7 @@
       "symbol": "IRFM11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -373,7 +373,7 @@
       "symbol": "LFTB11.SA",
       "category": "ETFs Nacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -381,7 +381,7 @@
       "symbol": "VOO",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -389,7 +389,7 @@
       "symbol": "VTV",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -397,7 +397,7 @@
       "symbol": "AVUV",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -405,7 +405,7 @@
       "symbol": "VEA",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -413,7 +413,7 @@
       "symbol": "AVDV",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -421,7 +421,7 @@
       "symbol": "VWO",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -429,7 +429,7 @@
       "symbol": "AVES",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -437,7 +437,7 @@
       "symbol": "TFLO",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -445,7 +445,7 @@
       "symbol": "NU",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -453,7 +453,7 @@
       "symbol": "AAPL",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -461,7 +461,7 @@
       "symbol": "MSFT",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -469,7 +469,7 @@
       "symbol": "GOOGL",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -477,7 +477,7 @@
       "symbol": "AMZN",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -485,7 +485,7 @@
       "symbol": "NVDA",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -493,7 +493,7 @@
       "symbol": "META",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -501,7 +501,7 @@
       "symbol": "JPM",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -509,7 +509,7 @@
       "symbol": "XOM",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -517,7 +517,7 @@
       "symbol": "BRK-B",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -525,7 +525,7 @@
       "symbol": "BTC-USD",
       "category": "Criptoativos",
       "status": "fresh",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "source": "Yahoo Finance",
       "error": null
     }
