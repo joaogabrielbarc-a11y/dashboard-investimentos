@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T23:41:21.134887-03:00",
+  "updatedAt": "2026-09-17T23:40:47.112215-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -289,6 +289,17 @@
       "amount": 0.47156696,
       "currency": "BRL",
       "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "MSFT",
+      "className": "Stocks",
+      "type": "Cash",
+      "exDate": "2026-11-19",
+      "paymentDate": "2026-12-10",
+      "amount": 0.98,
+      "currency": "USD",
+      "source": "Nasdaq",
       "paymentDateEstimated": false
     },
     {
