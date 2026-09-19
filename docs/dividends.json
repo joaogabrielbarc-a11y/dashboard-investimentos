@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-17T23:40:47.112215-03:00",
+  "updatedAt": "2026-09-18T23:39:28.877788-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -105,6 +105,17 @@
       "paymentDateEstimated": false
     },
     {
+      "ticker": "CMIG4",
+      "className": "Ações",
+      "type": "JSCP",
+      "exDate": "2026-09-22",
+      "paymentDate": "2027-12-30",
+      "amount": 0.0349567,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
       "ticker": "FIQE3",
       "className": "Ações",
       "type": "Dividendos",
@@ -133,6 +144,17 @@
       "exDate": "2026-03-24",
       "paymentDate": "2027-06-30",
       "amount": 0.115,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "CMIG4",
+      "className": "Ações",
+      "type": "JSCP",
+      "exDate": "2026-09-22",
+      "paymentDate": "2027-06-30",
+      "amount": 0.034957,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
@@ -457,6 +479,17 @@
       "paymentDateEstimated": false
     },
     {
+      "ticker": "XPML11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2026-09-18",
+      "paymentDate": "2026-09-25",
+      "amount": 0.92,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
       "ticker": "CPFE3",
       "className": "Ações",
       "type": "Dividendos",
@@ -477,6 +510,28 @@
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "VWO",
+      "className": "ETFs Internacionais",
+      "type": "Dividendos",
+      "exDate": "2026-09-18",
+      "paymentDate": "2026-09-18",
+      "amount": 0.114,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
+    },
+    {
+      "ticker": "VEA",
+      "className": "ETFs Internacionais",
+      "type": "Dividendos",
+      "exDate": "2026-09-18",
+      "paymentDate": "2026-09-18",
+      "amount": 0.178,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "TRXF11",
