@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T20:40:55.871767-03:00",
+  "updatedAt": "2026-09-22T20:41:08.956898-03:00",
   "source": "Banco Central do Brasil",
   "indexes": {
     "CDI": {
@@ -11,7 +11,7 @@
     "SELIC": {
       "annualPct": 13.649989315282562,
       "dailyPct": 0.050788,
-      "date": "21/09/2026",
+      "date": "22/09/2026",
       "series": 11,
       "dailyRates": [
         {
@@ -389,6 +389,10 @@
         {
           "date": "2026-09-21",
           "value": 0.050788
+        },
+        {
+          "date": "2026-09-22",
+          "value": 0.050788
         }
       ]
     },
@@ -400,7 +404,7 @@
     },
     "FED_FUNDS": {
       "annualPct": 3.88,
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "series": "DFF",
       "source": "Federal Reserve Bank of St. Louis"
     },

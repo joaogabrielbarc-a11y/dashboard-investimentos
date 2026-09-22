@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T20:43:11.612605-03:00",
+  "updatedAt": "2026-09-22T20:43:11.149147-03:00",
   "status": "ok",
   "representativeTicker": "BOVA11",
   "checks": {
@@ -13,13 +13,13 @@
   },
   "metrics": {
     "observations": 1246,
-    "volatility": 0.18125886949160952,
-    "sharpe": 0.0517874338954073,
-    "sortino": 0.07336163371991734,
-    "beta": 1.0193333662594966
+    "volatility": 0.18102546277842196,
+    "sharpe": 0.030184257778949224,
+    "sortino": 0.04270135368537729,
+    "beta": 1.0190038584677181
   },
   "coverage": {
-    "assets": 111,
+    "assets": 112,
     "benchmarks": 4
   }
 }

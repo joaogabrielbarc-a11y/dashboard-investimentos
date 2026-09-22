@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-09-21T20:43:11.389755-03:00",
+  "updatedAt": "2026-09-22T20:43:10.959539-03:00",
   "source": "CVM Informe Diário",
   "tracked": [
     "04609220000178",
@@ -59,38 +59,38 @@
   "missing": [],
   "funds": {
     "04609220000178": {
-      "priceNative": 9.94313743,
-      "priceBRL": 9.94313743,
+      "priceNative": 9.95288641,
+      "priceBRL": 9.95288641,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "14097800000187": {
-      "priceNative": 0.9298631,
-      "priceBRL": 0.9298631,
+      "priceNative": 0.9259827497,
+      "priceBRL": 0.9259827497,
       "currency": "BRL",
-      "date": "2026-09-14",
+      "date": "2026-09-18",
       "source": "CVM Informe Diário"
     },
     "14437359000135": {
-      "priceNative": 38.24141785,
-      "priceBRL": 38.24141785,
+      "priceNative": 38.26036729,
+      "priceBRL": 38.26036729,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "21024134000112": {
       "priceNative": 0.0,
       "priceBRL": 0.0,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "26360089000190": {
-      "priceNative": 2.24261686,
-      "priceBRL": 2.24261686,
+      "priceNative": 2.24382145,
+      "priceBRL": 2.24382145,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "26405893000149": {
@@ -101,94 +101,94 @@
       "source": "CVM Informe Diário"
     },
     "26559284000144": {
-      "priceNative": 2.33077191,
-      "priceBRL": 2.33077191,
+      "priceNative": 2.33308472,
+      "priceBRL": 2.33308472,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "32892326000167": {
-      "priceNative": 1.92711988,
-      "priceBRL": 1.92711988,
+      "priceNative": 1.92905921,
+      "priceBRL": 1.92905921,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "33784263000198": {
-      "priceNative": 1.8986145,
-      "priceBRL": 1.8986145,
+      "priceNative": 1.90052385,
+      "priceBRL": 1.90052385,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "34839865000168": {
       "priceNative": 0.0,
       "priceBRL": 0.0,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "35420532000162": {
-      "priceNative": 1.86777058,
-      "priceBRL": 1.86777058,
+      "priceNative": 1.8696459,
+      "priceBRL": 1.8696459,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "35551330000150": {
-      "priceNative": 1.80369098,
-      "priceBRL": 1.80369098,
+      "priceNative": 1.80549525,
+      "priceBRL": 1.80549525,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "38597349000125": {
-      "priceNative": 1.85458596,
-      "priceBRL": 1.85458596,
+      "priceNative": 1.85643842,
+      "priceBRL": 1.85643842,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "39973967000195": {
-      "priceNative": 1.84609295,
-      "priceBRL": 1.84609295,
+      "priceNative": 1.84793378,
+      "priceBRL": 1.84793378,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "44076221000119": {
-      "priceNative": 1.13985806,
-      "priceBRL": 1.13985806,
+      "priceNative": 1.13960293,
+      "priceBRL": 1.13960293,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "45278833000157": {
-      "priceNative": 1.64318148,
-      "priceBRL": 1.64318148,
+      "priceNative": 1.644833,
+      "priceBRL": 1.644833,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "46965426000180": {
-      "priceNative": 1.64363078,
-      "priceBRL": 1.64363078,
+      "priceNative": 1.64527367,
+      "priceBRL": 1.64527367,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "47047294000170": {
-      "priceNative": 1.62576493,
-      "priceBRL": 1.62576493,
+      "priceNative": 1.62739135,
+      "priceBRL": 1.62739135,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "47716590000117": {
-      "priceNative": 1.49519618,
-      "priceBRL": 1.49519618,
+      "priceNative": 1.49669101,
+      "priceBRL": 1.49669101,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "50628101000180": {
@@ -199,206 +199,206 @@
       "source": "CVM Informe Diário"
     },
     "50730281000106": {
-      "priceNative": 7432.09648888,
-      "priceBRL": 7432.09648888,
+      "priceNative": 7435.84765112,
+      "priceBRL": 7435.84765112,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "50911242000105": {
-      "priceNative": 145.82324905,
-      "priceBRL": 145.82324905,
+      "priceNative": 145.89914003,
+      "priceBRL": 145.89914003,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "54974348000109": {
-      "priceNative": 11319.88567736,
-      "priceBRL": 11319.88567736,
+      "priceNative": 11328.50154858,
+      "priceBRL": 11328.50154858,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "55177071000156": {
-      "priceNative": 1.28975624,
-      "priceBRL": 1.28975624,
+      "priceNative": 1.29104217,
+      "priceBRL": 1.29104217,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "55218837000101": {
-      "priceNative": 688.11071721,
-      "priceBRL": 688.11071721,
+      "priceNative": 688.56499473,
+      "priceBRL": 688.56499473,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "55342176000113": {
-      "priceNative": 1.32429285,
-      "priceBRL": 1.32429285,
+      "priceNative": 1.32561349,
+      "priceBRL": 1.32561349,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "55577828000107": {
-      "priceNative": 1.31588774,
-      "priceBRL": 1.31588774,
+      "priceNative": 1.31653011,
+      "priceBRL": 1.31653011,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "56916550000100": {
-      "priceNative": 1282.30206278,
-      "priceBRL": 1282.30206278,
+      "priceNative": 1282.93671647,
+      "priceBRL": 1282.93671647,
+      "currency": "BRL",
+      "date": "2026-09-21",
+      "source": "CVM Informe Diário"
+    },
+    "57341740000109": {
+      "priceNative": 1.27508926,
+      "priceBRL": 1.27508926,
+      "currency": "BRL",
+      "date": "2026-09-21",
+      "source": "CVM Informe Diário"
+    },
+    "57357581000130": {
+      "priceNative": 1.10898987,
+      "priceBRL": 1.10898987,
+      "currency": "BRL",
+      "date": "2026-09-21",
+      "source": "CVM Informe Diário"
+    },
+    "57913754000150": {
+      "priceNative": 1.21847042,
+      "priceBRL": 1.21847042,
+      "currency": "BRL",
+      "date": "2026-09-21",
+      "source": "CVM Informe Diário"
+    },
+    "57976525000184": {
+      "priceNative": 1.26019964,
+      "priceBRL": 1.26019964,
       "currency": "BRL",
       "date": "2026-09-18",
       "source": "CVM Informe Diário"
     },
-    "57341740000109": {
-      "priceNative": 1.2738159,
-      "priceBRL": 1.2738159,
-      "currency": "BRL",
-      "date": "2026-09-17",
-      "source": "CVM Informe Diário"
-    },
-    "57357581000130": {
-      "priceNative": 1.10789854,
-      "priceBRL": 1.10789854,
-      "currency": "BRL",
-      "date": "2026-09-17",
-      "source": "CVM Informe Diário"
-    },
-    "57913754000150": {
-      "priceNative": 1.21730985,
-      "priceBRL": 1.21730985,
-      "currency": "BRL",
-      "date": "2026-09-17",
-      "source": "CVM Informe Diário"
-    },
-    "57976525000184": {
-      "priceNative": 1.25956536,
-      "priceBRL": 1.25956536,
-      "currency": "BRL",
-      "date": "2026-09-17",
-      "source": "CVM Informe Diário"
-    },
     "57992560000197": {
-      "priceNative": 1.23445184,
-      "priceBRL": 1.23445184,
+      "priceNative": 1.23572645,
+      "priceBRL": 1.23572645,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "58459343000107": {
-      "priceNative": 1.2657675,
-      "priceBRL": 1.2657675,
+      "priceNative": 1.26704786,
+      "priceBRL": 1.26704786,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "58570048000115": {
       "priceNative": 929.3500206,
       "priceBRL": 929.3500206,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "59122774000138": {
       "priceNative": 922.82359307,
       "priceBRL": 922.82359307,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "59218871000129": {
-      "priceNative": 1.24342939,
-      "priceBRL": 1.24342939,
+      "priceNative": 1.24468812,
+      "priceBRL": 1.24468812,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "59337094000131": {
-      "priceNative": 1.25708813,
-      "priceBRL": 1.25708813,
+      "priceNative": 1.2585801,
+      "priceBRL": 1.2585801,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "59550812000153": {
-      "priceNative": 1.22964478,
-      "priceBRL": 1.22964478,
+      "priceNative": 1.23086705,
+      "priceBRL": 1.23086705,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "60372788000199": {
-      "priceNative": 1.19049821,
-      "priceBRL": 1.19049821,
+      "priceNative": 1.1916737,
+      "priceBRL": 1.1916737,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "60819442000196": {
-      "priceNative": 1.19788805,
-      "priceBRL": 1.19788805,
+      "priceNative": 1.19908256,
+      "priceBRL": 1.19908256,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "61297226000190": {
-      "priceNative": 1.12381345,
-      "priceBRL": 1.12381345,
+      "priceNative": 1.12492834,
+      "priceBRL": 1.12492834,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "61839257000126": {
       "priceNative": 445.74257071,
       "priceBRL": 445.74257071,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "63422775000175": {
       "priceNative": 1103.81389946,
       "priceBRL": 1103.81389946,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "64123696000126": {
-      "priceNative": 1081.50430995,
-      "priceBRL": 1081.50430995,
+      "priceNative": 1082.05647021,
+      "priceBRL": 1082.05647021,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "64127321000134": {
-      "priceNative": 1.10161208,
-      "priceBRL": 1.10161208,
+      "priceNative": 1.10271727,
+      "priceBRL": 1.10271727,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "64226683000182": {
-      "priceNative": 1.06963639,
-      "priceBRL": 1.06963639,
+      "priceNative": 1.07065135,
+      "priceBRL": 1.07065135,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "64289387000120": {
-      "priceNative": 1057.32378531,
-      "priceBRL": 1057.32378531,
+      "priceNative": 1057.85487774,
+      "priceBRL": 1057.85487774,
       "currency": "BRL",
-      "date": "2026-09-18",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "67797113000130": {
-      "priceNative": 1.0155344,
-      "priceBRL": 1.0155344,
+      "priceNative": 1.01654647,
+      "priceBRL": 1.01654647,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-21",
       "source": "CVM Informe Diário"
     },
     "68239245000100": {
@@ -416,10 +416,10 @@
       "source": "CVM Informe Diário"
     },
     "68448012000117": {
-      "priceNative": 1.0118987,
-      "priceBRL": 1.0118987,
+      "priceNative": 1.01244173,
+      "priceBRL": 1.01244173,
       "currency": "BRL",
-      "date": "2026-09-17",
+      "date": "2026-09-18",
       "source": "CVM Informe Diário"
     }
   }
