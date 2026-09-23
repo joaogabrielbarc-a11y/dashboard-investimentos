@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T23:40:49.874133-03:00",
+  "updatedAt": "2026-09-22T23:41:12.940097-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -23612,6 +23612,17 @@
       "paymentDateEstimated": false
     },
     {
+      "ticker": "HGCR11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2016-05-30",
+      "paymentDate": "2016-06-15",
+      "amount": 0.011,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
       "ticker": "MSFT",
       "className": "Stocks",
       "type": "Cash",
@@ -23684,6 +23695,17 @@
       "exDate": "2016-05-30",
       "paymentDate": "2016-05-15",
       "amount": 1.1,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "HGCR11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2016-04-30",
+      "paymentDate": "2016-05-15",
+      "amount": 0.95,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
@@ -23777,6 +23799,17 @@
       "paymentDateEstimated": false
     },
     {
+      "ticker": "HGCR11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2016-03-30",
+      "paymentDate": "2016-04-15",
+      "amount": 0.95,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
       "ticker": "ITUB4",
       "className": "Ações",
       "type": "Dividendos",
@@ -23849,6 +23882,17 @@
       "exDate": "2016-03-30",
       "paymentDate": "2016-03-15",
       "amount": 0.95,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "HGCR11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2016-02-28",
+      "paymentDate": "2016-03-15",
+      "amount": 0.94,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
@@ -23992,6 +24036,17 @@
       "exDate": "2016-02-28",
       "paymentDate": "2016-02-15",
       "amount": 0.94,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "HGCR11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2016-01-30",
+      "paymentDate": "2016-02-15",
+      "amount": 0.93,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
