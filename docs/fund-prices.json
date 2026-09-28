@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-09-27T20:42:02.493072-03:00",
+  "updatedAt": "2026-09-28T20:44:20.492999-03:00",
   "source": "CVM Informe Diário",
   "tracked": [
     "04609220000178",
@@ -122,10 +122,10 @@
       "source": "CVM Informe Diário"
     },
     "34839865000168": {
-      "priceNative": 1.628729225241,
-      "priceBRL": 1.628729225241,
+      "priceNative": 0.0,
+      "priceBRL": 0.0,
       "currency": "BRL",
-      "date": "2026-09-24",
+      "date": "2026-09-25",
       "source": "CVM Informe Diário"
     },
     "35420532000162": {
