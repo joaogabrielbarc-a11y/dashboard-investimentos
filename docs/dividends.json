@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-25T23:40:14.922581-03:00",
+  "updatedAt": "2026-09-28T23:41:20.311921-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -466,6 +466,28 @@
       "currency": "USD",
       "source": "Nasdaq",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "VTV",
+      "className": "ETFs Internacionais",
+      "type": "Dividendos",
+      "exDate": "2026-09-28",
+      "paymentDate": "2026-09-28",
+      "amount": 1.017,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
+    },
+    {
+      "ticker": "VOO",
+      "className": "ETFs Internacionais",
+      "type": "Dividendos",
+      "exDate": "2026-09-28",
+      "paymentDate": "2026-09-28",
+      "amount": 1.823,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "META",
