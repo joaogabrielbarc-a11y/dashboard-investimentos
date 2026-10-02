@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-30T23:43:56.529556-03:00",
+  "updatedAt": "2026-10-02T05:50:02.959292-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -155,6 +155,17 @@
       "exDate": "2026-09-22",
       "paymentDate": "2027-06-30",
       "amount": 0.034957,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "BBDC3",
+      "className": "Ações",
+      "type": "JSCP",
+      "exDate": "2026-10-13",
+      "paymentDate": "2027-04-30",
+      "amount": 0.34238981,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
@@ -457,6 +468,28 @@
       "paymentDateEstimated": false
     },
     {
+      "ticker": "HGCR11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2026-09-30",
+      "paymentDate": "2026-10-15",
+      "amount": 1.0,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "GGRC11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2026-10-01",
+      "paymentDate": "2026-10-08",
+      "amount": 0.1,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
       "ticker": "LVBI11",
       "className": "Fundos Imobiliários",
       "type": "Dividendos",
@@ -466,6 +499,28 @@
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "GARE11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2026-09-30",
+      "paymentDate": "2026-10-07",
+      "amount": 0.083,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "TFLO",
+      "className": "ETFs Internacionais",
+      "type": "Dividendos",
+      "exDate": "2026-10-01",
+      "paymentDate": "2026-10-01",
+      "amount": 0.16,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "NVDA",
