@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T06:14:03.673702-03:00",
+  "updatedAt": "2026-10-07T06:04:44.613619-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -532,6 +532,17 @@
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "JPM",
+      "className": "Stocks",
+      "type": "Dividendos",
+      "exDate": "2026-10-06",
+      "paymentDate": "2026-10-06",
+      "amount": 1.65,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "TFLO",
