@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-09T06:27:45.698362-03:00",
+  "updatedAt": "2026-10-10T05:48:37.285583-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -166,6 +166,17 @@
       "exDate": "2026-10-13",
       "paymentDate": "2027-04-30",
       "amount": 0.34238981,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "BBDC3",
+      "className": "Ações",
+      "type": "JSCP",
+      "exDate": "2026-10-13",
+      "paymentDate": "2027-04-30",
+      "amount": 0.32385872,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
@@ -499,6 +510,17 @@
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "MA",
+      "className": "Stocks",
+      "type": "Dividendos",
+      "exDate": "2026-10-09",
+      "paymentDate": "2026-10-09",
+      "amount": 0.87,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "GGRC11",
