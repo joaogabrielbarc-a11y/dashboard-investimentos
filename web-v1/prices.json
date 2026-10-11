@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-10-09T23:36:20.500335-03:00",
-  "fxUsdBrl": 4.9918,
+  "updatedAt": "2026-10-10T23:05:22.852212-03:00",
+  "fxUsdBrl": 4.9772,
   "prices": {
     "CPFE3": {
       "priceNative": 52.65,
@@ -151,251 +151,251 @@
     },
     "VOO": {
       "priceNative": 715.59,
-      "priceBRL": 3572.0821619999997,
+      "priceBRL": 3561.634548,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "AVUV": {
       "priceNative": 119.64,
-      "priceBRL": 597.218952,
+      "priceBRL": 595.472208,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "VEA": {
       "priceNative": 70.35,
-      "priceBRL": 351.17312999999996,
+      "priceBRL": 350.14601999999996,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "TFLO": {
       "priceNative": 50.57,
-      "priceBRL": 252.43532599999998,
+      "priceBRL": 251.697004,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "BTCUSD": {
-      "priceNative": 82569.19,
-      "priceBRL": 412168.882642,
+      "priceNative": 82933.56,
+      "priceBRL": 412776.914832,
       "currency": "USD",
-      "date": "2026-10-09",
+      "date": "2026-10-10",
       "source": "Yahoo Finance"
     },
     "TESOURO RENDA+ 2060": {
-      "priceNative": 321.2,
-      "priceBRL": 321.2,
+      "priceNative": 339.38,
+      "priceBRL": 339.38,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2079-12-15",
       "titleType": "Tesouro Renda+ Aposentadoria Extra"
     },
     "TESOURO SELIC 2027": {
-      "priceNative": 20046.41,
-      "priceBRL": 20046.41,
+      "priceNative": 20056.61,
+      "priceBRL": 20056.61,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2027-03-01",
       "titleType": "Tesouro Selic"
     },
     "TESOURO SELIC 2029": {
-      "priceNative": 20020.29,
-      "priceBRL": 20020.29,
+      "priceNative": 20031.46,
+      "priceBRL": 20031.46,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2029-03-01",
       "titleType": "Tesouro Selic"
     },
     "TESOURO SELIC 2031": {
-      "priceNative": 19962.99,
-      "priceBRL": 19962.99,
+      "priceNative": 19972.93,
+      "priceBRL": 19972.93,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2031-03-01",
       "titleType": "Tesouro Selic"
     },
     "TESOURO SELIC 2028": {
-      "priceNative": 20037.17,
-      "priceBRL": 20037.17,
+      "priceNative": 20048.17,
+      "priceBRL": 20048.17,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2028-03-01",
       "titleType": "Tesouro Selic"
     },
     "TESOURO PREFIXADO 2032": {
-      "priceNative": 531.23,
-      "priceBRL": 531.23,
+      "priceNative": 538.62,
+      "priceBRL": 538.62,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2032-01-01",
       "titleType": "Tesouro Prefixado"
     },
     "TESOURO PREFIXADO 2031": {
-      "priceNative": 942.46,
-      "priceBRL": 942.46,
+      "priceNative": 950.34,
+      "priceBRL": 950.34,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2031-01-01",
       "titleType": "Tesouro Prefixado com Juros Semestrais"
     },
     "TESOURO PREFIXADO 2029": {
-      "priceNative": 983.85,
-      "priceBRL": 983.85,
+      "priceNative": 988.13,
+      "priceBRL": 988.13,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2029-01-01",
       "titleType": "Tesouro Prefixado com Juros Semestrais"
     },
     "TESOURO PREFIXADO 2028": {
-      "priceNative": 864.04,
-      "priceBRL": 864.04,
+      "priceNative": 865.29,
+      "priceBRL": 865.29,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2028-01-01",
       "titleType": "Tesouro Prefixado"
     },
     "TESOURO PREFIXADO 2027": {
-      "priceNative": 1019.55,
-      "priceBRL": 1019.55,
+      "priceNative": 1020.06,
+      "priceBRL": 1020.06,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2027-01-01",
       "titleType": "Tesouro Prefixado com Juros Semestrais"
     },
     "TESOURO IPCA+ 2040": {
-      "priceNative": 1918.86,
-      "priceBRL": 1918.86,
+      "priceNative": 1966.48,
+      "priceBRL": 1966.48,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2040-08-15",
       "titleType": "Tesouro IPCA+"
     },
     "TESOURO IPCA+ 2060": {
-      "priceNative": 4362.38,
-      "priceBRL": 4362.38,
+      "priceNative": 4455.11,
+      "priceBRL": 4455.11,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2060-08-15",
       "titleType": "Tesouro IPCA+ com Juros Semestrais"
     },
     "TESOURO IPCA+ 2045": {
-      "priceNative": 1419.15,
-      "priceBRL": 1419.15,
+      "priceNative": 1458.39,
+      "priceBRL": 1458.39,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2045-05-15",
       "titleType": "Tesouro IPCA+"
     },
     "TESOURO IPCA+ 2055": {
-      "priceNative": 4461.38,
-      "priceBRL": 4461.38,
+      "priceNative": 4544.84,
+      "priceBRL": 4544.84,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2055-05-15",
       "titleType": "Tesouro IPCA+ com Juros Semestrais"
     },
     "TESOURO IPCA+ 2037": {
-      "priceNative": 4550.03,
-      "priceBRL": 4550.03,
+      "priceNative": 4618.55,
+      "priceBRL": 4618.55,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2037-05-15",
       "titleType": "Tesouro IPCA+ com Juros Semestrais"
     },
     "TESOURO IPCA+ 2030": {
-      "priceNative": 4659.55,
-      "priceBRL": 4659.55,
+      "priceNative": 4691.11,
+      "priceBRL": 4691.11,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2030-08-15",
       "titleType": "Tesouro IPCA+ com Juros Semestrais"
     },
     "TESOURO IPCA+ 2035": {
-      "priceNative": 2676.7,
-      "priceBRL": 2676.7,
+      "priceNative": 2718.98,
+      "priceBRL": 2718.98,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2035-05-15",
       "titleType": "Tesouro IPCA+"
     },
     "TESOURO IPCA+ 2032": {
-      "priceNative": 3218.25,
-      "priceBRL": 3218.25,
+      "priceNative": 3252.36,
+      "priceBRL": 3252.36,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2032-08-15",
       "titleType": "Tesouro IPCA+"
     },
     "TESOURO IPCA+ 2050": {
-      "priceNative": 1006.52,
-      "priceBRL": 1006.52,
+      "priceNative": 1046.6,
+      "priceBRL": 1046.6,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2050-08-15",
       "titleType": "Tesouro IPCA+"
     },
     "TESOURO IPCA+ 2029": {
-      "priceNative": 4004.26,
-      "priceBRL": 4004.26,
+      "priceNative": 4025.85,
+      "priceBRL": 4025.85,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2029-05-15",
       "titleType": "Tesouro IPCA+"
     },
     "TESOURO IGPM+ COM JUROS SEMESTRAIS 2031": {
-      "priceNative": 7842.49,
-      "priceBRL": 7842.49,
+      "priceNative": 7845.79,
+      "priceBRL": 7845.79,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2031-01-01",
       "titleType": "Tesouro IGPM+ com Juros Semestrais"
     },
     "TESOURO PREFIXADO 2035": {
-      "priceNative": 884.8,
-      "priceBRL": 884.8,
+      "priceNative": 899.41,
+      "priceBRL": 899.41,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2035-01-01",
       "titleType": "Tesouro Prefixado com Juros Semestrais"
     },
     "TESOURO PREFIXADO 2033": {
-      "priceNative": 908.19,
-      "priceBRL": 908.19,
+      "priceNative": 920.42,
+      "priceBRL": 920.42,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2033-01-01",
       "titleType": "Tesouro Prefixado com Juros Semestrais"
     },
     "TESOURO PREFIXADO 2037": {
-      "priceNative": 868.32,
-      "priceBRL": 868.32,
+      "priceNative": 884.94,
+      "priceBRL": 884.94,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2037-01-01",
       "titleType": "Tesouro Prefixado com Juros Semestrais"
@@ -457,19 +457,19 @@
       "source": "Tesouro Transparente"
     },
     "TESOURO EDUCA+ 2035": {
-      "priceNative": 2192.99,
-      "priceBRL": 2192.99,
+      "priceNative": 2241.26,
+      "priceBRL": 2241.26,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2040-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2041": {
-      "priceNative": 1505.72,
-      "priceBRL": 1505.72,
+      "priceNative": 1547.72,
+      "priceBRL": 1547.72,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2046-12-15",
       "titleType": "Tesouro Educa+"
@@ -482,55 +482,55 @@
       "source": "Tesouro Transparente"
     },
     "TESOURO EDUCA+ 2031": {
-      "priceNative": 2851.46,
-      "priceBRL": 2851.46,
+      "priceNative": 2891.64,
+      "priceBRL": 2891.64,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2036-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2032": {
-      "priceNative": 2665.15,
-      "priceBRL": 2665.15,
+      "priceNative": 2707.22,
+      "priceBRL": 2707.22,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2037-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2042": {
-      "priceNative": 1410.97,
-      "priceBRL": 1410.97,
+      "priceNative": 1452.48,
+      "priceBRL": 1452.48,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2047-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2037": {
-      "priceNative": 1936.93,
-      "priceBRL": 1936.93,
+      "priceNative": 1984.09,
+      "priceBRL": 1984.09,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2042-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2036": {
-      "priceNative": 2061.51,
-      "priceBRL": 2061.51,
+      "priceNative": 2108.16,
+      "priceBRL": 2108.16,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2041-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2033": {
-      "priceNative": 2493.17,
-      "priceBRL": 2493.17,
+      "priceNative": 2539.02,
+      "priceBRL": 2539.02,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2038-12-15",
       "titleType": "Tesouro Educa+"
@@ -543,19 +543,19 @@
       "source": "Tesouro Transparente"
     },
     "TESOURO EDUCA+ 2030": {
-      "priceNative": 3050.44,
-      "priceBRL": 3050.44,
+      "priceNative": 3086.35,
+      "priceBRL": 3086.35,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2035-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2040": {
-      "priceNative": 1604.48,
-      "priceBRL": 1604.48,
+      "priceNative": 1646.77,
+      "priceBRL": 1646.77,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2045-12-15",
       "titleType": "Tesouro Educa+"
@@ -568,10 +568,10 @@
       "source": "Tesouro Transparente"
     },
     "TESOURO EDUCA+ 2038": {
-      "priceNative": 1820.75,
-      "priceBRL": 1820.75,
+      "priceNative": 1865.7,
+      "priceBRL": 1865.7,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2043-12-15",
       "titleType": "Tesouro Educa+"
@@ -584,19 +584,19 @@
       "source": "Tesouro Transparente"
     },
     "TESOURO EDUCA+ 2034": {
-      "priceNative": 2336.83,
-      "priceBRL": 2336.83,
+      "priceNative": 2384.02,
+      "priceBRL": 2384.02,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2039-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2039": {
-      "priceNative": 1710.14,
-      "priceBRL": 1710.14,
+      "priceNative": 1755.14,
+      "priceBRL": 1755.14,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2044-12-15",
       "titleType": "Tesouro Educa+"
@@ -609,216 +609,216 @@
       "source": "Tesouro Transparente"
     },
     "TESOURO EDUCA+ 2043": {
-      "priceNative": 1324.6,
-      "priceBRL": 1324.6,
+      "priceNative": 1363.11,
+      "priceBRL": 1363.11,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2048-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO RENDA+ 2065": {
-      "priceNative": 233.36,
-      "priceBRL": 233.36,
+      "priceNative": 248.18,
+      "priceBRL": 248.18,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2084-12-15",
       "titleType": "Tesouro Renda+ Aposentadoria Extra"
     },
     "TESOURO RENDA+ 2050": {
-      "priceNative": 606.85,
-      "priceBRL": 606.85,
+      "priceNative": 631.01,
+      "priceBRL": 631.01,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2069-12-15",
       "titleType": "Tesouro Renda+ Aposentadoria Extra"
     },
     "TESOURO RENDA+ 2045": {
-      "priceNative": 829.59,
-      "priceBRL": 829.59,
+      "priceNative": 857.4,
+      "priceBRL": 857.4,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2064-12-15",
       "titleType": "Tesouro Renda+ Aposentadoria Extra"
     },
     "TESOURO RENDA+ 2030": {
-      "priceNative": 2137.4,
-      "priceBRL": 2137.4,
+      "priceNative": 2178.12,
+      "priceBRL": 2178.12,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2049-12-15",
       "titleType": "Tesouro Renda+ Aposentadoria Extra"
     },
     "TESOURO RENDA+ 2055": {
-      "priceNative": 443.64,
-      "priceBRL": 443.64,
+      "priceNative": 464.13,
+      "priceBRL": 464.13,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2074-12-15",
       "titleType": "Tesouro Renda+ Aposentadoria Extra"
     },
     "TESOURO RENDA+ 2035": {
-      "priceNative": 1549.29,
-      "priceBRL": 1549.29,
+      "priceNative": 1591.4,
+      "priceBRL": 1591.4,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2054-12-15",
       "titleType": "Tesouro Renda+ Aposentadoria Extra"
     },
     "TESOURO RENDA+ 2040": {
-      "priceNative": 1134.88,
-      "priceBRL": 1134.88,
+      "priceNative": 1170.43,
+      "priceBRL": 1170.43,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2059-12-15",
       "titleType": "Tesouro Renda+ Aposentadoria Extra"
     },
     "TESOURO EDUCA+ 2026": {
-      "priceNative": 3990.08,
-      "priceBRL": 3990.08,
+      "priceNative": 4011.57,
+      "priceBRL": 4011.57,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2031-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2027": {
-      "priceNative": 3728.45,
-      "priceBRL": 3728.45,
+      "priceNative": 3754.47,
+      "priceBRL": 3754.47,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2032-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2028": {
-      "priceNative": 3488.21,
-      "priceBRL": 3488.21,
+      "priceNative": 3516.61,
+      "priceBRL": 3516.61,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2033-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2025": {
-      "priceNative": 3531.95,
-      "priceBRL": 3531.95,
+      "priceNative": 3547.7,
+      "priceBRL": 3547.7,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2030-12-15",
       "titleType": "Tesouro Educa+"
     },
     "TESOURO EDUCA+ 2029": {
-      "priceNative": 3261.21,
-      "priceBRL": 3261.21,
+      "priceNative": 3294.38,
+      "priceBRL": 3294.38,
       "currency": "BRL",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "source": "Tesouro Transparente",
       "maturity": "2034-12-15",
       "titleType": "Tesouro Educa+"
     },
     "VTV": {
       "priceNative": 220.59,
-      "priceBRL": 1101.141162,
+      "priceBRL": 1097.920548,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "AVDV": {
       "priceNative": 108.52,
-      "priceBRL": 541.7101359999999,
+      "priceBRL": 540.1257439999999,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "VWO": {
       "priceNative": 59.76,
-      "priceBRL": 298.30996799999997,
+      "priceBRL": 297.43747199999996,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "AVES": {
       "priceNative": 65.56,
-      "priceBRL": 327.262408,
+      "priceBRL": 326.305232,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "NU": {
       "priceNative": 16.12,
-      "priceBRL": 80.467816,
+      "priceBRL": 80.23246400000001,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "AAPL": {
       "priceNative": 336.64,
-      "priceBRL": 1680.4395519999998,
+      "priceBRL": 1675.524608,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "MSFT": {
       "priceNative": 535.07,
-      "priceBRL": 2670.962426,
+      "priceBRL": 2663.150404,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "GOOGL": {
       "priceNative": 351.66,
-      "priceBRL": 1755.4163879999999,
+      "priceBRL": 1750.282152,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "AMZN": {
       "priceNative": 262.43,
-      "priceBRL": 1309.9980739999999,
+      "priceBRL": 1306.166596,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "NVDA": {
       "priceNative": 229.28,
-      "priceBRL": 1144.519904,
+      "priceBRL": 1141.1724159999999,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "META": {
       "priceNative": 718.67,
-      "priceBRL": 3587.4569059999994,
+      "priceBRL": 3576.9643239999996,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "JPM": {
       "priceNative": 332.99,
-      "priceBRL": 1662.219482,
+      "priceBRL": 1657.357828,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "XOM": {
       "priceNative": 168.94,
-      "priceBRL": 843.3146919999999,
+      "priceBRL": 840.848168,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
     },
     "BRK-B": {
       "priceNative": 515.62,
-      "priceBRL": 2573.8719159999996,
+      "priceBRL": 2566.343864,
       "currency": "USD",
       "date": "2026-10-09",
       "source": "Yahoo Finance"
