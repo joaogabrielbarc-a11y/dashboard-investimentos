@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10T23:05:22.855182-03:00",
+  "updatedAt": "2026-10-11T23:36:08.557981-03:00",
   "source": "Banco Central do Brasil",
   "indexes": {
     "CDI": {
@@ -517,9 +517,9 @@
           "annualPct": 6.66
         },
         {
-          "label": "Tesouro IPCA+ 2032",
+          "label": "Tesouro IPCA+ com Juros Semestrais 2032",
           "maturity": "2032-08-15",
-          "annualPct": 6.65
+          "annualPct": 6.64
         },
         {
           "label": "Tesouro IPCA+ com Juros Semestrais 2035",
@@ -532,9 +532,9 @@
           "annualPct": 6.66
         },
         {
-          "label": "Tesouro IPCA+ 2040",
+          "label": "Tesouro IPCA+ com Juros Semestrais 2040",
           "maturity": "2040-08-15",
-          "annualPct": 6.51
+          "annualPct": 6.55
         },
         {
           "label": "Tesouro IPCA+ 2045",
