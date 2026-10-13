@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-11T23:36:08.554505-03:00",
+  "updatedAt": "2026-10-13T00:45:55.032495-03:00",
   "provider": {
     "primary": "Configurável por classe (fontes oficiais / brapi / UP2DATA)",
     "fallback": "Yahoo Finance em hosts redundantes",
@@ -381,7 +381,7 @@
       "symbol": "VOO",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -389,7 +389,7 @@
       "symbol": "VTV",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -397,7 +397,7 @@
       "symbol": "AVUV",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -405,7 +405,7 @@
       "symbol": "VEA",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -413,7 +413,7 @@
       "symbol": "AVDV",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -421,7 +421,7 @@
       "symbol": "VWO",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -429,7 +429,7 @@
       "symbol": "AVES",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -437,7 +437,7 @@
       "symbol": "TFLO",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -445,7 +445,7 @@
       "symbol": "NU",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -453,7 +453,7 @@
       "symbol": "AAPL",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -461,7 +461,7 @@
       "symbol": "MSFT",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -469,7 +469,7 @@
       "symbol": "GOOGL",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -477,7 +477,7 @@
       "symbol": "AMZN",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -485,7 +485,7 @@
       "symbol": "NVDA",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -493,7 +493,7 @@
       "symbol": "META",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -501,7 +501,7 @@
       "symbol": "JPM",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -509,7 +509,7 @@
       "symbol": "XOM",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -517,7 +517,7 @@
       "symbol": "BRK-B",
       "category": "Ativos internacionais",
       "status": "fresh",
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "source": "Yahoo Finance",
       "error": null
     },
@@ -525,7 +525,7 @@
       "symbol": "BTC-USD",
       "category": "Criptoativos",
       "status": "fresh",
-      "date": "2026-10-11",
+      "date": "2026-10-13",
       "source": "Yahoo Finance",
       "error": null
     }

@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-10-11T23:36:08.557981-03:00",
+  "updatedAt": "2026-10-13T00:45:55.035665-03:00",
   "source": "Banco Central do Brasil",
   "indexes": {
     "CDI": {
       "annualPct": 13.649989315282562,
       "dailyPct": 0.050788,
-      "date": "08/10/2026",
+      "date": "09/10/2026",
       "series": 12
     },
     "SELIC": {
@@ -480,9 +480,9 @@
           "annualPct": 12.3
         },
         {
-          "label": "Tesouro Prefixado 2031",
+          "label": "Tesouro Prefixado com Juros Semestrais 2031",
           "maturity": "2031-01-01",
-          "annualPct": 12.45
+          "annualPct": 12.48
         },
         {
           "label": "Tesouro Prefixado 2032",
@@ -517,9 +517,9 @@
           "annualPct": 6.66
         },
         {
-          "label": "Tesouro IPCA+ com Juros Semestrais 2032",
+          "label": "Tesouro IPCA+ 2032",
           "maturity": "2032-08-15",
-          "annualPct": 6.64
+          "annualPct": 6.65
         },
         {
           "label": "Tesouro IPCA+ com Juros Semestrais 2035",
@@ -532,14 +532,14 @@
           "annualPct": 6.66
         },
         {
-          "label": "Tesouro IPCA+ com Juros Semestrais 2040",
+          "label": "Tesouro IPCA+ 2040",
           "maturity": "2040-08-15",
-          "annualPct": 6.55
+          "annualPct": 6.51
         },
         {
-          "label": "Tesouro IPCA+ 2045",
+          "label": "Tesouro IPCA+ com Juros Semestrais 2045",
           "maturity": "2045-05-15",
-          "annualPct": 6.49
+          "annualPct": 6.53
         },
         {
           "label": "Tesouro IPCA+ 2050",
