@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-10-17T22:27:18.012909-03:00",
-  "status": "ok",
+  "updatedAt": "2026-10-18T22:35:36.851390-03:00",
+  "status": "review",
   "representativeTicker": "BOVA11",
   "checks": {
     "schemaVersion2": true,
     "fiveYearWindow": true,
     "minimumHistory": true,
-    "benchmarks": true,
+    "benchmarks": false,
     "finiteVolatility": true,
     "finiteSharpe": true,
     "finiteBeta": true
@@ -14,12 +14,12 @@
   "metrics": {
     "observations": 1246,
     "volatility": 0.18377744727548928,
-    "sharpe": 0.1100471143305203,
-    "sortino": 0.15880943702962627,
+    "sharpe": 0.7628036686117591,
+    "sortino": 1.1367383391140444,
     "beta": 1.019139272066228
   },
   "coverage": {
-    "assets": 112,
-    "benchmarks": 4
+    "assets": 111,
+    "benchmarks": 3
   }
 }
