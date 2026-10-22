@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-10-20T22:52:42.395694-03:00",
+  "updatedAt": "2026-10-21T22:43:10.288305-03:00",
   "source": "Banco Central do Brasil",
   "indexes": {
     "CDI": {
       "annualPct": 13.649989315282562,
       "dailyPct": 0.050788,
-      "date": "19/10/2026",
+      "date": "20/10/2026",
       "series": 12
     },
     "SELIC": {
       "annualPct": 13.649989315282562,
       "dailyPct": 0.050788,
-      "date": "20/10/2026",
+      "date": "21/10/2026",
       "series": 11,
       "dailyRates": [
         {
@@ -468,6 +468,10 @@
         },
         {
           "date": "2026-10-20",
+          "value": 0.050788
+        },
+        {
+          "date": "2026-10-21",
           "value": 0.050788
         }
       ]
