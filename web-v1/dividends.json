@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T05:52:25.711642-03:00",
+  "updatedAt": "2026-10-31T05:41:16.620264-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -441,6 +441,28 @@
       "exDate": "2026-08-21",
       "paymentDate": "2026-11-23",
       "amount": 0.67407131,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "TRXF11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2026-10-30",
+      "paymentDate": "2026-11-16",
+      "amount": 0.93,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "LVBI11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2026-10-30",
+      "paymentDate": "2026-11-09",
+      "amount": 0.8,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
