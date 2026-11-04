@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T06:52:52.413203-03:00",
+  "updatedAt": "2026-11-04T06:40:39.301306-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -474,6 +474,17 @@
       "exDate": "2026-10-30",
       "paymentDate": "2026-11-16",
       "amount": 1.0,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "GGRC11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2026-11-03",
+      "paymentDate": "2026-11-10",
+      "amount": 0.1,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
