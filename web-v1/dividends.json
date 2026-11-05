@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T06:40:39.301306-03:00",
+  "updatedAt": "2026-11-05T06:44:46.180644-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -476,6 +476,17 @@
       "amount": 1.0,
       "currency": "BRL",
       "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "AAPL",
+      "className": "Stocks",
+      "type": "Cash",
+      "exDate": "2026-11-12",
+      "paymentDate": "2026-11-16",
+      "amount": 0.27,
+      "currency": "USD",
+      "source": "Nasdaq",
       "paymentDateEstimated": false
     },
     {
