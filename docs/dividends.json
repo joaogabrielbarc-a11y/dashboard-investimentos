@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T06:44:46.180644-03:00",
+  "updatedAt": "2026-11-06T06:40:49.365244-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -441,6 +441,17 @@
       "exDate": "2026-08-14",
       "paymentDate": "2026-11-26",
       "amount": 0.35947458,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "BRBI11",
+      "className": "Ações",
+      "type": "Dividendos",
+      "exDate": "2026-11-12",
+      "paymentDate": "2026-11-26",
+      "amount": 0.12,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
