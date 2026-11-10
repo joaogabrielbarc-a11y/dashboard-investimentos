@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T06:03:39.534147-03:00",
+  "updatedAt": "2026-11-10T07:14:00.967606-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -270,6 +270,17 @@
       "paymentDateEstimated": false
     },
     {
+      "ticker": "CPFE3",
+      "className": "Ações",
+      "type": "Dividendos",
+      "exDate": "2026-04-29",
+      "paymentDate": "2026-12-31",
+      "amount": 0.303473,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
       "ticker": "CMIG4",
       "className": "Ações",
       "type": "Dividendos",
@@ -463,6 +474,17 @@
       "exDate": "2026-08-21",
       "paymentDate": "2026-11-23",
       "amount": 0.67407131,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "CPFE3",
+      "className": "Ações",
+      "type": "Dividendos",
+      "exDate": "2026-04-29",
+      "paymentDate": "2026-11-23",
+      "amount": 1.128223,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
