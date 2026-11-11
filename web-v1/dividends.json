@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T07:14:00.967606-03:00",
+  "updatedAt": "2026-11-11T06:44:14.492977-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -468,6 +468,17 @@
       "paymentDateEstimated": false
     },
     {
+      "ticker": "WIZC3",
+      "className": "Ações",
+      "type": "Dividendos",
+      "exDate": "2026-04-28",
+      "paymentDate": "2026-11-23",
+      "amount": 0.312637,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
       "ticker": "PETR4",
       "className": "Ações",
       "type": "JSCP",
@@ -521,6 +532,17 @@
       "currency": "USD",
       "source": "Nasdaq",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "V",
+      "className": "Stocks",
+      "type": "Dividendos",
+      "exDate": "2026-11-10",
+      "paymentDate": "2026-11-10",
+      "amount": 0.78,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "GGRC11",
