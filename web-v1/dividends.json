@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T06:44:14.492977-03:00",
+  "updatedAt": "2026-11-12T07:05:17.899295-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -182,12 +182,45 @@
       "paymentDateEstimated": false
     },
     {
+      "ticker": "PETR4",
+      "className": "Ações",
+      "type": "Provento",
+      "exDate": "2026-12-21",
+      "paymentDate": "2027-03-22",
+      "amount": 0.59366387,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
       "ticker": "FIQE3",
       "className": "Ações",
       "type": "Dividendos",
       "exDate": "2025-12-29",
       "paymentDate": "2027-03-16",
       "amount": 0.09204072,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "PETR4",
+      "className": "Ações",
+      "type": "Provento",
+      "exDate": "2026-12-21",
+      "paymentDate": "2027-02-22",
+      "amount": 0.593663,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "TAEE11",
+      "className": "Ações",
+      "type": "Dividendos",
+      "exDate": "2026-11-16",
+      "paymentDate": "2027-01-27",
+      "amount": 1.05610816,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
@@ -598,6 +631,17 @@
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "TFLO",
+      "className": "ETFs Internacionais",
+      "type": "Dividendos",
+      "exDate": "2026-11-02",
+      "paymentDate": "2026-11-02",
+      "amount": 0.172,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "XPML11",
