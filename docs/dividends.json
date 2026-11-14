@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T06:51:34.610563-03:00",
+  "updatedAt": "2026-11-14T06:15:20.990988-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -8669,6 +8669,17 @@
       "exDate": "2023-11-21",
       "paymentDate": "2024-03-20",
       "amount": 0.6726735,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "PETR4",
+      "className": "Ações",
+      "type": "Rend. Trib.",
+      "exDate": "2023-11-21",
+      "paymentDate": "2024-03-20",
+      "amount": 0.01596994,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
