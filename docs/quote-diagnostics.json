@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-14T23:58:22.919053-03:00",
+  "updatedAt": "2026-11-15T23:58:04.083114-03:00",
   "provider": {
     "primary": "Configurável por classe (fontes oficiais / brapi / UP2DATA)",
     "fallback": "Yahoo Finance em hosts redundantes",
@@ -525,7 +525,7 @@
       "symbol": "BTC-USD",
       "category": "Criptoativos",
       "status": "fresh",
-      "date": "2026-11-14",
+      "date": "2026-11-15",
       "source": "Yahoo Finance",
       "error": null
     }
