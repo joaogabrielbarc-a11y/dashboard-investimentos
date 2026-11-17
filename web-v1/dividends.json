@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T06:15:20.990988-03:00",
+  "updatedAt": "2026-11-17T07:58:22.672046-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -532,6 +532,17 @@
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
+    },
+    {
+      "ticker": "XOM",
+      "className": "Stocks",
+      "type": "Dividendos",
+      "exDate": "2026-11-16",
+      "paymentDate": "2026-11-16",
+      "amount": 1.07,
+      "currency": "USD",
+      "source": "Yahoo Finance (data ex como referência)",
+      "paymentDateEstimated": true
     },
     {
       "ticker": "TRXF11",
