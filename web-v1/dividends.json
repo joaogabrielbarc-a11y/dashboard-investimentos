@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T07:58:22.672046-03:00",
+  "updatedAt": "2026-11-18T07:30:16.707477-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -496,6 +496,17 @@
       "exDate": "2026-11-12",
       "paymentDate": "2026-11-26",
       "amount": 0.12,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "XPML11",
+      "className": "Fundos Imobiliários",
+      "type": "Dividendos",
+      "exDate": "2026-11-17",
+      "paymentDate": "2026-11-25",
+      "amount": 0.8,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
