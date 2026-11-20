@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T07:37:59.086865-03:00",
+  "updatedAt": "2026-11-20T07:18:56.699723-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -226,6 +226,17 @@
       "paymentDateEstimated": false
     },
     {
+      "ticker": "PEP",
+      "className": "Stocks",
+      "type": "Cash",
+      "exDate": null,
+      "paymentDate": "2027-01-06",
+      "amount": 1.48,
+      "currency": "USD",
+      "source": "Nasdaq",
+      "paymentDateEstimated": false
+    },
+    {
       "ticker": "ITUB4",
       "className": "Ações",
       "type": "JSCP",
@@ -366,6 +377,17 @@
       "amount": 0.09455892,
       "currency": "BRL",
       "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "NVDA",
+      "className": "Stocks",
+      "type": "Cash",
+      "exDate": "2026-12-02",
+      "paymentDate": "2026-12-23",
+      "amount": 0.25,
+      "currency": "USD",
+      "source": "Nasdaq",
       "paymentDateEstimated": false
     },
     {
