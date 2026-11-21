@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T07:18:56.699723-03:00",
+  "updatedAt": "2026-11-21T07:03:40.406480-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -230,6 +230,17 @@
       "className": "Stocks",
       "type": "Cash",
       "exDate": null,
+      "paymentDate": "2027-01-06",
+      "amount": 1.48,
+      "currency": "USD",
+      "source": "Nasdaq",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "PEP",
+      "className": "Stocks",
+      "type": "Cash",
+      "exDate": "2026-12-04",
       "paymentDate": "2027-01-06",
       "amount": 1.48,
       "currency": "USD",
