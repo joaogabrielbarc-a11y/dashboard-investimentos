@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T01:12:04.884442-03:00",
+  "updatedAt": "2026-11-21T01:12:12.319059-03:00",
   "source": "Banco Central do Brasil",
   "indexes": {
     "CDI": {
@@ -564,7 +564,7 @@
     },
     "FED_FUNDS": {
       "annualPct": 3.88,
-      "date": "2026-11-18",
+      "date": "2026-11-19",
       "series": "DFF",
       "source": "Federal Reserve Bank of St. Louis"
     },
