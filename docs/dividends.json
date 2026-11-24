@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T07:03:40.406480-03:00",
+  "updatedAt": "2026-11-24T09:48:50.580252-03:00",
   "sources": [
     "Investidor10",
     "Nasdaq",
@@ -386,6 +386,17 @@
       "exDate": "2025-03-25",
       "paymentDate": "2026-12-30",
       "amount": 0.09455892,
+      "currency": "BRL",
+      "source": "Investidor10",
+      "paymentDateEstimated": false
+    },
+    {
+      "ticker": "PETR4",
+      "className": "Ações",
+      "type": "Dividendos",
+      "exDate": "2026-12-07",
+      "paymentDate": "2026-12-23",
+      "amount": 1.21035949,
       "currency": "BRL",
       "source": "Investidor10",
       "paymentDateEstimated": false
